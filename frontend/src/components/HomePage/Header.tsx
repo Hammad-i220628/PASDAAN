@@ -21,7 +21,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <img 
-              src="/images/logo.png" 
+              src="/public/logo.png" 
               alt="PASDAAN" 
               className="h-10 sm:h-14 w-auto"
             />

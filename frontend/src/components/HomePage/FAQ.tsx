@@ -51,7 +51,7 @@ const FAQ = () => {
             <div className="hidden lg:flex justify-start items-end">
               <div className="w-full max-w-sm">
                 <img 
-                  src="/images/FAQ.png" 
+                  src="/public/FAQ.png" 
                   alt="Frequently Asked Questions Illustration"
                   className="w-full h-auto object-contain"
                 />

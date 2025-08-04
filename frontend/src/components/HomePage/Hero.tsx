@@ -19,7 +19,7 @@ const Hero = () => {
     <section 
       className="relative bg-cover bg-no-repeat text-white py-8 sm:py-20 min-h-[70vh] sm:min-h-0" 
       style={{
-        backgroundImage: 'url(/images/home_image.jpg)',
+        backgroundImage: 'url(/public/home_image.jpg)',
         backgroundPosition: isMobile ? 'center 10%' : 'center center'
       }}
     >
