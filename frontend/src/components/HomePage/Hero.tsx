@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 
 const Hero = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   return (
-    <section className="relative bg-cover bg-center bg-no-repeat text-white py-12 sm:py-20" style={{backgroundImage: 'url(/images/home_image.jpg)'}}>
+    <section 
+      className="relative bg-cover bg-no-repeat text-white py-8 sm:py-20 min-h-[70vh] sm:min-h-0" 
+      style={{
+        backgroundImage: 'url(/images/home_image.jpg)',
+        backgroundPosition: isMobile ? 'center 10%' : 'center center'
+      }}
+    >
       {/* Bluish overlay for better text readability */}
       <div className="absolute inset-0 bg-blue-900 bg-opacity-60"></div>
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-6xl mx-auto">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end sm:justify-start min-h-[70vh] sm:min-h-0">
+        <div className="text-center max-w-6xl mx-auto mb-8 sm:mb-0 sm:mt-0">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
             Personalized Learning, Verified Tutors
           </h1>
-          <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-12 text-gray-200 max-w-4xl mx-auto px-4">
+          <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-12 text-gray-200 max-w-4xl mx-auto px-4">
             Connect with qualified in-person tutors in your area who are committed 
             to helping your child excel academically.
           </p>

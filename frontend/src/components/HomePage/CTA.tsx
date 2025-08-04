@@ -5,7 +5,7 @@ const CTA = () => {
   return (
     <section className="bg-gradient-to-r from-blue-900 to-teal-600 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 whitespace-nowrap">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
           Ready to Start Your Learning Journey?
         </h2>
         <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
