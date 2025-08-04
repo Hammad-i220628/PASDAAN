@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/public/logo.png" 
+                src="/logo.png" 
                 alt="Pasdaan Logo"
                 className="h-16 w-auto filter brightness-0 invert"
               />
