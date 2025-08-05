@@ -59,11 +59,11 @@ const AboutUs = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="text-white py-8" style={{ backgroundColor: '#003366' }}>
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">
+        <div className="max-w-4xl mx-auto text-center px-2 sm:px-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold mb-3 whitespace-nowrap">
             Trust, Quality, Convenience
           </h1>
-          <p className="text-sm sm:text-lg text-gray-200 whitespace-nowrap">
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-200 px-2">
             Connect with verified Pakistani tutors in just a few simple steps
           </p>
         </div>
@@ -112,10 +112,10 @@ const AboutUs = () => {
       {/* CTA Section */}
       <section className="text-white pt-16 pb-8" style={{ backgroundColor: '#003366' }}>
         <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-2xl md:text-4xl font-bold mb-4 text-green-400">
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-3 text-green-400">
             Ready to Start Your Learning Journey?
           </h2>
-          <p className="text-base md:text-xl text-gray-200 mb-6 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-4 leading-relaxed px-2">
             Join thousands of students across Pakistan who are achieving their academic 
             goals with the help of qualified tutors.
           </p>
