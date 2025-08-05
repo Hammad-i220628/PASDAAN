@@ -42,7 +42,7 @@ const FAQ = () => {
               <p className="text-gray-600 mb-6">
                 Still you have any questions? Contact our Team via support@pasdaan.com
               </p>
-              <button className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors">
+              <button className="text-white px-6 py-3 rounded-md transition-colors" style={{ backgroundColor: '#003366' }}>
                 See All FAQ's
               </button>
             </div>
@@ -68,8 +68,8 @@ const FAQ = () => {
                   onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
                 >
                   <span className="font-medium text-gray-900 text-base">{faq.question}</span>
-                  <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center ml-4">
-                    <Plus className="w-5 h-5 text-green-600" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ml-4" style={{ backgroundColor: '#003366' }}>
+                    <Plus className="w-5 h-5 text-white" />
                   </div>
                 </button>
                 {openFAQ === index && (
