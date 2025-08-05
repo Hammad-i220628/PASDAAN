@@ -6,7 +6,7 @@ const Contact = () => {
       {/* Hero Section */}
       <section className="text-white py-16" style={{ backgroundColor: '#003366' }}>
         <div className="max-w-4xl mx-auto text-center px-2 sm:px-4">
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold mb-3 whitespace-nowrap">Help & Support</h1>
+          <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-5xl font-bold mb-3 whitespace-nowrap">Help & Support</h1>
           <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-200 px-2">Find answers to your questions about Pasdaan's tutoring platform. Browse our FAQs or contact our support team for assistance.</p>
         </div>
       </section>
@@ -132,8 +132,8 @@ const Contact = () => {
       {/* Support Call to Action */}
       <section className="text-white pt-16 pb-8" style={{ backgroundColor: '#003366' }}>
         <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-green-400 mb-4">Still Need Help?</h2>
-          <p className="text-lg text-gray-200 mb-8">Our support team is available to assist you with any questions or concerns you may have about using Pasdaan.</p>
+          <h2 className="text-lg sm:text-lg md:text-xl lg:text-2xl font-bold text-green-400 mb-3">Still Need Help?</h2>
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-4">Our support team is available to assist you with any questions or concerns you may have about using Pasdaan.</p>
           <button className="bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">Contact Support</button>
         </div>
       </section>

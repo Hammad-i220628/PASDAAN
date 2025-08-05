@@ -83,10 +83,10 @@ const Hero = () => {
           <div className="bg-white rounded-lg p-4 sm:p-6 shadow-xl max-w-6xl mx-auto">
             {/* Top buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mb-4">
-              <button className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-colors flex-1 sm:flex-none">
+              <button className="text-white px-4 py-2 rounded-md transition-colors flex-1 sm:flex-none" style={{ backgroundColor: '#003366' }}>
                 Find a Tutor
               </button>
-              <button className="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-colors flex-1 sm:flex-none">
+              <button className="text-white px-4 py-2 rounded-md transition-colors flex-1 sm:flex-none" style={{ backgroundColor: '#003366' }}>
                 Become a Tutor
               </button>
             </div>
@@ -98,7 +98,7 @@ const Hero = () => {
                 placeholder="Search by subject, e.g., Mathematics..."
                 className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 text-sm"
               />
-              <button className="bg-teal-500 text-white px-6 sm:px-8 py-3 rounded-md hover:bg-teal-600 transition-colors font-medium">
+              <button className="text-white px-6 sm:px-8 py-3 rounded-md transition-colors font-medium" style={{ backgroundColor: '#003366' }}>
                 Search
               </button>
             </div>

@@ -41,7 +41,7 @@ const Testimonials = () => {
             <h2 className="text-4xl font-bold text-blue-900 mb-4">What Parents & Students Say</h2>
             <p className="text-xl text-gray-600">Real feedback from our learning community</p>
           </div>
-          <button className="bg-teal-500 text-white px-6 py-3 rounded-md hover:bg-teal-600 transition-colors">
+          <button className="text-white px-6 py-3 rounded-md transition-colors" style={{ backgroundColor: '#003366' }}>
             View All
           </button>
         </div>

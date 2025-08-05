@@ -53,7 +53,7 @@ const FeaturedTutors = () => {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-900 mb-2 sm:mb-4">Featured Tutors</h2>
             <p className="text-base sm:text-lg lg:text-xl text-gray-600">Meet our top-rated tutors ready to help</p>
           </div>
-          <button className="bg-teal-500 text-white px-6 py-3 rounded-md hover:bg-teal-600 transition-colors text-sm sm:text-base">
+          <button className="text-white px-6 py-3 rounded-md transition-colors text-sm sm:text-base" style={{ backgroundColor: '#003366' }}>
             View All
           </button>
         </div>
@@ -101,7 +101,7 @@ const FeaturedTutors = () => {
                   {tutor.price}
                 </div>
                 
-                <button className="w-full bg-blue-900 text-white py-2 sm:py-3 rounded-md hover:bg-blue-800 transition-colors font-medium text-sm sm:text-base">
+                <button className="w-full text-white py-2 sm:py-3 rounded-md transition-colors font-medium text-sm sm:text-base" style={{ backgroundColor: '#003366' }}>
                   View Profile
                 </button>
               </div>
