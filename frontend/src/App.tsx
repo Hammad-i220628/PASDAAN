@@ -11,6 +11,7 @@ import FAQ from './components/HomePage/FAQ';
 import CTA from './components/HomePage/CTA';
 import Footer from './components/HomePage/Footer';
 import AboutUs from './components/AboutUs';
+import Contact from './components/Contact';
 
 // HomePage component
 const HomePage = () => (
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
         
         <Footer />

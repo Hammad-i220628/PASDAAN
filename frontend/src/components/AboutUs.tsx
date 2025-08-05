@@ -58,7 +58,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="text-white py-8" style={{ backgroundColor: '#003366' }}>
+      <section className="text-white py-16" style={{ backgroundColor: '#003366' }}>
         <div className="max-w-4xl mx-auto text-center px-2 sm:px-4">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold mb-3 whitespace-nowrap">
             Trust, Quality, Convenience
@@ -83,7 +83,7 @@ const AboutUs = () => {
                   
                   {/* Content */}
                   <div className="flex-1 p-4">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    <h3 className="text-lg font-bold mb-2" style={{ color: '#003366' }}>
                       {step.title}
                     </h3>
                     <p className="text-gray-600 mb-4 text-sm leading-relaxed">

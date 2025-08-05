@@ -28,7 +28,7 @@ const Header = () => {
             <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium ml-8 xl:ml-16">
               <a href="/" className="text-gray-700 transition-colors pb-1 hover:border-b-2 hover:border-green-500" style={{ ":hover": { color: '#003366' } }} onMouseEnter={(e) => e.target.style.color = '#003366'} onMouseLeave={(e) => e.target.style.color = ''}>Home</a>
               <a href="/about-us" className="text-gray-700 transition-colors pb-1 hover:border-b-2 hover:border-green-500" style={{ ":hover": { color: '#003366' } }} onMouseEnter={(e) => e.target.style.color = '#003366'} onMouseLeave={(e) => e.target.style.color = ''}>About Us</a>
-              <a href="#" className="text-gray-700 transition-colors pb-1 hover:border-b-2 hover:border-green-500" style={{ ":hover": { color: '#003366' } }} onMouseEnter={(e) => e.target.style.color = '#003366'} onMouseLeave={(e) => e.target.style.color = ''}>Contact</a>
+              <a href="/contact" className="text-gray-700 transition-colors pb-1 hover:border-b-2 hover:border-green-500" style={{ ":hover": { color: '#003366' } }} onMouseEnter={(e) => e.target.style.color = '#003366'} onMouseLeave={(e) => e.target.style.color = ''}>Contact</a>
             </nav>
           </div>
           
@@ -59,7 +59,7 @@ const Header = () => {
               <a href="/about-us" className="block text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-100">
                 About Us
               </a>
-              <a href="#" className="block text-gray-700 hover:text-blue-900 transition-colors py-2">
+              <a href="/contact" className="block text-gray-700 hover:text-blue-900 transition-colors py-2">
                 Contact
               </a>
             </nav>
