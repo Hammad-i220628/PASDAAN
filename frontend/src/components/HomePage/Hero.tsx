@@ -3,6 +3,13 @@ import { Search } from 'lucide-react';
 
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  const backgroundImages = [
+    '/home_image1.jpg',
+    '/home_image2.png',
+    '/home_image3.png'
+  ];
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -15,16 +22,52 @@ const Hero = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        (prevIndex + 1) % backgroundImages.length
+      );
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [backgroundImages.length]);
+
   return (
-    <section 
-      className="relative bg-cover bg-no-repeat text-white py-8 sm:py-20 min-h-[70vh] sm:min-h-0" 
-      style={{
-        backgroundImage: 'url(/home_image.jpg)',
-        backgroundPosition: isMobile ? 'center 10%' : 'center center'
-      }}
-    >
+    <section className="relative text-white py-8 sm:py-20 min-h-[70vh] sm:min-h-0 overflow-hidden">
+      {/* Background Image Glider */}
+      <div className="absolute inset-0">
+        {backgroundImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 bg-cover bg-no-repeat transition-opacity duration-1000 ${
+              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundPosition: isMobile ? 'center 10%' : 'center center'
+            }}
+          />
+        ))}
+      </div>
+      
       {/* Bluish overlay for better text readability */}
       <div className="absolute inset-0 bg-blue-900 bg-opacity-60"></div>
+      
+      {/* Image indicators */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+        {backgroundImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentImageIndex(index)}
+            className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+              index === currentImageIndex 
+                ? 'bg-white' 
+                : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end sm:justify-start min-h-[70vh] sm:min-h-0">
         <div className="text-center max-w-6xl mx-auto mb-8 sm:mb-0 sm:mt-0">

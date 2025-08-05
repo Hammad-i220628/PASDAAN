@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className="bg-white shadow-sm border-b">
       {/* Top bar */}
-      <div className="bg-blue-900 text-white py-2 text-sm">
+      <div className="text-white py-2 text-sm" style={{ backgroundColor: '#003366' }}>
         <div className="w-full px-4">
           <div className="flex justify-center items-center">
             <span className="font-medium">Find Your Tutor Here →</span>
@@ -26,9 +26,9 @@ const Header = () => {
               className="h-10 sm:h-14 w-auto"
             />
             <nav className="hidden lg:flex items-center space-x-8 text-sm font-medium ml-8 xl:ml-16">
-              <a href="#" className="text-gray-700 hover:text-blue-900 transition-colors pb-1 hover:border-b-2 hover:border-green-500">Home</a>
-              <a href="#" className="text-gray-700 hover:text-blue-900 transition-colors pb-1 hover:border-b-2 hover:border-green-500">About Us</a>
-              <a href="#" className="text-gray-700 hover:text-blue-900 transition-colors pb-1 hover:border-b-2 hover:border-green-500">Contact</a>
+              <a href="/" className="text-gray-700 transition-colors pb-1 hover:border-b-2 hover:border-green-500" style={{ ":hover": { color: '#003366' } }} onMouseEnter={(e) => e.target.style.color = '#003366'} onMouseLeave={(e) => e.target.style.color = ''}>Home</a>
+              <a href="/about-us" className="text-gray-700 transition-colors pb-1 hover:border-b-2 hover:border-green-500" style={{ ":hover": { color: '#003366' } }} onMouseEnter={(e) => e.target.style.color = '#003366'} onMouseLeave={(e) => e.target.style.color = ''}>About Us</a>
+              <a href="#" className="text-gray-700 transition-colors pb-1 hover:border-b-2 hover:border-green-500" style={{ ":hover": { color: '#003366' } }} onMouseEnter={(e) => e.target.style.color = '#003366'} onMouseLeave={(e) => e.target.style.color = ''}>Contact</a>
             </nav>
           </div>
           
@@ -53,10 +53,10 @@ const Header = () => {
         {menuOpen && (
           <div className="lg:hidden bg-white border-t border-gray-200">
             <nav className="px-4 py-4 space-y-3">
-              <a href="#" className="block text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-100">
+              <a href="/" className="block text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-100">
                 Home
               </a>
-              <a href="#" className="block text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-100">
+              <a href="/about-us" className="block text-gray-700 hover:text-blue-900 transition-colors py-2 border-b border-gray-100">
                 About Us
               </a>
               <a href="#" className="block text-gray-700 hover:text-blue-900 transition-colors py-2">
