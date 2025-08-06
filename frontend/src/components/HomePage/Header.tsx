@@ -33,9 +33,9 @@ const Header = () => {
           </div>
           
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <button className="text-gray-700 border-2 border-transparent hover:border-green-500 text-xs sm:text-sm font-medium px-2 sm:px-4 py-2 rounded-md">
+            <a href="/signup" className="text-gray-700 border-2 border-transparent hover:border-green-500 text-xs sm:text-sm font-medium px-2 sm:px-4 py-2 rounded-md inline-block">
               Sign Up
-            </button>
+            </a>
             <button className="text-gray-700 border-2 border-transparent hover:border-green-500 text-xs sm:text-sm font-medium px-3 sm:px-6 py-2 rounded-md">
               Login
             </button>

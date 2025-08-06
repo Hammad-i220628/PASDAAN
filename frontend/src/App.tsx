@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/HomePage/Header';
 import Hero from './components/HomePage/Hero';
 import WhyChoose from './components/HomePage/WhyChoose';
@@ -12,6 +12,7 @@ import CTA from './components/HomePage/CTA';
 import Footer from './components/HomePage/Footer';
 import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
+import SignUp from './components/SignUp';
 
 // HomePage component
 const HomePage = () => (
@@ -27,21 +28,32 @@ const HomePage = () => (
   </>
 );
 
-function App() {
+// AppContent component
+const AppContent = () => {
+  const location = useLocation();
+  const hideFooter = location.pathname === '/signup';
+
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      <Router>
-        <Header />
-        
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        
-        <Footer />
-      </Router>
+      <Header />
+      
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+      
+      {!hideFooter && <Footer />}
     </div>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 
