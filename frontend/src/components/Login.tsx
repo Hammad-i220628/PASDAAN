@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 
-const SignUp = () => {
+const Login = () => {
   const [accountType, setAccountType] = useState('Parent');
   const [formData, setFormData] = useState({
-    fullName: '',
     email: '',
-    phoneNumber: '',
     password: ''
   });
 
@@ -19,13 +17,13 @@ const SignUp = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', { accountType, ...formData });
+    console.log('Login form submitted:', { accountType, ...formData });
   };
 
   return (
     <div className="min-h-screen flex">
-        {/* Left section - Hero */}
-        <div className="hidden lg:flex lg:w-1/2 relative">
+      {/* Left section - Hero */}
+      <div className="hidden lg:flex lg:w-1/2 relative">
         {/* Gradient background */}
         <div 
           className="w-full flex flex-col justify-center items-start px-16 text-white relative"
@@ -62,14 +60,14 @@ const SignUp = () => {
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
-        {/* Right section - Form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-8 py-12">
+      {/* Right section - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-gray-50 px-8 py-12">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Join Pasdaan</h2>
-            <p className="text-gray-600">Create your account to find verified tutors in your area</p>
+            <p className="text-gray-600">Log in your account to find verified tutors in your area</p>
           </div>
 
           {/* Account type toggle */}
@@ -105,26 +103,9 @@ const SignUp = () => {
             </div>
           </div>
 
-          {/* Form */}
+          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Full Name */}
-            <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                placeholder="Enter your full name"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-500"
-                required
-              />
-            </div>
-
-            {/* Email */}
+            {/* Email Address */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -141,27 +122,10 @@ const SignUp = () => {
               />
             </div>
 
-            {/* Phone Number */}
-            <div>
-              <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number
-              </label>
-              <input
-                type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                placeholder="Enter your phone number"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-500"
-                required
-              />
-            </div>
-
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                Enter Your Password
               </label>
               <input
                 type="password"
@@ -169,18 +133,26 @@ const SignUp = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                placeholder="Create a password"
+                placeholder="Enter your Password"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-500"
                 required
               />
+              <div className="text-right mt-2">
+                <a 
+                  href="/forgot-password" 
+                  className="text-sm text-green-600 hover:text-green-500 transition-colors"
+                >
+                  Forgot Password
+                </a>
+              </div>
             </div>
 
-            {/* Submit button */}
+            {/* Login button */}
             <button
               type="submit"
               className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
-              Create Account
+              Log In
             </button>
           </form>
 
@@ -191,7 +163,7 @@ const SignUp = () => {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-gray-50 text-gray-500">or continue with</span>
+                <span className="px-2 bg-gray-50 text-gray-500">or Log In with</span>
               </div>
             </div>
           </div>
@@ -221,17 +193,17 @@ const SignUp = () => {
             </button>
           </div>
 
-          {/* Login link */}
+          {/* Sign up link */}
           <p className="text-center text-sm text-gray-600">
-            Already have an account?{' '}
-            <a href="/login" className="font-medium text-green-600 hover:text-green-500 transition-colors">
-              Log in
+            Create an account?{' '}
+            <a href="/signup" className="font-medium text-green-600 hover:text-green-500 transition-colors">
+              Sign Up
             </a>
           </p>
         </div>
-        </div>
+      </div>
     </div>
   );
 };
 
-export default SignUp;
+export default Login;

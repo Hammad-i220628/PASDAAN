@@ -13,6 +13,7 @@ import Footer from './components/HomePage/Footer';
 import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
 import SignUp from './components/SignUp';
+import Login from './components/Login';
 
 // HomePage component
 const HomePage = () => (
@@ -31,7 +32,7 @@ const HomePage = () => (
 // AppContent component
 const AppContent = () => {
   const location = useLocation();
-  const hideFooter = location.pathname === '/signup';
+  const hideFooter = location.pathname === '/signup' || location.pathname === '/login';
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
@@ -42,6 +43,7 @@ const AppContent = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       
       {!hideFooter && <Footer />}

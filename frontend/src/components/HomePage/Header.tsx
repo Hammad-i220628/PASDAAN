@@ -36,9 +36,9 @@ const Header = () => {
             <a href="/signup" className="text-gray-700 border-2 border-transparent hover:border-green-500 text-xs sm:text-sm font-medium px-2 sm:px-4 py-2 rounded-md inline-block">
               Sign Up
             </a>
-            <button className="text-gray-700 border-2 border-transparent hover:border-green-500 text-xs sm:text-sm font-medium px-3 sm:px-6 py-2 rounded-md">
+            <a href="/login" className="text-gray-700 border-2 border-transparent hover:border-green-500 text-xs sm:text-sm font-medium px-3 sm:px-6 py-2 rounded-md inline-block">
               Login
-            </button>
+            </a>
             {/* Hamburger Menu Button */}
             <button 
               className="lg:hidden text-gray-700 hover:text-blue-900 focus:outline-none p-2"
