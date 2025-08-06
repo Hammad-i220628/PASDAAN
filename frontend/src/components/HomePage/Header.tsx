@@ -65,11 +65,18 @@ const Header = () => {
       {/* Full-screen Mobile Menu */}
       {menuOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
-          {/* Menu panel with gradient background */}
-          <div className={`absolute inset-0 bg-blue-900 ${isClosing ? 'animate-slideOutToRight' : 'animate-slideInFromRight'}`}>
+          {/* Backdrop with blur effect */}
+          <div className={`absolute inset-0 backdrop-blur-sm bg-black/20 ${isClosing ? 'animate-fadeOut' : 'animate-fadeIn'}`}></div>
+          
+          {/* Menu panel with enhanced gradient background */}
+          <div className={`absolute inset-0 ${isClosing ? 'animate-slideOutToRight' : 'animate-slideInFromRight'}`}
+               style={{ 
+                 background: 'linear-gradient(135deg, #003366 0%, #1e3a8a 50%, #1e40af 100%)', 
+                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+               }}>
             {/* Header with logo and close button */}
-            <div className={`relative z-20 flex justify-between items-center px-4 py-4 border-b border-gray-200 bg-white ${isClosing ? 'animate-slideOutToTop' : 'animate-slideInFromTop'}`}>
-              <div className="bg-white p-2 rounded-lg">
+            <div className={`relative z-20 flex justify-between items-center px-4 py-4 border-b border-white/20 bg-white/95 backdrop-blur-md ${isClosing ? 'animate-slideOutToTop' : 'animate-slideInFromTop'}`}>
+              <div className="bg-white/90 p-2 rounded-lg shadow-lg backdrop-blur-sm">
                 <img 
                   src="/logo.png" 
                   alt="PASDAAN" 
@@ -77,7 +84,7 @@ const Header = () => {
                 />
               </div>
               <button 
-                className="relative z-30 text-white hover:text-gray-300 focus:outline-none p-3 bg-white rounded-full"
+                className="relative z-30 text-white hover:text-gray-200 focus:outline-none p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
                 onClick={toggleMenu}
                 type="button"
               >
@@ -90,24 +97,36 @@ const Header = () => {
               <nav className="flex flex-col items-center space-y-8">
                 <a 
                   href="/" 
-                  className={`text-2xl font-semibold text-blue-900 hover:text-blue-700 bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
-                  style={{ animationDelay: isClosing ? '0s' : '0.3s' }}
+                  className={`text-xl font-medium text-gray-800 hover:text-white hover:bg-blue-600/90 transition-all duration-500 bg-white/95 backdrop-blur-sm px-12 py-5 rounded-xl shadow-xl border border-white/30 tracking-wide transform hover:scale-105 hover:-translate-y-1 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                  style={{ 
+                    animationDelay: isClosing ? '0s' : '0.2s', 
+                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                  }}
                   onClick={toggleMenu}
                 >
                   Home
                 </a>
                 <a 
                   href="/about-us" 
-                  className={`text-2xl font-semibold text-blue-900 hover:text-blue-700 bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
-                  style={{ animationDelay: isClosing ? '0.1s' : '0.4s' }}
+                  className={`text-xl font-medium text-gray-800 hover:text-white hover:bg-blue-600/90 transition-all duration-500 bg-white/95 backdrop-blur-sm px-12 py-5 rounded-xl shadow-xl border border-white/30 tracking-wide transform hover:scale-105 hover:-translate-y-1 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                  style={{ 
+                    animationDelay: isClosing ? '0.1s' : '0.3s', 
+                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                  }}
                   onClick={toggleMenu}
                 >
                   About Us
                 </a>
                 <a 
                   href="/contact" 
-                  className={`text-2xl font-semibold text-blue-900 hover:text-blue-700 bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
-                  style={{ animationDelay: isClosing ? '0.2s' : '0.5s' }}
+                  className={`text-xl font-medium text-gray-800 hover:text-white hover:bg-blue-600/90 transition-all duration-500 bg-white/95 backdrop-blur-sm px-12 py-5 rounded-xl shadow-xl border border-white/30 tracking-wide transform hover:scale-105 hover:-translate-y-1 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                  style={{ 
+                    animationDelay: isClosing ? '0.2s' : '0.4s', 
+                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                  }}
                   onClick={toggleMenu}
                 >
                   Contact

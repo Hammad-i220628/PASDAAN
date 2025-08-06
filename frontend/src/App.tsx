@@ -14,6 +14,9 @@ import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
+import BecomeATutor from './components/BecomeTutor/BecomeATutor';
 
 // HomePage component
 const HomePage = () => (
@@ -32,7 +35,7 @@ const HomePage = () => (
 // AppContent component
 const AppContent = () => {
   const location = useLocation();
-  const hideFooter = location.pathname === '/signup' || location.pathname === '/login';
+  const hideFooter = location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password';
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
@@ -44,6 +47,9 @@ const AppContent = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/become-a-tutor" element={<BecomeATutor />} />
       </Routes>
       
       {!hideFooter && <Footer />}
