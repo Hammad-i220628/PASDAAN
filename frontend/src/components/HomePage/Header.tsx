@@ -96,7 +96,7 @@ const Header = () => {
               <nav className="flex flex-col items-center space-y-8">
                 <a 
                   href="/" 
-                  className="text-2xl font-medium text-gray-700 hover:text-green-600 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white bg-opacity-70 backdrop-blur-sm px-6 py-3 rounded-lg shadow-lg"
+                  className="text-2xl font-semibold text-gray-800 hover:text-white hover:bg-green-500 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200"
                   style={{ animationDelay: '0.1s' }}
                   onClick={toggleMenu}
                 >
@@ -104,7 +104,7 @@ const Header = () => {
                 </a>
                 <a 
                   href="/about-us" 
-                  className="text-2xl font-medium text-gray-700 hover:text-green-600 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white bg-opacity-70 backdrop-blur-sm px-6 py-3 rounded-lg shadow-lg"
+                  className="text-2xl font-semibold text-gray-800 hover:text-white hover:bg-green-500 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200"
                   style={{ animationDelay: '0.2s' }}
                   onClick={toggleMenu}
                 >
@@ -112,7 +112,7 @@ const Header = () => {
                 </a>
                 <a 
                   href="/contact" 
-                  className="text-2xl font-medium text-gray-700 hover:text-green-600 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white bg-opacity-70 backdrop-blur-sm px-6 py-3 rounded-lg shadow-lg"
+                  className="text-2xl font-semibold text-gray-800 hover:text-white hover:bg-green-500 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200"
                   style={{ animationDelay: '0.3s' }}
                   onClick={toggleMenu}
                 >
