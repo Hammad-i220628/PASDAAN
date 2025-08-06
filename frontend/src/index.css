@@ -64,30 +64,26 @@ html {
   }
 }
 
-/* Enhanced Super Cool Bubble Animations */
+/* Optimized Mobile-Friendly Bubble Animations */
 @keyframes bubble {
   0% {
-    transform: translateY(100vh) scale(0) rotate(0deg);
+    transform: translateY(100vh) scale(0);
     opacity: 0;
   }
-  5% {
-    opacity: 0.8;
-    transform: translateY(95vh) scale(0.3) rotate(36deg);
-  }
-  15% {
-    opacity: 1;
-    transform: translateY(85vh) scale(0.6) rotate(72deg);
+  10% {
+    opacity: 0.6;
+    transform: translateY(90vh) scale(0.4);
   }
   50% {
-    opacity: 0.9;
-    transform: translateY(50vh) scale(1) rotate(180deg);
+    opacity: 0.8;
+    transform: translateY(50vh) scale(0.8);
   }
-  85% {
-    opacity: 0.7;
-    transform: translateY(15vh) scale(0.8) rotate(288deg);
+  90% {
+    opacity: 0.4;
+    transform: translateY(10vh) scale(0.6);
   }
   100% {
-    transform: translateY(-10vh) scale(0.2) rotate(360deg);
+    transform: translateY(-10vh) scale(0);
     opacity: 0;
   }
 }
@@ -144,21 +140,32 @@ html {
   animation: fadeInUp 0.5s ease-out both;
 }
 
-/* Super Cool Enhanced Square Bubble Styles */
+/* Mobile-Optimized Bubble Styles */
 .bubble {
   position: absolute;
   border-radius: 12px;
-  background: conic-gradient(from 0deg, 
-    rgba(16, 185, 129, 0.4) 0%, 
-    rgba(34, 197, 94, 0.6) 25%, 
-    rgba(59, 130, 246, 0.4) 50%, 
-    rgba(147, 51, 234, 0.3) 75%, 
-    rgba(236, 72, 153, 0.4) 100%);
-  animation: bubble linear infinite, bubble-glow 3s ease-in-out infinite;
+  background: linear-gradient(135deg, 
+    rgba(34, 197, 94, 0.3) 0%, 
+    rgba(59, 130, 246, 0.3) 100%);
+  animation: bubble linear infinite;
   pointer-events: none;
-  backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
   transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* Enhanced effects only on larger screens */
+@media (min-width: 768px) {
+  .bubble {
+    background: conic-gradient(from 0deg, 
+      rgba(16, 185, 129, 0.4) 0%, 
+      rgba(34, 197, 94, 0.6) 25%, 
+      rgba(59, 130, 246, 0.4) 50%, 
+      rgba(147, 51, 234, 0.3) 75%, 
+      rgba(236, 72, 153, 0.4) 100%);
+    animation: bubble linear infinite, bubble-glow 3s ease-in-out infinite;
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
 }
 
 .bubble::before {
@@ -274,5 +281,32 @@ html {
   animation-duration: 9s, 3.3s;
   animation-delay: 4s, 0.9s;
   background: conic-gradient(from 300deg, rgba(34, 197, 94, 0.4), rgba(236, 72, 153, 0.6), rgba(147, 51, 234, 0.5));
+}
+
+/* Mobile Performance Optimizations */
+@media (max-width: 480px) {
+  /* Hide some bubbles on very small screens for better performance */
+  .bubble:nth-child(n+6) {
+    display: none;
+  }
+  
+  /* Simplify remaining bubbles further */
+  .bubble {
+    background: rgba(34, 197, 94, 0.2) !important;
+    animation-duration: 6s !important;
+  }
+  
+  /* Remove pseudo-elements on small screens */
+  .bubble::before,
+  .bubble::after {
+    display: none;
+  }
+}
+
+@media (max-width: 320px) {
+  /* Ultra small screens - minimal bubbles */
+  .bubble:nth-child(n+4) {
+    display: none;
+  }
 }
 

@@ -55,7 +55,7 @@ const Header = () => {
       {menuOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
           {/* Menu panel with slide-in animation and bubbles */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 animate-slideInFromRight overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-green-400 via-teal-500 to-blue-600 animate-slideInFromRight overflow-hidden">
             {/* Super Cool Animated Bubbles Background */}
             <div className="absolute inset-0 overflow-hidden">
               <div className="bubble"></div>
