@@ -3,8 +3,19 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleMenu = () => {
+    if (menuOpen) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setMenuOpen(false);
+        setIsClosing(false);
+      }, 400); // Match animation duration
+    } else {
+      setMenuOpen(true);
+    }
+  };
   return (
     <header className="bg-white shadow-sm border-b">
       {/* Top bar */}
@@ -54,40 +65,23 @@ const Header = () => {
       {/* Full-screen Mobile Menu */}
       {menuOpen && (
         <div className="lg:hidden fixed inset-0 z-50">
-          {/* Menu panel with slide-in animation and bubbles */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-400 via-teal-500 to-blue-600 animate-slideInFromRight overflow-hidden">
-            {/* Super Cool Animated Bubbles Background */}
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-              <div className="bubble"></div>
-            </div>
-            
+          {/* Menu panel with gradient background */}
+          <div className={`absolute inset-0 bg-blue-900 ${isClosing ? 'animate-slideOutToRight' : 'animate-slideInFromRight'}`}>
             {/* Header with logo and close button */}
-            <div className="relative z-20 flex justify-between items-center px-4 py-4 border-b border-gray-200 bg-white bg-opacity-90 backdrop-blur-sm animate-slideInFromTop">
-              <img 
-                src="/logo.png" 
-                alt="PASDAAN" 
-                className="h-10 w-auto"
-              />
+            <div className={`relative z-20 flex justify-between items-center px-4 py-4 border-b border-gray-200 bg-white ${isClosing ? 'animate-slideOutToTop' : 'animate-slideInFromTop'}`}>
+              <div className="bg-white p-2 rounded-lg">
+                <img 
+                  src="/logo.png" 
+                  alt="PASDAAN" 
+                  className="h-10 w-auto"
+                />
+              </div>
               <button 
-                className="relative z-30 text-gray-700 hover:text-green-600 focus:outline-none p-3 transition-colors bg-white rounded-full shadow-lg"
+                className="relative z-30 text-white hover:text-gray-300 focus:outline-none p-3 bg-white rounded-full"
                 onClick={toggleMenu}
                 type="button"
               >
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 text-blue-900" />
               </button>
             </div>
             
@@ -96,24 +90,24 @@ const Header = () => {
               <nav className="flex flex-col items-center space-y-8">
                 <a 
                   href="/" 
-                  className="text-2xl font-semibold text-gray-800 hover:text-white hover:bg-green-500 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200"
-                  style={{ animationDelay: '0.1s' }}
+                  className={`text-2xl font-semibold text-blue-900 hover:text-blue-700 bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                  style={{ animationDelay: isClosing ? '0s' : '0.3s' }}
                   onClick={toggleMenu}
                 >
                   Home
                 </a>
                 <a 
                   href="/about-us" 
-                  className="text-2xl font-semibold text-gray-800 hover:text-white hover:bg-green-500 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200"
-                  style={{ animationDelay: '0.2s' }}
+                  className={`text-2xl font-semibold text-blue-900 hover:text-blue-700 bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                  style={{ animationDelay: isClosing ? '0.1s' : '0.4s' }}
                   onClick={toggleMenu}
                 >
                   About Us
                 </a>
                 <a 
                   href="/contact" 
-                  className="text-2xl font-semibold text-gray-800 hover:text-white hover:bg-green-500 transition-all duration-300 transform hover:scale-105 animate-fadeInUp bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200"
-                  style={{ animationDelay: '0.3s' }}
+                  className={`text-2xl font-semibold text-blue-900 hover:text-blue-700 bg-white px-8 py-4 rounded-xl shadow-lg border border-gray-200 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                  style={{ animationDelay: isClosing ? '0.2s' : '0.5s' }}
                   onClick={toggleMenu}
                 >
                   Contact
