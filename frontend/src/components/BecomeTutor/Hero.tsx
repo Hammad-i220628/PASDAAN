@@ -8,7 +8,7 @@ const Hero = () => {
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
             Become a Tutor
           </h1>
-          <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base mb-6 sm:mb-8 leading-relaxed">
             Share your knowledge, build your reputation, and grow your<br/>
             tutoring business with Pakistan's trusted education platform.
           </p>

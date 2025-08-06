@@ -4,10 +4,10 @@ const CallToAction = () => {
   return (
     <section className="text-white py-12" style={{ backgroundColor: '#003366' }}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-3 text-green-400">
+        <h2 className="text-xl sm:text-2xl md:text-4xl font-bold mb-3 text-green-400">
           Ready to Start Your Tutoring Journey?
         </h2>
-        <p className="text-lg mb-6 max-w-3xl mx-auto">
+        <p className="text-sm sm:text-base md:text-lg mb-6 max-w-3xl mx-auto">
           Join thousands of students across Pakistan who are achieving their academic 
           goals with the help of qualified tutors.
         </p>
