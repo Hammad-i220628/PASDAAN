@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, ChevronDown, User, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import './TutorApplicationForm.css';
 
 const TutorApplicationForm = () => {
   const navigate = useNavigate();
@@ -529,6 +530,80 @@ const TutorApplicationForm = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [startTime, setStartTime] = useState({ hour: 12, minute: 0, ampm: 'AM' });
   const [endTime, setEndTime] = useState({ hour: 12, minute: 0, ampm: 'AM' });
+  
+  // Dropdown states
+  const [dropdownStates, setDropdownStates] = useState({
+    startHour: false,
+    startMinute: false,
+    startAmPm: false,
+    endHour: false,
+    endMinute: false,
+    endAmPm: false
+  });
+
+  const toggleDropdown = (dropdownName) => {
+    setDropdownStates(prev => ({
+      ...Object.keys(prev).reduce((acc, key) => ({ ...acc, [key]: false }), {}),
+      [dropdownName]: !prev[dropdownName]
+    }));
+  };
+
+  const selectOption = (dropdownName, value, timeType, property) => {
+    // Convert value to appropriate type
+    const convertedValue = (property === 'hour' || property === 'minute') 
+      ? (typeof value === 'string' ? parseInt(value) : value)
+      : value;
+    
+    if (timeType === 'start') {
+      setStartTime(prev => ({ ...prev, [property]: convertedValue }));
+    } else {
+      setEndTime(prev => ({ ...prev, [property]: convertedValue }));
+    }
+    setDropdownStates(prev => ({ ...prev, [dropdownName]: false }));
+  };
+
+  // Custom Dropdown Component
+  const CustomDropdown = ({ label, value, options, dropdownName, timeType, property, className = "" }) => {
+    const isOpen = dropdownStates[dropdownName];
+    
+    return (
+      <div className={`relative ${className}`}>
+        <button
+          type="button"
+          onClick={() => toggleDropdown(dropdownName)}
+          className="border border-gray-300 rounded px-1 sm:px-3 py-2 text-center text-sm w-14 sm:w-auto bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {value}
+        </button>
+        
+        {isOpen && (
+          <>
+            {/* Backdrop to close dropdown when clicking outside */}
+            <div 
+              className="fixed inset-0 z-10" 
+              onClick={() => setDropdownStates(prev => ({ ...prev, [dropdownName]: false }))}
+            />
+            
+            {/* Animated dropdown menu */}
+            <div className="absolute top-0 left-full ml-2 z-20 bg-white border border-gray-300 rounded-lg shadow-lg animate-slide-right max-h-48 overflow-y-auto">
+              <div className="py-1">
+                {options.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => selectOption(dropdownName, option, timeType, property)}
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 focus:bg-gray-100 focus:outline-none min-w-16"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  };
 
   const renderAvailability = () => {
 
@@ -593,7 +668,7 @@ const TutorApplicationForm = () => {
             <div className="flex items-center justify-between mb-4">
               <button 
                 onClick={goToPreviousMonth}
-                className="p-2 hover:bg-gray-100 rounded"
+                className="p-2 hover:bg-gray-100 rounded md:invisible"
               >
                 ←
               </button>
@@ -602,7 +677,7 @@ const TutorApplicationForm = () => {
               </h4>
               <button 
                 onClick={goToNextMonth}
-                className="p-2 hover:bg-gray-100 rounded"
+                className="p-2 hover:bg-gray-100 rounded md:invisible"
               >
                 →
               </button>
@@ -637,71 +712,66 @@ const TutorApplicationForm = () => {
           </div>
 
           {/* Time Selection */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
             <div>
-              <div className="flex items-center space-x-2">
-                <select 
-                  className="border border-gray-300 rounded px-3 py-2 text-center"
+              <label className="block text-sm font-medium text-gray-700 mb-2">Start Time</label>
+              <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+                <CustomDropdown
                   value={startTime.hour}
-                  onChange={(e) => setStartTime({...startTime, hour: parseInt(e.target.value)})}
-                >
-                  {Array.from({length: 12}, (_, i) => i + 1).map(hour => (
-                    <option key={hour} value={hour}>{hour}</option>
-                  ))}
-                </select>
-                <span>:</span>
-                <select 
-                  className="border border-gray-300 rounded px-3 py-2 text-center"
-                  value={startTime.minute}
-                  onChange={(e) => setStartTime({...startTime, minute: parseInt(e.target.value)})}
-                >
-                  <option value={0}>00</option>
-                  <option value={15}>15</option>
-                  <option value={30}>30</option>
-                  <option value={45}>45</option>
-                </select>
-                <select 
-                  className="border border-gray-300 rounded px-3 py-2"
+                  options={Array.from({length: 12}, (_, i) => i + 1)}
+                  dropdownName="startHour"
+                  timeType="start"
+                  property="hour"
+                  className=""
+                />
+                <span className="text-gray-600">:</span>
+                <CustomDropdown
+                  value={startTime.minute.toString().padStart(2, '0')}
+                  options={['00', '15', '30', '45']}
+                  dropdownName="startMinute"
+                  timeType="start"
+                  property="minute"
+                  className=""
+                />
+                <CustomDropdown
                   value={startTime.ampm}
-                  onChange={(e) => setStartTime({...startTime, ampm: e.target.value})}
-                >
-                  <option value="AM">AM</option>
-                  <option value="PM">PM</option>
-                </select>
+                  options={['AM', 'PM']}
+                  dropdownName="startAmPm"
+                  timeType="start"
+                  property="ampm"
+                  className="w-16 sm:w-auto"
+                />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-gray-600">To</span>
-                <select 
-                  className="border border-gray-300 rounded px-3 py-2 text-center"
+              <label className="block text-sm font-medium text-gray-700 mb-2">End Time</label>
+              <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+                <CustomDropdown
                   value={endTime.hour}
-                  onChange={(e) => setEndTime({...endTime, hour: parseInt(e.target.value)})}
-                >
-                  {Array.from({length: 12}, (_, i) => i + 1).map(hour => (
-                    <option key={hour} value={hour}>{hour}</option>
-                  ))}
-                </select>
-                <span>:</span>
-                <select 
-                  className="border border-gray-300 rounded px-3 py-2 text-center"
-                  value={endTime.minute}
-                  onChange={(e) => setEndTime({...endTime, minute: parseInt(e.target.value)})}
-                >
-                  <option value={0}>00</option>
-                  <option value={15}>15</option>
-                  <option value={30}>30</option>
-                  <option value={45}>45</option>
-                </select>
-                <select 
-                  className="border border-gray-300 rounded px-3 py-2"
+                  options={Array.from({length: 12}, (_, i) => i + 1)}
+                  dropdownName="endHour"
+                  timeType="end"
+                  property="hour"
+                  className=""
+                />
+                <span className="text-gray-600">:</span>
+                <CustomDropdown
+                  value={endTime.minute.toString().padStart(2, '0')}
+                  options={['00', '15', '30', '45']}
+                  dropdownName="endMinute"
+                  timeType="end"
+                  property="minute"
+                  className=""
+                />
+                <CustomDropdown
                   value={endTime.ampm}
-                  onChange={(e) => setEndTime({...endTime, ampm: e.target.value})}
-                >
-                  <option value="AM">AM</option>
-                  <option value="PM">PM</option>
-                </select>
+                  options={['AM', 'PM']}
+                  dropdownName="endAmPm"
+                  timeType="end"
+                  property="ampm"
+                  className="w-16 sm:w-auto"
+                />
               </div>
             </div>
           </div>
@@ -1036,10 +1106,10 @@ const TutorApplicationForm = () => {
           {currentStep === 5 && renderVerification()}
 
           {/* Navigation Buttons */}
-          <div className="flex flex-row justify-between gap-3 mt-6 sm:mt-8 pt-6 border-t border-gray-200">
+          <div className="flex flex-row justify-between gap-2 sm:gap-4 mt-6 sm:mt-8 pt-6 border-t border-gray-200">
             <button
               onClick={currentStep === 1 ? handleCancel : prevStep}
-              className="flex-1 sm:flex-none sm:w-auto px-4 sm:px-8 py-3 rounded-lg font-medium text-sm bg-gray-200 text-gray-700 hover:bg-gray-300"
+              className="flex-1 max-w-[45%] sm:flex-none sm:w-auto sm:max-w-none px-3 sm:px-8 py-3 rounded-lg font-medium text-xs sm:text-sm bg-gray-200 text-gray-700 hover:bg-gray-300 truncate"
             >
               {currentStep === 1 ? 'Cancel' : 'Back'}
             </button>
@@ -1047,16 +1117,18 @@ const TutorApplicationForm = () => {
             {currentStep < 5 ? (
               <button
                 onClick={nextStep}
-                className="flex-1 sm:flex-none sm:w-auto bg-green-500 hover:bg-green-600 text-white font-medium px-4 sm:px-8 py-3 rounded-lg text-sm"
+                className="flex-1 max-w-[52%] sm:flex-none sm:w-auto sm:max-w-none bg-green-500 hover:bg-green-600 text-white font-medium px-3 sm:px-8 py-3 rounded-lg text-xs sm:text-sm truncate"
               >
-                Next: {steps[currentStep]?.title}
+                <span className="hidden sm:inline">Next: {steps[currentStep]?.title}</span>
+                <span className="sm:hidden">Next</span>
               </button>
             ) : (
               <button
                 onClick={handleSubmit}
-                className="flex-1 sm:flex-none sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 sm:px-10 py-3 rounded-lg text-sm"
+                className="flex-1 max-w-[52%] sm:flex-none sm:w-auto sm:max-w-none bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 sm:px-10 py-3 rounded-lg text-xs sm:text-sm truncate"
               >
-                Submit Application
+                <span className="hidden sm:inline">Submit Application</span>
+                <span className="sm:hidden">Submit</span>
               </button>
             )}
           </div>
