@@ -18,6 +18,7 @@ import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import BecomeATutor from './components/BecomeTutor/BecomeATutor';
 import TutorApplicationForm from './components/BecomeTutor/TutorApplicationForm';
+import FindTutor from './components/FindTutor/FindTutor';
 
 // HomePage component
 const HomePage = () => (
@@ -52,6 +53,7 @@ const AppContent = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/become-a-tutor" element={<BecomeATutor />} />
         <Route path="/tutor-application" element={<TutorApplicationForm />} />
+        <Route path="/find-tutor" element={<FindTutor />} />
       </Routes>
       
       {!hideFooter && <Footer />}

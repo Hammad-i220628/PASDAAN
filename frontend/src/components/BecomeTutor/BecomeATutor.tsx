@@ -169,12 +169,14 @@ const BecomeATutor = () => {
           </div>
 
           <div className="relative">
-            {/* Vertical line connecting all steps */}
-            <div className="absolute left-5 top-5 bottom-5 w-px bg-gray-300"></div>
-            
-            <div className="space-y-8">
+            <div className="space-y-0">
               {steps.map((stepItem, index) => (
-                <div key={index} className="flex items-start relative">
+                <div key={index} className="flex items-start relative pb-8 last:pb-0">
+                  {/* Vertical line connecting steps (only show line below if not the last step) */}
+                  {index < steps.length - 1 && (
+                    <div className="absolute left-5 top-10 w-px bottom-0 bg-gray-300"></div>
+                  )}
+                  
                   {/* Step Number Circle */}
                   <div className="flex-shrink-0 w-10 h-10 text-white rounded-full flex items-center justify-center font-bold text-lg mr-6 relative z-10" style={{ backgroundColor: '#003366' }}>
                     {stepItem.step}

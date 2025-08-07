@@ -22,7 +22,7 @@ const Header = () => {
       <div className="text-white py-2 text-sm" style={{ backgroundColor: '#003366' }}>
         <div className="w-full px-4">
           <div className="flex justify-center items-center">
-            <span className="font-medium">Find Your Tutor Here →</span>
+            <a href="/find-tutor" className="font-medium hover:underline cursor-pointer">Find Your Tutor Here →</a>
           </div>
         </div>
       </div>

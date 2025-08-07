@@ -83,9 +83,9 @@ const Hero = () => {
           <div className="bg-white rounded-lg p-4 sm:p-6 shadow-xl max-w-6xl mx-auto">
             {/* Top buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mb-4">
-              <button className="text-white px-4 py-2 rounded-md transition-colors flex-1 sm:flex-none" style={{ backgroundColor: '#003366' }}>
+              <a href="/find-tutor" className="text-white px-4 py-2 rounded-md transition-colors flex-1 sm:flex-none text-center inline-block" style={{ backgroundColor: '#003366' }}>
                 Find a Tutor
-              </button>
+              </a>
               <a href="/become-a-tutor" className="text-white px-4 py-2 rounded-md transition-colors flex-1 sm:flex-none text-center inline-block" style={{ backgroundColor: '#003366' }}>
                 Become a Tutor
               </a>
