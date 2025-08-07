@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Upload, ChevronDown, User, GraduationCap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const TutorApplicationForm = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Personal Information
@@ -87,12 +89,25 @@ const TutorApplicationForm = () => {
     }));
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const nextStep = () => {
-    if (currentStep < 5) setCurrentStep(currentStep + 1);
+    if (currentStep < 5) {
+      setCurrentStep(currentStep + 1);
+      scrollToTop();
+    }
   };
 
   const prevStep = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      scrollToTop();
+    }
   };
 
   const renderStepIndicator = () => (
@@ -114,7 +129,7 @@ const TutorApplicationForm = () => {
                 {step.title}
               </span>
             </div>
-            {index < steps.length - 1 && (
+            {index < steps.length - 1 && step.number < 5 && (
               <div className={`w-8 md:w-16 h-px ${
                 step.completed ? 'bg-green-500' : 'bg-gray-200'
               }`} />
@@ -964,6 +979,11 @@ const TutorApplicationForm = () => {
     alert('Application submitted successfully!');
   };
 
+  const handleCancel = () => {
+    navigate('/become-a-tutor');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
@@ -975,31 +995,34 @@ const TutorApplicationForm = () => {
 
         {/* Step Indicator */}
         <div className="mb-6 sm:mb-12">
-          <div className="flex justify-center px-2 sm:px-4">
-            <div className="flex items-center justify-between w-full max-w-3xl">
-              {steps.map((step, index) => (
-                <React.Fragment key={step.number}>
-                  <div className="flex flex-col items-center">
-                    <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
+          <div className="flex justify-center px-1 sm:px-4">
+            <div className="w-full max-w-6xl relative">
+              {/* Connecting Line Background - only between first 4 steps */}
+              <div className="absolute top-4 sm:top-6 h-0.5 bg-gray-300" 
+                   style={{
+                     left: `${100 / (steps.length - 1) / 2}%`,
+                     width: `${(100 / (steps.length - 1)) * 3}%`
+                   }}></div>
+              
+              {/* Steps */}
+              <div className="flex justify-between items-start relative">
+                {steps.map((step, index) => (
+                  <div key={step.number} className="flex flex-col items-center flex-1 px-1">
+                    <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xs sm:text-base font-semibold relative z-10 ${
                       step.completed ? 'bg-green-500 text-white' :
-                      step.active ? 'bg-blue-600 text-white' :
-                      'bg-gray-200 text-gray-600'
+                      step.active ? 'bg-teal-600 text-white' :
+                      'bg-gray-300 text-gray-600'
                     }`}>
                       {step.completed ? '✓' : step.number}
                     </div>
-                    <span className={`mt-1 sm:mt-2 text-xs font-medium text-center w-14 sm:w-16 leading-tight ${
-                      step.active ? 'text-blue-600' : 'text-gray-500'
-                    }`}>
+                    <span className={`mt-1.5 sm:mt-3 text-[10px] md:text-sm font-normal text-center leading-tight ${
+                      step.active ? 'text-teal-600' : 'text-gray-600'
+                    }`} style={{ maxWidth: '100%', wordBreak: 'break-word' }}>
                       {step.title}
                     </span>
                   </div>
-                  {index < steps.length - 1 && (
-                    <div className={`flex-1 h-px mx-2 sm:mx-3 ${
-                      step.completed ? 'bg-green-500' : 'bg-gray-200'
-                    }`} />
-                  )}
-                </React.Fragment>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -1013,30 +1036,25 @@ const TutorApplicationForm = () => {
           {currentStep === 5 && renderVerification()}
 
           {/* Navigation Buttons */}
-          <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 mt-6 sm:mt-8 pt-6 border-t border-gray-200">
+          <div className="flex flex-row justify-between gap-3 mt-6 sm:mt-8 pt-6 border-t border-gray-200">
             <button
-              onClick={prevStep}
-              disabled={currentStep === 1}
-              className={`w-full sm:w-auto px-6 sm:px-8 py-3 rounded-lg font-medium text-sm order-2 sm:order-1 ${
-                currentStep === 1
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+              onClick={currentStep === 1 ? handleCancel : prevStep}
+              className="flex-1 sm:flex-none sm:w-auto px-4 sm:px-8 py-3 rounded-lg font-medium text-sm bg-gray-200 text-gray-700 hover:bg-gray-300"
             >
-              Cancel
+              {currentStep === 1 ? 'Cancel' : 'Back'}
             </button>
             
             {currentStep < 5 ? (
               <button
                 onClick={nextStep}
-                className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-medium px-6 sm:px-8 py-3 rounded-lg text-sm order-1 sm:order-2"
+                className="flex-1 sm:flex-none sm:w-auto bg-green-500 hover:bg-green-600 text-white font-medium px-4 sm:px-8 py-3 rounded-lg text-sm"
               >
                 Next: {steps[currentStep]?.title}
               </button>
             ) : (
               <button
                 onClick={handleSubmit}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 sm:px-10 py-3 rounded-lg text-sm order-1 sm:order-2"
+                className="flex-1 sm:flex-none sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 sm:px-10 py-3 rounded-lg text-sm"
               >
                 Submit Application
               </button>
