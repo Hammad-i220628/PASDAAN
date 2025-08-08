@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const TutorsListing = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchFilters, setSearchFilters] = useState({
     subject: '',
     levelOfEducation: '',
@@ -120,7 +121,21 @@ const TutorsListing = () => {
 
   const handleViewProfile = (tutorId: number) => {
     navigate(`/tutor/${tutorId}`);
+    // Smooth scrolling will be handled by TutorProfile component
   };
+
+  // Handle scroll to featured tutors section when navigating from Find a Tutor
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const scrollTo = urlParams.get('scrollTo');
+    
+    if (scrollTo === 'featured-tutors') {
+      const element = document.getElementById('featured-tutors');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -247,7 +262,7 @@ const TutorsListing = () => {
       </section>
 
       {/* Featured Tutors Section */}
-      <section className="py-12">
+      <section id="featured-tutors" className="py-12">
         <div className="container mx-auto px-4">
           {/* Desktop header with View All button */}
           <div className="hidden md:flex justify-between items-center mb-8">

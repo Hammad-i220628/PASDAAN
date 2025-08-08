@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 const TutorProfile = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('About Me');
+
+  // Scroll to top smoothly when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   // Mock tutor data - in real app, you'd fetch this based on the ID
   const tutor = {

@@ -26,7 +26,11 @@ const FindTutor = () => {
         searchParams.append(key, value);
       }
     });
-    navigate(`/tutors-listing${searchParams.toString() ? '?' + searchParams.toString() : ''}`);
+    
+    // Add scroll parameter to navigate to featured tutors section
+    searchParams.append('scrollTo', 'featured-tutors');
+    
+    navigate(`/tutors-listing?${searchParams.toString()}`);
   };
 
   return (
@@ -35,8 +39,9 @@ const FindTutor = () => {
       <section className="text-white py-16" style={{ backgroundColor: '#003366' }}>
         <div className="container mx-auto text-center px-4">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Browse Tutors</h1>
-          <p className="text-sm sm:text-base md:text-lg mb-8">
-            Discover experienced, verified tutors specialized in your child's<br className="block md:hidden" /> academic success.
+          <p className="text-sm sm:text-base md:text-lg mb-8 px-2">
+            <span className="block sm:inline">Discover experienced, verified tutors</span>
+            <span className="block sm:inline"> specialized in your child's academic success.</span>
           </p>
 
           {/* Search Form */}
