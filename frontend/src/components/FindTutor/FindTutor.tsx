@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const FindTutor = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     subject: '',
     levelOfEducation: '',
@@ -17,8 +19,14 @@ const FindTutor = () => {
   };
 
   const handleFindTutor = () => {
-    // Handle the find tutor logic here
-    console.log('Search criteria:', formData);
+    // Navigate to tutors listing page with search parameters
+    const searchParams = new URLSearchParams();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value) {
+        searchParams.append(key, value);
+      }
+    });
+    navigate(`/tutors-listing${searchParams.toString() ? '?' + searchParams.toString() : ''}`);
   };
 
   return (
@@ -28,8 +36,7 @@ const FindTutor = () => {
         <div className="container mx-auto text-center px-4">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Browse Tutors</h1>
           <p className="text-sm sm:text-base md:text-lg mb-8">
-            Discover experienced, verified tutors specialized in your child's<br className="hidden sm:block" />
-            academic success.
+            Discover experienced, verified tutors specialized in your child's<br className="block md:hidden" /> academic success.
           </p>
 
           {/* Search Form */}

@@ -19,6 +19,8 @@ import ResetPassword from './components/ResetPassword';
 import BecomeATutor from './components/BecomeTutor/BecomeATutor';
 import TutorApplicationForm from './components/BecomeTutor/TutorApplicationForm';
 import FindTutor from './components/FindTutor/FindTutor';
+import TutorsListing from './components/TutorsListing/TutorsListing';
+import TutorProfile from './components/FindTutor/TutorProfile';
 
 // HomePage component
 const HomePage = () => (
@@ -37,7 +39,7 @@ const HomePage = () => (
 // AppContent component
 const AppContent = () => {
   const location = useLocation();
-  const hideFooter = location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/tutor-application';
+  const hideFooter = location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/tutor-application' || location.pathname.startsWith('/tutor/');
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
@@ -54,6 +56,8 @@ const AppContent = () => {
         <Route path="/become-a-tutor" element={<BecomeATutor />} />
         <Route path="/tutor-application" element={<TutorApplicationForm />} />
         <Route path="/find-tutor" element={<FindTutor />} />
+        <Route path="/tutors-listing" element={<TutorsListing />} />
+        <Route path="/tutor/:id" element={<TutorProfile />} />
       </Routes>
       
       {!hideFooter && <Footer />}
