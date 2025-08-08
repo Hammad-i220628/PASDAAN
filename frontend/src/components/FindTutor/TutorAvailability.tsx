@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Mail, Phone, MapPin, ChevronDown } from 'lucide-react';
 
 const TutorAvailability = () => {
   const { id } = useParams();
@@ -8,6 +8,7 @@ const TutorAvailability = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState('Month View');
+  const [timeSlotIndex, setTimeSlotIndex] = useState<{[key: string]: number}>({});
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -71,6 +72,16 @@ const TutorAvailability = () => {
     return new Date(year, month - 1, 1).getDay();
   };
 
+  // Handle cycling through time slots for mobile view
+  const handleTimeSlotCycle = (dateString: string, availabilityLength: number) => {
+    const currentIndex = timeSlotIndex[dateString] || 0;
+    const nextIndex = (currentIndex + 1) % availabilityLength;
+    setTimeSlotIndex(prev => ({
+      ...prev,
+      [dateString]: nextIndex
+    }));
+  };
+
   const renderCalendar = () => {
     const year = 2025;
     const month = 3; // March
@@ -99,25 +110,59 @@ const TutorAvailability = () => {
       const hasAvailability = availability && availability.length > 0;
       
       days.push(
-        <div key={day} className="p-1">
+        <div key={day} className="p-0.5 md:p-1">
           <div 
-            className={`w-full h-16 border rounded text-center p-1 cursor-pointer text-xs ${
+            className={`w-full h-24 md:h-auto md:min-h-24 border rounded text-center p-1 cursor-pointer ${
               hasAvailability ? 'border-green-500 bg-green-50' : 'border-gray-200'
             }`}
             onClick={() => hasAvailability && setSelectedDate(dateString)}
           >
-            <div className="font-medium">{day}</div>
+            <div className="font-medium text-xs md:text-sm mb-1 md:mb-2">{day}</div>
             {hasAvailability && (
-              <div className="mt-1">
-                {availability.slice(0, 2).map((time, index) => (
-                  <div key={index} className="text-green-600 text-xs truncate">
-                    {time}
-                  </div>
-                ))}
-                {availability.length > 2 && (
-                  <div className="text-green-600 text-xs">...</div>
-                )}
-              </div>
+              <>
+                {/* Mobile view - cycle through time slots */}
+                <div className="md:hidden space-y-0.5">
+                  {selectedDate === dateString ? (
+                    // Show all time slots when selected
+                    availability.map((time, index) => (
+                      <div key={index} className="text-green-600 text-xs leading-tight px-1">
+                        {time}
+                      </div>
+                    ))
+                  ) : (
+                    // Show current time slot based on index
+                    <>
+                      <div className="text-green-600 text-xs leading-tight px-1">
+                        {(() => {
+                          const currentIndex = timeSlotIndex[dateString] || 0;
+                          const currentTime = availability[currentIndex];
+                          return currentTime;
+                        })()}
+                      </div>
+                      {availability.length > 1 && (
+                        <div 
+                          className="flex items-center justify-center cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleTimeSlotCycle(dateString, availability.length);
+                          }}
+                        >
+                          <ChevronDown className="w-3 h-3 text-green-600 hover:text-green-800" />
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+                
+                {/* Desktop view - show all times */}
+                <div className="hidden md:block space-y-1">
+                  {availability.map((time, index) => (
+                    <div key={index} className="text-green-600 text-xs leading-tight px-1">
+                      {time}
+                    </div>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>
