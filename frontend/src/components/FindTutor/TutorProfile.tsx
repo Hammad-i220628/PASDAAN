@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 const TutorProfile = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('About Me');
 
   // Scroll to top smoothly when component mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  const handleTutorAvailability = () => {
+    navigate(`/tutor-availability/${id}`);
+  };
 
   // Mock tutor data - in real app, you'd fetch this based on the ID
   const tutor = {
@@ -225,6 +230,7 @@ const TutorProfile = () => {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="flex items-center gap-4">
                 <button 
+                  onClick={handleTutorAvailability}
                   className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-6 rounded-md transition duration-200"
                 >
                   Tutor Availability
