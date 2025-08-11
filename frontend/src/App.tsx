@@ -22,7 +22,7 @@ import FindTutor from './components/FindTutor/FindTutor';
 import TutorProfile from './components/FindTutor/TutorProfile';
 import TutorAvailability from './components/FindTutor/TutorAvailability';
 import BookASession from './components/FindTutor/BookASession';
-import Dashboard from './components/TeacherDashboard/Dashboard';
+import Dashboard from './components/TutorDashboard/Dashboard';
 
 // HomePage component
 const HomePage = () => (
