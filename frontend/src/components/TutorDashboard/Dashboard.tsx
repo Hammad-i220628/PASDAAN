@@ -15,22 +15,30 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import Schedule from './Schedule';
 
 // Sidebar Component
 interface SidebarProps {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
+  currentPage: string;
+  setCurrentPage: (page: string) => void;
 }
 
-const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps) => {
+const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurrentPage }: SidebarProps) => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { icon: Home, label: 'Tutor Dashboard', active: true },
-    { icon: Calendar, label: 'Schedule', active: false },
-    { icon: Users, label: 'Sessions', active: false },
-    { icon: MessageSquare, label: 'Messages', active: false },
+    { icon: Home, label: 'Tutor Dashboard', page: 'dashboard' },
+    { icon: Calendar, label: 'Schedule', page: 'schedule' },
+    { icon: Users, label: 'Sessions', page: 'sessions' },
+    { icon: MessageSquare, label: 'Messages', page: 'messages' },
   ];
+
+  const handleMenuClick = (page: string) => {
+    setCurrentPage(page);
+    setIsMobileMenuOpen(false);
+  };
 
   const accountItems = [
     { icon: User, label: 'Profile', active: false },
@@ -96,11 +104,11 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }: SidebarProps) => {
                 key={index}
                 href="#"
                 className={`flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium ${
-                  item.active 
+                  currentPage === item.page 
                     ? 'bg-blue-900 text-white' 
                     : 'text-blue-900 hover:bg-blue-50'
                 }`}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => handleMenuClick(item.page)}
               >
                 <item.icon className="w-5 h-5 mr-3" />
                 <span>{item.label}</span>
@@ -488,37 +496,81 @@ const RecentReviews = () => {
   );
 };
 
+// Dashboard Content Component
+const DashboardContent = () => {
+  return (
+    <main className="flex-1 p-4 md:p-6 bg-gray-50">
+      {/* Mobile: Single column, Tablet: 1-2 columns, Desktop: 2 columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+        <QuickStats />
+        <UpcomingSessions />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+        <BookingRequests />
+        <WeeklySchedule />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        <EarningsOverview />
+        <RecentReviews />
+      </div>
+    </main>
+  );
+};
+
+// Placeholder components for other pages
+const SessionsContent = () => (
+  <div className="flex-1 bg-gray-50 p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h1 className="text-xl font-semibold text-gray-900 mb-4">Sessions Management</h1>
+      <p className="text-gray-600">Sessions page content will be implemented here.</p>
+    </div>
+  </div>
+);
+
+const MessagesContent = () => (
+  <div className="flex-1 bg-gray-50 p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <h1 className="text-xl font-semibold text-gray-900 mb-4">Messages</h1>
+      <p className="text-gray-600">Messages page content will be implemented here.</p>
+    </div>
+  </div>
+);
+
 // Main Teacher Dashboard Component
 const Dashboard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('dashboard');
   const tutorName = "Tutor Name"; // This would come from auth state
+
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case 'dashboard':
+        return <DashboardContent />;
+      case 'schedule':
+        return <Schedule />;
+      case 'sessions':
+        return <SessionsContent />;
+      case 'messages':
+        return <MessagesContent />;
+      default:
+        return <DashboardContent />;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <Sidebar 
         isMobileMenuOpen={isMobileMenuOpen} 
-        setIsMobileMenuOpen={setIsMobileMenuOpen} 
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
       <div className="flex-1 flex flex-col lg:ml-0">
         <DashboardHeader 
           tutorName={tutorName} 
           onMenuClick={() => setIsMobileMenuOpen(true)}
         />
-        <main className="flex-1 p-4 md:p-6 bg-gray-50">
-          {/* Mobile: Single column, Tablet: 1-2 columns, Desktop: 2 columns */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
-            <QuickStats />
-            <UpcomingSessions />
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
-            <BookingRequests />
-            <WeeklySchedule />
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-            <EarningsOverview />
-            <RecentReviews />
-          </div>
-        </main>
+        {renderCurrentPage()}
       </div>
     </div>
   );
