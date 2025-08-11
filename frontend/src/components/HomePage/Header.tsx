@@ -2,20 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
-
-  const toggleMenu = () => {
-    if (menuOpen) {
-      setIsClosing(true);
-      setTimeout(() => {
-        setMenuOpen(false);
-        setIsClosing(false);
-      }, 400); // Match animation duration
-    } else {
-      setMenuOpen(true);
-    }
-  };
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <header className="bg-white shadow-sm border-b">
       {/* Top bar */}
@@ -53,89 +40,133 @@ const Header = () => {
             {/* Hamburger Menu Button */}
             <button 
               className="lg:hidden text-gray-700 hover:text-blue-900 focus:outline-none p-2"
-              onClick={toggleMenu}
+              onClick={() => setIsMobileMenuOpen(true)}
             >
-              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
         
       </div>
       
-      {/* Full-screen Mobile Menu */}
-      {menuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50">
-          {/* Backdrop with blur effect */}
-          <div className={`absolute inset-0 backdrop-blur-sm bg-black/20 ${isClosing ? 'animate-fadeOut' : 'animate-fadeIn'}`}></div>
-          
-          {/* Menu panel with enhanced gradient background */}
-          <div className={`absolute inset-0 ${isClosing ? 'animate-slideOutToRight' : 'animate-slideInFromRight'}`}
-               style={{ 
-                 background: 'linear-gradient(135deg, #003366 0%, #1e3a8a 50%, #1e40af 100%)', 
-                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-               }}>
-            {/* Header with logo and close button */}
-            <div className={`relative z-20 flex justify-between items-center px-4 py-4 border-b border-white/20 bg-white/95 backdrop-blur-md ${isClosing ? 'animate-slideOutToTop' : 'animate-slideInFromTop'}`}>
-              <div className="bg-white/90 p-2 rounded-lg shadow-lg backdrop-blur-sm">
-                <img 
-                  src="/logo.png" 
-                  alt="PASDAAN" 
-                  className="h-10 w-auto"
-                />
-              </div>
+      {/* Mobile Sidebar Menu */}
+      <>
+        {/* Mobile backdrop */}
+        <div 
+          className={`fixed inset-0 bg-black z-40 lg:hidden transition-opacity duration-700 ${
+            isMobileMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'
+          }`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+        
+        {/* Sidebar */}
+        <div className={`
+          fixed lg:hidden transition-transform duration-1000 ease-out
+          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          w-60 bg-white shadow-sm flex flex-col h-screen border-l border-gray-200 z-50 overflow-hidden
+          right-0 top-0
+        `}>
+            {/* Mobile close button */}
+            <div className="flex justify-end p-4 flex-shrink-0">
               <button 
-                className="relative z-30 text-white hover:text-gray-200 focus:outline-none p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
-                onClick={toggleMenu}
-                type="button"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-gray-100"
               >
-                <X className="w-6 h-6 text-blue-900" />
+                <X className="w-5 h-5" />
               </button>
             </div>
             
-            {/* Centered Navigation */}
-            <div className="relative z-10 flex flex-col items-center justify-center h-full -mt-20">
-              <nav className="flex flex-col items-center space-y-8">
-                <a 
-                  href="/" 
-                  className={`text-xl font-medium text-gray-800 hover:text-white hover:bg-blue-600/90 transition-all duration-500 bg-white/95 backdrop-blur-sm px-12 py-5 rounded-xl shadow-xl border border-white/30 tracking-wide transform hover:scale-105 hover:-translate-y-1 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+            {/* Logo */}
+            <div className="p-6 pb-4 flex-shrink-0 flex justify-center">
+              <img 
+                src="/logo.png" 
+                alt="PASDAAN" 
+                className="h-8 w-auto"
+              />
+            </div>
+
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center justify-center">
+              {/* Menu Items */}
+              <nav className="flex flex-col items-center space-y-6 mb-8">
+                <a
+                  href="/"
+                  className={`text-xl font-medium transition-all duration-700 transform ${
+                    isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  } hover:scale-105 hover:text-green-600`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
-                    animationDelay: isClosing ? '0s' : '0.2s', 
-                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                    color: '#003366',
+                    animationDelay: '0.2s',
+                    transitionDelay: isMobileMenuOpen ? '0.2s' : '0s'
                   }}
-                  onClick={toggleMenu}
                 >
                   Home
                 </a>
-                <a 
-                  href="/about-us" 
-                  className={`text-xl font-medium text-gray-800 hover:text-white hover:bg-blue-600/90 transition-all duration-500 bg-white/95 backdrop-blur-sm px-12 py-5 rounded-xl shadow-xl border border-white/30 tracking-wide transform hover:scale-105 hover:-translate-y-1 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                <a
+                  href="/about-us"
+                  className={`text-xl font-medium transition-all duration-700 transform ${
+                    isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  } hover:scale-105 hover:text-green-600`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
-                    animationDelay: isClosing ? '0.1s' : '0.3s', 
-                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                    color: '#003366',
+                    animationDelay: '0.4s',
+                    transitionDelay: isMobileMenuOpen ? '0.4s' : '0s'
                   }}
-                  onClick={toggleMenu}
                 >
                   About Us
                 </a>
-                <a 
-                  href="/contact" 
-                  className={`text-xl font-medium text-gray-800 hover:text-white hover:bg-blue-600/90 transition-all duration-500 bg-white/95 backdrop-blur-sm px-12 py-5 rounded-xl shadow-xl border border-white/30 tracking-wide transform hover:scale-105 hover:-translate-y-1 ${isClosing ? 'animate-fadeOutDown' : 'animate-fadeInUp'}`}
+                <a
+                  href="/contact"
+                  className={`text-xl font-medium transition-all duration-700 transform ${
+                    isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  } hover:scale-105 hover:text-green-600`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
-                    animationDelay: isClosing ? '0.2s' : '0.4s', 
-                    fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                    color: '#003366',
+                    animationDelay: '0.6s',
+                    transitionDelay: isMobileMenuOpen ? '0.6s' : '0s'
                   }}
-                  onClick={toggleMenu}
                 >
                   Contact
                 </a>
               </nav>
+
+              {/* Auth Links */}
+              <div className="flex flex-col items-center space-y-4 w-full px-8">
+                <a
+                  href="/signup"
+                  className={`w-full max-w-xs py-4 px-6 rounded-xl text-lg font-medium text-white bg-green-500 hover:bg-green-600 text-center transition-all duration-700 transform ${
+                    isMobileMenuOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+                  } hover:scale-105 shadow-lg`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  style={{ 
+                    transitionDelay: isMobileMenuOpen ? '0.8s' : '0s'
+                  }}
+                >
+                  Sign Up
+                </a>
+                <a
+                  href="/login"
+                  className={`w-full max-w-xs py-4 px-6 rounded-xl text-lg font-medium border-2 border-green-500 hover:bg-green-50 text-center transition-all duration-700 transform ${
+                    isMobileMenuOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+                  } hover:scale-105 shadow-lg`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  style={{ 
+                    color: '#003366',
+                    transitionDelay: isMobileMenuOpen ? '1.0s' : '0s'
+                  }}
+                >
+                  Login
+                </a>
+              </div>
+              
+              {/* Bottom padding for better scroll experience */}
+              <div className="h-8"></div>
             </div>
           </div>
-        </div>
-      )}
+        </>
     </header>
   );
 };
