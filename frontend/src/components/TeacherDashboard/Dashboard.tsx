@@ -29,9 +29,6 @@ const Sidebar = () => {
     { icon: Star, label: 'Reviews', active: false },
     { icon: Book, label: 'Resources', active: false },
     { icon: Settings, label: 'Settings', active: false },
-  ];
-
-  const bottomItems = [
     { icon: HelpCircle, label: 'Help & Support', active: false },
   ];
 
@@ -47,76 +44,58 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-64 bg-white shadow-lg flex flex-col">
+    <div className="w-60 bg-white shadow-sm flex flex-col min-h-screen border-r border-gray-200">
       {/* Logo */}
-      <div className="p-6">
+      <div className="p-6 pb-4">
         <img 
           src="/logo.png" 
           alt="PASDAAN" 
-          className="h-8 w-auto"
+          className="h-6 w-auto"
         />
       </div>
 
       {/* Menu Items */}
-      <nav className="flex-1 px-4 space-y-2">
+      <nav className="px-3 space-y-1">
         {menuItems.map((item, index) => (
           <a
             key={index}
             href="#"
-            className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
+            className={`flex items-center px-3 py-2.5 rounded-md transition-colors text-sm ${
               item.active 
-                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600' 
-                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                ? 'bg-blue-50 text-blue-700 font-medium' 
+                : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
             }`}
           >
             <item.icon className="w-5 h-5 mr-3" />
-            <span className="text-sm font-medium">{item.label}</span>
+            <span>{item.label}</span>
           </a>
         ))}
       </nav>
 
       {/* Account Section */}
-      <div className="px-4 py-4 border-t border-gray-200">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+      <div className="px-3 py-6 border-t border-gray-100 mt-6">
+        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-3">
           ACCOUNT
         </p>
-        <div className="space-y-2">
+        <div className="space-y-1">
           {accountItems.map((item, index) => (
             <a
               key={index}
               href="#"
-              className={`flex items-center px-4 py-3 rounded-lg transition-colors ${
-                item.active 
-                  ? 'bg-blue-50 text-blue-600' 
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-              }`}
+              className="flex items-center px-3 py-2.5 rounded-md transition-colors text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
             >
               <item.icon className="w-5 h-5 mr-3" />
-              <span className="text-sm font-medium">{item.label}</span>
+              <span>{item.label}</span>
             </a>
           ))}
-        </div>
-      </div>
-
-      {/* Bottom Items */}
-      <div className="px-4 pb-6 space-y-2">
-        {bottomItems.map((item, index) => (
-          <a
-            key={index}
-            href="#"
-            className="flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center px-3 py-2.5 rounded-md text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors text-left"
           >
-            <item.icon className="w-5 h-5 mr-3" />
-            <span className="text-sm font-medium">{item.label}</span>
-          </a>
-        ))}
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center px-4 py-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors text-left"
-        >
-          <LogOut className="w-5 h-5 mr-3" />
-          <span className="text-sm font-medium">Logout</span>
-        </button>
+            <LogOut className="w-5 h-5 mr-3" />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -129,19 +108,19 @@ interface DashboardHeaderProps {
 
 const DashboardHeader = ({ tutorName }: DashboardHeaderProps) => {
   return (
-    <div className="bg-blue-900 text-white p-8">
+    <div className="bg-blue-900 text-white px-8 py-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <h1 className="text-2xl font-semibold">Welcome back, {tutorName}!</h1>
+          <h1 className="text-xl font-semibold">Welcome back, [Tutor Name]!</h1>
         </div>
         <div className="bg-white text-blue-900 px-4 py-2 rounded-full">
           <div className="flex items-center space-x-2">
             <div className="w-12 h-2 bg-green-500 rounded-full"></div>
-            <span className="text-sm font-medium">Active</span>
+            <span className="text-sm font-medium">Online</span>
           </div>
         </div>
       </div>
-      <p className="text-blue-100 mt-2">
+      <p className="text-blue-100 mt-2 text-sm">
         You have 3 upcoming sessions and 2 new booking requests today.
       </p>
     </div>
@@ -150,53 +129,41 @@ const DashboardHeader = ({ tutorName }: DashboardHeaderProps) => {
 
 // Quick Stats Component
 const QuickStats = () => {
-  const stats = [
-    {
-      title: 'Total Sessions',
-      value: '24',
-      bgColor: 'bg-white',
-      textColor: 'text-gray-900',
-      link: 'View All'
-    },
-    {
-      title: 'Students',
-      value: '14',
-      bgColor: 'bg-white',
-      textColor: 'text-gray-900',
-      link: ''
-    },
-    {
-      title: 'Rating',
-      value: '4.8',
-      bgColor: 'bg-white',
-      textColor: 'text-gray-900',
-      link: ''
-    },
-    {
-      title: 'Response Rate',
-      value: '92%',
-      bgColor: 'bg-white',
-      textColor: 'text-gray-900',
-      link: ''
-    }
-  ];
-
   return (
-    <>
-      {stats.map((stat, index) => (
-        <div key={index} className={`${stat.bgColor} rounded-lg shadow-sm p-6`}>
+    <div className="mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-gray-900">Quick Stats</h2>
+        <a href="#" className="text-sm text-blue-600 hover:text-blue-800">
+          View All
+        </a>
+      </div>
+      <div className="grid grid-cols-4 gap-6">
+        <div className="bg-white rounded-lg shadow-sm p-5">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-medium text-gray-500">{stat.title}</h3>
-            {stat.link && (
-              <a href="#" className="text-xs text-blue-600 hover:text-blue-800">
-                {stat.link}
-              </a>
-            )}
+            <h3 className="text-sm font-medium text-gray-500">Total Sessions</h3>
+            <a href="#" className="text-xs text-blue-600 hover:text-blue-800">
+              View All
+            </a>
           </div>
-          <p className={`text-2xl font-bold ${stat.textColor}`}>{stat.value}</p>
+          <p className="text-2xl font-bold text-gray-900">24</p>
         </div>
-      ))}
-    </>
+        
+        <div className="bg-white rounded-lg shadow-sm p-5">
+          <h3 className="text-sm font-medium text-gray-500 mb-2">Students</h3>
+          <p className="text-2xl font-bold text-gray-900">14</p>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-sm p-5">
+          <h3 className="text-sm font-medium text-gray-500 mb-2">Rating</h3>
+          <p className="text-2xl font-bold text-gray-900">4.8</p>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-sm p-5">
+          <h3 className="text-sm font-medium text-gray-500 mb-2">Response Rate</h3>
+          <p className="text-2xl font-bold text-gray-900">92%</p>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -292,18 +259,18 @@ const WeeklySchedule = () => {
     { day: 'Mon', date: '11', sessions: 1, status: 'available' },
     { day: 'Tue', date: '12', sessions: 1, status: 'available' },
     { day: 'Wed', date: '13', sessions: 1, status: 'available' },
-    { day: 'Thu', date: '14', sessions: 0, status: 'unavailable' },
-    { day: 'Fri', date: '15', sessions: 2, status: 'busy' },
+    { day: 'Thu', date: '14', sessions: 0, status: 'booked' },
+    { day: 'Fri', date: '15', sessions: 2, status: 'booked' },
     { day: 'Sat', date: '16', sessions: 1, status: 'available' },
-    { day: 'Sun', date: '17', sessions: 0, status: 'unavailable' }
+    { day: 'Sun', date: '17', sessions: 0, status: 'booked' }
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'available':
-        return 'bg-green-100 text-green-800';
-      case 'busy':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-green-200 text-green-800';
+      case 'booked':
+        return 'bg-green-300 text-green-900';
       case 'unavailable':
         return 'bg-gray-100 text-gray-500';
       default:
@@ -319,14 +286,16 @@ const WeeklySchedule = () => {
           Edit Availability
         </a>
       </div>
-      <div className="grid grid-cols-7 gap-2">
+      <div className="grid grid-cols-7 gap-3">
         {weekDays.map((day, index) => (
           <div key={index} className="text-center">
-            <div className="text-xs font-medium text-gray-500 mb-1">{day.day}</div>
-            <div className={`w-12 h-12 rounded-lg flex flex-col items-center justify-center text-xs font-medium ${getStatusColor(day.status)}`}>
-              <div className="text-sm font-bold">{day.date}</div>
-              {day.sessions > 0 && (
-                <div className="text-xs">{day.sessions}</div>
+            <div className="text-xs font-medium text-gray-500 mb-2">{day.day}</div>
+            <div className={`w-14 h-14 rounded-lg flex flex-col items-center justify-center text-xs font-medium ${getStatusColor(day.status)}`}>
+              <div className="text-sm font-bold mb-1">{day.date}</div>
+              {day.sessions > 0 ? (
+                <div className="text-xs">{day.sessions} session{day.sessions > 1 ? 's' : ''}</div>
+              ) : (
+                <div className="text-xs">{day.status === 'booked' ? 'Booked' : 'Open'}</div>
               )}
             </div>
           </div>
@@ -451,23 +420,21 @@ const RecentReviews = () => {
 
 // Main Teacher Dashboard Component
 const Dashboard = () => {
-  const tutorName = "Ahmed Khan"; // This would come from auth state
+  const tutorName = "Tutor Name"; // This would come from auth state
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <DashboardHeader tutorName={tutorName} />
-        <main className="flex-1 p-8 bg-gray-100">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <QuickStats />
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-8">
+        <main className="flex-1 p-6 bg-gray-50">
+          <QuickStats />
+          <div className="grid grid-cols-3 gap-6">
+            <div className="col-span-2 space-y-6">
               <BookingRequests />
               <EarningsOverview />
             </div>
-            <div className="space-y-8">
+            <div className="space-y-6">
               <UpcomingSessions />
               <WeeklySchedule />
               <RecentReviews />
