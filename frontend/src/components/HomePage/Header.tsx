@@ -53,7 +53,7 @@ const Header = () => {
       <>
         {/* Mobile backdrop */}
         <div 
-          className={`fixed inset-0 bg-black z-40 lg:hidden transition-opacity duration-700 ${
+          className={`fixed inset-0 bg-black z-40 lg:hidden transition-opacity duration-500 ${
             isMobileMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
@@ -61,7 +61,7 @@ const Header = () => {
         
         {/* Sidebar */}
         <div className={`
-          fixed lg:hidden transition-transform duration-1000 ease-out
+          fixed lg:hidden transition-transform duration-500 ease-out
           ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
           w-60 bg-white shadow-sm flex flex-col h-screen border-l border-gray-200 z-50 overflow-hidden
           right-0 top-0
@@ -85,19 +85,18 @@ const Header = () => {
               />
             </div>
 
-            {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center justify-center">
+            {/* Menu Content - appears right after logo */}
+            <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 flex flex-col items-center">
               {/* Menu Items */}
-              <nav className="flex flex-col items-center space-y-6 mb-8">
+              <nav className="flex flex-col items-center space-y-4 mb-8">
                 <a
                   href="/"
-                  className={`text-xl font-medium transition-all duration-700 transform ${
+                  className={`text-xl font-medium transition-all duration-500 transform px-4 py-3 rounded-lg hover:bg-blue-50 ${
                     isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   } hover:scale-105 hover:text-green-600`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
                     color: '#003366',
-                    animationDelay: '0.2s',
                     transitionDelay: isMobileMenuOpen ? '0.2s' : '0s'
                   }}
                 >
@@ -105,28 +104,26 @@ const Header = () => {
                 </a>
                 <a
                   href="/about-us"
-                  className={`text-xl font-medium transition-all duration-700 transform ${
+                  className={`text-xl font-medium transition-all duration-500 transform px-4 py-3 rounded-lg hover:bg-blue-50 ${
                     isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   } hover:scale-105 hover:text-green-600`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
                     color: '#003366',
-                    animationDelay: '0.4s',
-                    transitionDelay: isMobileMenuOpen ? '0.4s' : '0s'
+                    transitionDelay: isMobileMenuOpen ? '0.3s' : '0s'
                   }}
                 >
                   About Us
                 </a>
                 <a
                   href="/contact"
-                  className={`text-xl font-medium transition-all duration-700 transform ${
+                  className={`text-xl font-medium transition-all duration-500 transform px-4 py-3 rounded-lg hover:bg-blue-50 ${
                     isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                   } hover:scale-105 hover:text-green-600`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
                     color: '#003366',
-                    animationDelay: '0.6s',
-                    transitionDelay: isMobileMenuOpen ? '0.6s' : '0s'
+                    transitionDelay: isMobileMenuOpen ? '0.4s' : '0s'
                   }}
                 >
                   Contact
@@ -134,28 +131,28 @@ const Header = () => {
               </nav>
 
               {/* Auth Links */}
-              <div className="flex flex-col items-center space-y-4 w-full px-8">
+              <div className="flex flex-col items-center space-y-3 w-full px-4">
                 <a
                   href="/signup"
-                  className={`w-full max-w-xs py-4 px-6 rounded-xl text-lg font-medium text-white bg-green-500 hover:bg-green-600 text-center transition-all duration-700 transform ${
+                  className={`w-full max-w-xs py-4 px-6 rounded-xl text-lg font-medium text-white bg-green-500 hover:bg-green-600 text-center transition-all duration-500 transform ${
                     isMobileMenuOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
                   } hover:scale-105 shadow-lg`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
-                    transitionDelay: isMobileMenuOpen ? '0.8s' : '0s'
+                    transitionDelay: isMobileMenuOpen ? '0.5s' : '0s'
                   }}
                 >
                   Sign Up
                 </a>
                 <a
                   href="/login"
-                  className={`w-full max-w-xs py-4 px-6 rounded-xl text-lg font-medium border-2 border-green-500 hover:bg-green-50 text-center transition-all duration-700 transform ${
+                  className={`w-full max-w-xs py-4 px-6 rounded-xl text-lg font-medium border-2 border-green-500 hover:bg-green-50 text-center transition-all duration-500 transform ${
                     isMobileMenuOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
                   } hover:scale-105 shadow-lg`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
                     color: '#003366',
-                    transitionDelay: isMobileMenuOpen ? '1.0s' : '0s'
+                    transitionDelay: isMobileMenuOpen ? '0.6s' : '0s'
                   }}
                 >
                   Login
