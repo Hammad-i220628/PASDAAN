@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [accountType, setAccountType] = useState('Parent');
   const [formData, setFormData] = useState({
     email: '',
@@ -17,7 +19,16 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check for admin login credentials
+    if (formData.email === 'admin@gmail.com' && formData.password === 'admin') {
+      console.log('Admin login successful');
+      navigate('/teacher-dashboard');
+      return;
+    }
+    
     console.log('Login form submitted:', { accountType, ...formData });
+    // Add other login logic here
   };
 
   return (
