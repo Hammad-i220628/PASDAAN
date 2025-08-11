@@ -16,6 +16,7 @@ const TutorProfile = () => {
     navigate(`/tutor-availability/${id}`);
   };
 
+
   // Mock tutor data - in real app, you'd fetch this based on the ID
   const tutor = {
     id: 1,

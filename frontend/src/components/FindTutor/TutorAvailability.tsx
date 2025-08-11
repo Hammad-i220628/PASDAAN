@@ -178,8 +178,7 @@ const TutorAvailability = () => {
   };
 
   const handleBookSession = () => {
-    // Handle booking logic here
-    alert('Booking session functionality would be implemented here');
+    navigate(`/book-session/${id}`);
   };
 
   return (
