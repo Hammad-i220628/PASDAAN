@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  LayoutDashboard, 
+  Home, 
   Calendar, 
+  Users, 
   MessageSquare, 
   User, 
   DollarSign, 
   Star, 
-  Book, 
+  BookOpen, 
   Settings, 
   HelpCircle, 
   LogOut 
@@ -18,8 +19,9 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const menuItems = [
-    { icon: LayoutDashboard, label: 'Tutor Dashboard', active: true },
+    { icon: Home, label: 'Tutor Dashboard', active: true },
     { icon: Calendar, label: 'Schedule', active: false },
+    { icon: Users, label: 'Sessions', active: false },
     { icon: MessageSquare, label: 'Messages', active: false },
   ];
 
@@ -27,7 +29,7 @@ const Sidebar = () => {
     { icon: User, label: 'Profile', active: false },
     { icon: DollarSign, label: 'Earnings', active: false },
     { icon: Star, label: 'Reviews', active: false },
-    { icon: Book, label: 'Resources', active: false },
+    { icon: BookOpen, label: 'Resources', active: false },
     { icon: Settings, label: 'Settings', active: false },
     { icon: HelpCircle, label: 'Help & Support', active: false },
   ];
@@ -55,15 +57,15 @@ const Sidebar = () => {
       </div>
 
       {/* Menu Items */}
-      <nav className="px-3 space-y-1">
+      <nav className="px-4 space-y-2">
         {menuItems.map((item, index) => (
           <a
             key={index}
             href="#"
-            className={`flex items-center px-3 py-2.5 rounded-md transition-colors text-sm ${
+            className={`flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium ${
               item.active 
-                ? 'bg-blue-50 text-blue-700 font-medium' 
-                : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                ? 'bg-blue-900 text-white' 
+                : 'text-blue-900 hover:bg-blue-50'
             }`}
           >
             <item.icon className="w-5 h-5 mr-3" />
@@ -73,16 +75,16 @@ const Sidebar = () => {
       </nav>
 
       {/* Account Section */}
-      <div className="px-3 py-6 border-t border-gray-100 mt-6">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-3">
+      <div className="px-4 py-6 mt-6">
+        <p className="text-xs font-semibold text-blue-900 uppercase tracking-wider mb-4 px-3">
           ACCOUNT
         </p>
-        <div className="space-y-1">
+        <div className="space-y-2">
           {accountItems.map((item, index) => (
             <a
               key={index}
               href="#"
-              className="flex items-center px-3 py-2.5 rounded-md transition-colors text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+              className="flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium text-blue-900 hover:bg-blue-50"
             >
               <item.icon className="w-5 h-5 mr-3" />
               <span>{item.label}</span>
@@ -90,7 +92,7 @@ const Sidebar = () => {
           ))}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center px-3 py-2.5 rounded-md text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors text-left"
+            className="w-full flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium text-blue-900 hover:bg-blue-50 text-left"
           >
             <LogOut className="w-5 h-5 mr-3" />
             <span>Logout</span>
@@ -108,7 +110,7 @@ interface DashboardHeaderProps {
 
 const DashboardHeader = ({ tutorName }: DashboardHeaderProps) => {
   return (
-    <div className="bg-blue-900 text-white px-8 py-6">
+    <div className="bg-blue-900 text-white px-8 py-6 mx-6 mt-6 rounded-lg">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <h1 className="text-xl font-semibold">Welcome back, [Tutor Name]!</h1>
@@ -130,37 +132,40 @@ const DashboardHeader = ({ tutorName }: DashboardHeaderProps) => {
 // Quick Stats Component
 const QuickStats = () => {
   return (
-    <div className="mb-6">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold text-gray-900">Quick Stats</h2>
         <a href="#" className="text-sm text-blue-600 hover:text-blue-800">
           View All
         </a>
       </div>
-      <div className="grid grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow-sm p-5">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-medium text-gray-500">Total Sessions</h3>
-            <a href="#" className="text-xs text-blue-600 hover:text-blue-800">
-              View All
-            </a>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-6">
+        <div className="text-center">
+          <div className="bg-gray-50 rounded-lg p-4 mb-2">
+            <p className="text-3xl font-bold text-gray-900">24</p>
           </div>
-          <p className="text-2xl font-bold text-gray-900">24</p>
+          <p className="text-sm text-gray-500">Total Sessions</p>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm p-5">
-          <h3 className="text-sm font-medium text-gray-500 mb-2">Students</h3>
-          <p className="text-2xl font-bold text-gray-900">14</p>
+        <div className="text-center">
+          <div className="bg-gray-50 rounded-lg p-4 mb-2">
+            <p className="text-3xl font-bold text-gray-900">14</p>
+          </div>
+          <p className="text-sm text-gray-500">Students</p>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm p-5">
-          <h3 className="text-sm font-medium text-gray-500 mb-2">Rating</h3>
-          <p className="text-2xl font-bold text-gray-900">4.8</p>
+        <div className="text-center">
+          <div className="bg-gray-50 rounded-lg p-4 mb-2">
+            <p className="text-3xl font-bold text-gray-900">4.8</p>
+          </div>
+          <p className="text-sm text-gray-500">Rating</p>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm p-5">
-          <h3 className="text-sm font-medium text-gray-500 mb-2">Response Rate</h3>
-          <p className="text-2xl font-bold text-gray-900">92%</p>
+        <div className="text-center">
+          <div className="bg-gray-50 rounded-lg p-4 mb-2">
+            <p className="text-3xl font-bold text-gray-900">92%</p>
+          </div>
+          <p className="text-sm text-gray-500">Response Rate</p>
         </div>
       </div>
     </div>
@@ -172,17 +177,17 @@ const UpcomingSessions = () => {
   const sessions = [
     {
       subject: 'Mathematics - Calculus',
-      student: 'Ahmed K • O-Level',
+      student: 'Ahmed K. • O-Levels',
       time: 'Today, 4:00 PM'
     },
     {
       subject: 'Physics - Mechanics',
-      student: 'Fatima S • A-Level',
+      student: 'Fatima S. • A-Levels',
       time: 'Tomorrow, 5:30 PM'
     },
     {
-      subject: 'Zoology',
-      student: 'Zain M • Secondary',
+      subject: '',
+      student: 'Zain M. • Secondary',
       time: 'Wed, 3:00 PM'
     }
   ];
@@ -195,12 +200,20 @@ const UpcomingSessions = () => {
           View All
         </a>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-0">
         {sessions.map((session, index) => (
-          <div key={index} className="border-l-4 border-green-500 bg-green-50 p-4 rounded-r-lg">
-            <h3 className="font-medium text-gray-900 mb-1">{session.subject}</h3>
-            <p className="text-sm text-gray-600 mb-1">{session.student}</p>
-            <p className="text-sm text-green-700 font-medium">{session.time}</p>
+          <div key={index} className="py-3 border-b border-gray-100 last:border-b-0">
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                {session.subject && (
+                  <h3 className="font-medium text-gray-900 mb-1">{session.subject}</h3>
+                )}
+                <p className="text-sm text-gray-500">{session.student}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium text-gray-900">{session.time}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -233,16 +246,16 @@ const BookingRequests = () => {
       </div>
       <div className="space-y-4">
         {requests.map((request, index) => (
-          <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+          <div key={index} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
             <div>
-              <h3 className="font-medium text-gray-900">{request.name}</h3>
+              <h3 className="font-medium text-gray-900 mb-1">{request.name}</h3>
               <p className="text-sm text-gray-600">{request.subject} • {request.time}</p>
             </div>
             <div className="flex space-x-2">
-              <button className="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors">
+              <button className="px-3 py-1.5 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors">
                 Accept
               </button>
-              <button className="px-4 py-2 bg-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-400 transition-colors">
+              <button className="px-3 py-1.5 bg-gray-300 text-gray-700 text-sm rounded-lg hover:bg-gray-400 transition-colors">
                 Decline
               </button>
             </div>
@@ -257,46 +270,38 @@ const BookingRequests = () => {
 const WeeklySchedule = () => {
   const weekDays = [
     { day: 'Mon', date: '11', sessions: 1, status: 'available' },
-    { day: 'Tue', date: '12', sessions: 1, status: 'available' },
-    { day: 'Wed', date: '13', sessions: 1, status: 'available' },
-    { day: 'Thu', date: '14', sessions: 0, status: 'booked' },
-    { day: 'Fri', date: '15', sessions: 2, status: 'booked' },
-    { day: 'Sat', date: '16', sessions: 1, status: 'available' },
-    { day: 'Sun', date: '17', sessions: 0, status: 'booked' }
+    { day: 'Tue', date: '12', sessions: 1, status: 'booked' },
+    { day: 'Wed', date: '13', sessions: 1, status: 'booked' },
+    { day: 'Thu', date: '14', sessions: 0, status: 'available' },
+    { day: 'Fri', date: '15', sessions: 0, status: 'available' },
+    { day: 'Sat', date: '16', sessions: 2, status: 'booked' },
+    { day: 'Sun', date: '17', sessions: 0, status: 'available' }
   ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'available':
-        return 'bg-green-200 text-green-800';
-      case 'booked':
-        return 'bg-green-300 text-green-900';
-      case 'unavailable':
-        return 'bg-gray-100 text-gray-500';
-      default:
-        return 'bg-gray-100 text-gray-500';
+  const getStatusColor = (status: string, sessions: number) => {
+    if (sessions > 0 && status === 'booked') {
+      return 'bg-green-200 text-green-800';
     }
+    return 'bg-white text-gray-700 border border-gray-200';
   };
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold text-gray-900">Weekly Schedule</h2>
-        <a href="#" className="text-sm text-blue-600 hover:text-blue-800">
+        <a href="#" className="text-sm text-green-600 hover:text-green-800">
           Edit Availability
         </a>
       </div>
       <div className="grid grid-cols-7 gap-3">
         {weekDays.map((day, index) => (
           <div key={index} className="text-center">
-            <div className="text-xs font-medium text-gray-500 mb-2">{day.day}</div>
-            <div className={`w-14 h-14 rounded-lg flex flex-col items-center justify-center text-xs font-medium ${getStatusColor(day.status)}`}>
-              <div className="text-sm font-bold mb-1">{day.date}</div>
-              {day.sessions > 0 ? (
-                <div className="text-xs">{day.sessions} session{day.sessions > 1 ? 's' : ''}</div>
-              ) : (
-                <div className="text-xs">{day.status === 'booked' ? 'Booked' : 'Open'}</div>
-              )}
+            <div className="text-sm font-medium text-gray-500 mb-3">{day.day}</div>
+            <div className={`w-16 h-20 rounded-lg flex flex-col items-center justify-center text-sm font-medium ${getStatusColor(day.status, day.sessions)}`}>
+              <div className="text-xl font-bold mb-2">{day.date}</div>
+              <div className="text-xs text-gray-500">
+                {day.sessions === 0 ? '0 sessions' : `${day.sessions} session${day.sessions > 1 ? 's' : ''}`}
+              </div>
             </div>
           </div>
         ))}
@@ -308,54 +313,62 @@ const WeeklySchedule = () => {
 // Earnings Overview Component
 const EarningsOverview = () => {
   const monthlyData = [
-    { month: 'Jan', amount: 12500 },
-    { month: 'Feb', amount: 18000 },
-    { month: 'Mar', amount: 15500 },
-    { month: 'Apr', amount: 21000 },
-    { month: 'May', amount: 24500 },
-    { month: 'Jun', amount: 19500 }
+    { month: 'Jan', amount: 12500, display: 'Rs12,500' },
+    { month: 'Feb', amount: 18000, display: 'Rs18,000' },
+    { month: 'Mar', amount: 15500, display: 'Rs15,500' },
+    { month: 'Apr', amount: 21000, display: 'Rs21,000' },
+    { month: 'May', amount: 24000, display: 'Rs24,000' },
+    { month: 'Jun', amount: 19500, display: 'Rs19,500' }
   ];
 
   const maxAmount = Math.max(...monthlyData.map(item => item.amount));
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <h2 className="text-lg font-semibold text-gray-900">Earnings Overview</h2>
-        <a href="#" className="text-sm text-blue-600 hover:text-blue-800">
+        <a href="#" className="text-sm text-green-600 hover:text-green-800">
           View Details
         </a>
       </div>
       
-      <div className="grid grid-cols-6 gap-4 mb-6">
-        {monthlyData.map((data, index) => {
-          const heightPercentage = (data.amount / maxAmount) * 100;
-          return (
-            <div key={index} className="text-center">
-              <div className="relative h-32 bg-gray-100 rounded-lg mb-2 flex items-end">
-                <div 
-                  className="w-full bg-green-400 rounded-lg transition-all duration-300 flex items-end justify-center"
-                  style={{ height: `${heightPercentage}%` }}
-                >
-                  <span className="text-xs font-medium text-white mb-1">
-                    ₨{(data.amount / 1000).toFixed(0)}k
-                  </span>
+      <div className="mb-8">
+        <div className="grid grid-cols-6 gap-3 mb-4">
+          {monthlyData.map((data, index) => {
+            const heightPercentage = (data.amount / maxAmount) * 100;
+            return (
+              <div key={index} className="text-center relative">
+                <div className="text-xs font-medium text-gray-900 mb-2 absolute -top-6 left-0 right-0">
+                  {data.display}
+                </div>
+                <div className="h-32 flex items-end">
+                  <div 
+                    className="w-full bg-green-300 rounded-sm transition-all duration-300"
+                    style={{ height: `${heightPercentage}%` }}
+                  >
+                  </div>
                 </div>
               </div>
-              <div className="text-xs font-medium text-gray-500">{data.month}</div>
+            );
+          })}
+        </div>
+        <div className="grid grid-cols-6 gap-3 mt-4">
+          {monthlyData.map((data, index) => (
+            <div key={index} className="text-center">
+              <div className="text-sm text-gray-500">{data.month}</div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 pt-6 border-t border-gray-200">
+      <div className="grid grid-cols-2 gap-8 pt-6 border-t border-gray-200">
         <div>
-          <p className="text-sm text-gray-600 mb-1">Total (Last 6 Months)</p>
-          <p className="text-xl font-bold text-gray-900">₨110,500</p>
+          <p className="text-2xl font-bold text-gray-900 mb-1">Rs110,500</p>
+          <p className="text-sm text-gray-500">Total (Last 6 Months)</p>
         </div>
-        <div>
-          <p className="text-sm text-gray-600 mb-1">This Month</p>
-          <p className="text-xl font-bold text-gray-900">₨19,500</p>
+        <div className="text-right">
+          <p className="text-2xl font-bold text-gray-900 mb-1">Rs19,500</p>
+          <p className="text-sm text-gray-500">This Month</p>
         </div>
       </div>
     </div>
@@ -428,17 +441,17 @@ const Dashboard = () => {
       <div className="flex-1 flex flex-col">
         <DashboardHeader tutorName={tutorName} />
         <main className="flex-1 p-6 bg-gray-50">
-          <QuickStats />
-          <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-2 space-y-6">
-              <BookingRequests />
-              <EarningsOverview />
-            </div>
-            <div className="space-y-6">
-              <UpcomingSessions />
-              <WeeklySchedule />
-              <RecentReviews />
-            </div>
+          <div className="grid grid-cols-2 gap-6 mb-6">
+            <QuickStats />
+            <UpcomingSessions />
+          </div>
+          <div className="grid grid-cols-2 gap-6 mb-6">
+            <BookingRequests />
+            <WeeklySchedule />
+          </div>
+          <div className="grid grid-cols-2 gap-6">
+            <EarningsOverview />
+            <RecentReviews />
           </div>
         </main>
       </div>
