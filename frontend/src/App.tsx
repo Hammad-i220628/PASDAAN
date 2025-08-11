@@ -19,7 +19,6 @@ import ResetPassword from './components/ResetPassword';
 import BecomeATutor from './components/BecomeTutor/BecomeATutor';
 import TutorApplicationForm from './components/BecomeTutor/TutorApplicationForm';
 import FindTutor from './components/FindTutor/FindTutor';
-import TutorsListing from './components/TutorsListing/TutorsListing';
 import TutorProfile from './components/FindTutor/TutorProfile';
 import TutorAvailability from './components/FindTutor/TutorAvailability';
 
@@ -57,7 +56,7 @@ const AppContent = () => {
         <Route path="/become-a-tutor" element={<BecomeATutor />} />
         <Route path="/tutor-application" element={<TutorApplicationForm />} />
         <Route path="/find-tutor" element={<FindTutor />} />
-        <Route path="/tutors-listing" element={<TutorsListing />} />
+        <Route path="/tutors-listing" element={<FindTutor />} />
         <Route path="/tutor/:id" element={<TutorProfile />} />
         <Route path="/tutor-availability/:id" element={<TutorAvailability />} />
       </Routes>

@@ -1,8 +1,125 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+// Custom Animated Dropdown Component
+const AnimatedDropdown = ({ label, placeholder, options, value, onChange, style = {} }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [maxHeight, setMaxHeight] = useState(0);
+  const dropdownRef = useRef(null);
+  const dropdownContentRef = useRef(null);
+
+  // Calculate max height when dropdown opens
+  useEffect(() => {
+    if (isOpen && dropdownContentRef.current) {
+      const contentHeight = dropdownContentRef.current.scrollHeight;
+      setMaxHeight(Math.min(contentHeight, 300)); // Max height of 300px with scroll
+    } else {
+      setMaxHeight(0);
+    }
+  }, [isOpen, options]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleOptionSelect = (optionValue) => {
+    onChange(optionValue);
+    setIsOpen(false);
+  };
+
+  const selectedOption = options.find(option => option.value === value);
+  const displayText = selectedOption ? selectedOption.label : placeholder;
+
+  return (
+    <div className="text-left">
+      <label className="block text-gray-700 text-sm font-medium mb-2">{label}</label>
+      <div className="relative" ref={dropdownRef}>
+        {/* Dropdown Button */}
+        <button
+          type="button"
+          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-sm text-left flex items-center justify-between transition-all duration-200 hover:border-gray-400"
+          style={style}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span className={value ? '' : 'text-gray-500'}>
+            {displayText}
+          </span>
+          <svg
+            className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
+              isOpen ? 'transform rotate-180' : ''
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {/* Dropdown Content */}
+        <div
+          className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md shadow-lg z-50 overflow-hidden transition-all duration-300 ease-out"
+          style={{
+            maxHeight: `${maxHeight}px`,
+            opacity: isOpen ? 1 : 0,
+            visibility: isOpen ? 'visible' : 'hidden',
+            transform: isOpen ? 'translateY(0)' : 'translateY(-10px)',
+          }}
+        >
+          <div
+            ref={dropdownContentRef}
+            className="overflow-y-auto"
+            style={{ maxHeight: '300px' }}
+          >
+            {options.map((option, index) => (
+              <button
+                key={option.value}
+                type="button"
+                className={`w-full px-4 py-3 text-left text-sm hover:bg-blue-50 focus:bg-blue-50 focus:outline-none transition-colors duration-150 ${
+                  value === option.value ? 'bg-blue-100 text-blue-700 font-medium' : 'text-gray-700'
+                }`}
+                onClick={() => handleOptionSelect(option.value)}
+                style={{
+                  animationDelay: `${index * 20}ms`,
+                  animation: isOpen ? 'slideInOption 0.3s ease-out forwards' : 'none'
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes slideInOption {
+          from {
+            opacity: 0;
+            transform: translateX(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
 
 const FindTutor = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [formData, setFormData] = useState({
     subject: '',
     levelOfEducation: '',
@@ -10,6 +127,157 @@ const FindTutor = () => {
     priceRange: '',
     gender: ''
   });
+  
+  // Show tutor results based on URL parameters or search
+  const [showResults, setShowResults] = useState(false);
+  
+  // Mock tutors data - replace with actual data from API
+  const tutors = [
+    {
+      id: 1,
+      name: "Ahmad Khan",
+      subject: "Mathematics",
+      experience: "5+ years",
+      rating: 4.9,
+      reviews: 45,
+      hourlyRate: "Rs. 1,500/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in Mathematics", "5+ years teaching experience"]
+    },
+    {
+      id: 2,
+      name: "Sara Mustafa",
+      subject: "Chemistry",
+      experience: "7+ years",
+      rating: 4.8,
+      reviews: 28,
+      hourlyRate: "Rs. 1,800/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in English", "7+ years teaching experience"]
+    },
+    {
+      id: 3,
+      name: "Hamraaz Ali",
+      subject: "Physics",
+      experience: "6+ years",
+      rating: 4.9,
+      reviews: 120,
+      hourlyRate: "Rs. 2,000/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in Chemistry", "6+ years teaching experience"]
+    },
+    {
+      id: 4,
+      name: "Fazla Khalid",
+      subject: "Computer Science",
+      experience: "4+ years",
+      rating: 4.7,
+      reviews: 15,
+      hourlyRate: "Rs. 2,200/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in Computer Science", "4+ years teaching experience"]
+    },
+    {
+      id: 5,
+      name: "Umar Khan",
+      subject: "Mathematics",
+      experience: "8+ years",
+      rating: 4.8,
+      reviews: 67,
+      hourlyRate: "Rs. 1,600/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in Mathematics", "8+ years teaching experience"]
+    },
+    {
+      id: 6,
+      name: "Fahad Shaikh",
+      subject: "Biology",
+      experience: "5+ years",
+      rating: 4.6,
+      reviews: 32,
+      hourlyRate: "Rs. 1,400/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in Biology", "5+ years teaching experience"]
+    },
+    {
+      id: 7,
+      name: "Laiba Ali",
+      subject: "English",
+      experience: "6+ years",
+      rating: 4.9,
+      reviews: 89,
+      hourlyRate: "Rs. 1,300/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in English", "6+ years teaching experience"]
+    },
+    {
+      id: 8,
+      name: "Sidra Khan",
+      subject: "Mathematics",
+      experience: "4+ years",
+      rating: 4.7,
+      reviews: 23,
+      hourlyRate: "Rs. 1,200/hr",
+      image: "/api/placeholder/150/150",
+      verified: true,
+      specialties: ["MS in Mathematics", "4+ years teaching experience"]
+    }
+  ];
+
+  // Options for dropdowns
+  const subjectOptions = [
+    { value: '', label: 'All Subjects' },
+    { value: 'mathematics', label: 'Mathematics' },
+    { value: 'chemistry', label: 'Chemistry' },
+    { value: 'computer-science', label: 'Computer Science' },
+    { value: 'physics', label: 'Physics' },
+    { value: 'biology', label: 'Biology' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const educationLevelOptions = [
+    { value: '', label: 'All Levels' },
+    { value: 'primary', label: 'Primary (grades 1-5)' },
+    { value: 'middle', label: 'Middle (grades 6-8)' },
+    { value: 'secondary', label: 'Secondary (grades 9-10)' },
+    { value: 'higher-secondary', label: 'Higher secondary (grades 11-12)' },
+    { value: 'tertiary', label: 'Tertiary (university level)' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const locationOptions = [
+    { value: '', label: 'All Locations' },
+    { value: 'bahria-town-phase-1-6', label: 'Bahria Town Phase 1 to 6' },
+    { value: 'bahria-town-phase-7-9', label: 'Bahria Town Phase 7 to 9' },
+    { value: 'dha-phase-1', label: 'DHA Phase 1' },
+    { value: 'dha-phase-2', label: 'DHA Phase 2' },
+    { value: 'dha-phase-3', label: 'DHA Phase 3' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const priceRangeOptions = [
+    { value: '', label: 'All Prices' },
+    { value: '15000', label: '15,000' },
+    { value: '20000', label: '20,000' },
+    { value: '25000', label: '25,000' },
+    { value: '30000', label: '30,000' },
+    { value: '35000', label: '35,000' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const genderOptions = [
+    { value: '', label: 'All' },
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'other', label: 'Other' }
+  ];
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -19,18 +287,59 @@ const FindTutor = () => {
   };
 
   const handleFindTutor = () => {
-    // Navigate to tutors listing page with search parameters
-    const searchParams = new URLSearchParams();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value) {
-        searchParams.append(key, value);
+    setShowResults(true);
+    // Scroll to results section
+    setTimeout(() => {
+      const element = document.getElementById('featured-tutors');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
-    });
+    }, 100);
+  };
+  
+  const handleViewProfile = (tutorId: number) => {
+    navigate(`/tutor/${tutorId}`);
+  };
+  
+  // Handle URL parameters and show results if coming from external link
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const hasParams = Array.from(urlParams.keys()).length > 0;
     
-    // Add scroll parameter to navigate to featured tutors section
-    searchParams.append('scrollTo', 'featured-tutors');
-    
-    navigate(`/tutors-listing?${searchParams.toString()}`);
+    if (hasParams) {
+      // Set form data from URL parameters
+      const newFormData = { ...formData };
+      ['subject', 'levelOfEducation', 'location', 'priceRange', 'gender'].forEach(key => {
+        const value = urlParams.get(key);
+        if (value) {
+          newFormData[key] = value;
+        }
+      });
+      setFormData(newFormData);
+      setShowResults(true);
+      
+      // Scroll to results if specified
+      const scrollTo = urlParams.get('scrollTo');
+      if (scrollTo === 'featured-tutors') {
+        setTimeout(() => {
+          const element = document.getElementById('featured-tutors');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 500);
+      }
+    }
+  }, [location]);
+  
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <span 
+        key={index} 
+        className={`text-sm ${index < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+      >
+        ⭐
+      </span>
+    ));
   };
 
   return (
@@ -48,96 +357,54 @@ const FindTutor = () => {
           <div className="bg-white rounded-lg shadow-lg p-6 max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
               {/* Subject */}
-              <div className="text-left">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Subject</label>
-                <select 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                  style={{ color: '#003366' }}
-                  value={formData.subject}
-                  onChange={(e) => handleInputChange('subject', e.target.value)}
-                >
-                  <option value="" style={{ color: '#003366' }}>Subject</option>
-                  <option value="mathematics">Mathematics</option>
-                  <option value="chemistry">Chemistry</option>
-                  <option value="computer-science">Computer Science</option>
-                  <option value="physics">Physics</option>
-                  <option value="biology">Biology</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+              <AnimatedDropdown
+                label="Subject"
+                placeholder="Subject"
+                options={subjectOptions}
+                value={formData.subject}
+                onChange={(value) => handleInputChange('subject', value)}
+                style={{ color: '#003366' }}
+              />
 
               {/* Level of Education */}
-              <div className="text-left">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Level of Education</label>
-                <select 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                  style={{ color: '#003366' }}
-                  value={formData.levelOfEducation}
-                  onChange={(e) => handleInputChange('levelOfEducation', e.target.value)}
-                >
-                  <option value="" style={{ color: '#003366' }}>Level of Education</option>
-                  <option value="primary">Primary (grades 1-5)</option>
-                  <option value="middle">Middle (grades 6-8)</option>
-                  <option value="secondary">Secondary (grades 9-10)</option>
-                  <option value="higher-secondary">Higher secondary (grades 11-12)</option>
-                  <option value="tertiary">Tertiary (university level)</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+              <AnimatedDropdown
+                label="Level of Education"
+                placeholder="Level of Education"
+                options={educationLevelOptions}
+                value={formData.levelOfEducation}
+                onChange={(value) => handleInputChange('levelOfEducation', value)}
+                style={{ color: '#003366' }}
+              />
 
               {/* Location */}
-              <div className="text-left">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Location</label>
-                <select 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                  style={{ color: '#003366' }}
-                  value={formData.location}
-                  onChange={(e) => handleInputChange('location', e.target.value)}
-                >
-                  <option value="" style={{ color: '#003366' }}>Location</option>
-                  <option value="bahria-town-phase-1-6">Bahria Town Phase 1 to 6</option>
-                  <option value="bahria-town-phase-7-9">Bahria Town Phase 7 to 9</option>
-                  <option value="dha-phase-1">DHA Phase 1</option>
-                  <option value="dha-phase-2">DHA Phase 2</option>
-                  <option value="dha-phase-3">DHA Phase 3</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+              <AnimatedDropdown
+                label="Location"
+                placeholder="Location"
+                options={locationOptions}
+                value={formData.location}
+                onChange={(value) => handleInputChange('location', value)}
+                style={{ color: '#003366' }}
+              />
 
               {/* Price Range */}
-              <div className="text-left">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Price Range</label>
-                <select 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                  style={{ color: '#003366' }}
-                  value={formData.priceRange}
-                  onChange={(e) => handleInputChange('priceRange', e.target.value)}
-                >
-                  <option value="" style={{ color: '#003366' }}>Price Range</option>
-                  <option value="15000">15,000</option>
-                  <option value="20000">20,000</option>
-                  <option value="25000">25,000</option>
-                  <option value="30000">30,000</option>
-                  <option value="35000">35,000</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+              <AnimatedDropdown
+                label="Price Range"
+                placeholder="Price Range"
+                options={priceRangeOptions}
+                value={formData.priceRange}
+                onChange={(value) => handleInputChange('priceRange', value)}
+                style={{ color: '#003366' }}
+              />
 
               {/* Gender */}
-              <div className="text-left">
-                <label className="block text-gray-700 text-sm font-medium mb-2">Gender</label>
-                <select 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                  style={{ color: '#003366' }}
-                  value={formData.gender}
-                  onChange={(e) => handleInputChange('gender', e.target.value)}
-                >
-                  <option value="" style={{ color: '#003366' }}>Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
+              <AnimatedDropdown
+                label="Gender"
+                placeholder="Gender"
+                options={genderOptions}
+                value={formData.gender}
+                onChange={(value) => handleInputChange('gender', value)}
+                style={{ color: '#003366' }}
+              />
             </div>
 
             {/* Find a Tutor Button */}
@@ -371,6 +638,89 @@ const FindTutor = () => {
           </div>
         </div>
       </section>
+
+      {/* Featured Tutors Section - Show only when search is performed */}
+      {showResults && (
+        <section id="featured-tutors" className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            {/* Desktop header with View All button */}
+            <div className="hidden md:flex justify-between items-center mb-8">
+              <div>
+                <h2 className="text-2xl font-bold mb-2" style={{ color: '#003366' }}>Search Results</h2>
+                <p className="text-gray-600">Found {tutors.length} tutors matching your criteria</p>
+              </div>
+              <button className="text-white font-medium py-2 px-4 rounded-md text-sm" style={{ backgroundColor: '#003366' }}>
+                View All
+              </button>
+            </div>
+
+            {/* Mobile header without View All button */}
+            <div className="block md:hidden mb-8">
+              <h2 className="text-2xl font-bold mb-2" style={{ color: '#003366' }}>Search Results</h2>
+              <p className="text-gray-600">Found {tutors.length} tutors matching your criteria</p>
+            </div>
+
+            {/* Tutors Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {tutors.map((tutor) => (
+                <div key={tutor.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="relative">
+                    <img 
+                      src={tutor.image} 
+                      alt={tutor.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    {tutor.verified && (
+                      <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                        Verified
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg mb-1" style={{ color: '#003366' }}>
+                      {tutor.name}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-2">{tutor.subject}</p>
+                    
+                    <div className="flex items-center mb-2">
+                      {renderStars(tutor.rating)}
+                      <span className="text-sm text-gray-600 ml-2">
+                        {tutor.rating} ({tutor.reviews} reviews)
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-1 mb-3">
+                      {tutor.specialties.map((specialty, index) => (
+                        <p key={index} className="text-xs text-gray-600">• {specialty}</p>
+                      ))}
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold text-green-600">{tutor.hourlyRate}</span>
+                    </div>
+                    
+                    <button 
+                      onClick={() => handleViewProfile(tutor.id)}
+                      className="w-full text-white font-medium py-2 px-4 rounded-md mt-3 transition duration-200 hover:bg-blue-800"
+                      style={{ backgroundColor: '#003366' }}
+                    >
+                      View Profile
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile View All button - shown only on mobile after all profiles */}
+            <div className="block md:hidden text-center mt-8">
+              <button className="text-white font-medium py-3 px-6 rounded-md" style={{ backgroundColor: '#003366' }}>
+                View All
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="text-white pt-16 pb-4" style={{ backgroundColor: '#003366' }}>
