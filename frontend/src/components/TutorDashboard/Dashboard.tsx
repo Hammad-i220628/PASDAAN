@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import Schedule from './Schedule';
 import Sessions from './Sessions';
+import Messages from './Messages';
 
 // Sidebar Component
 interface SidebarProps {
@@ -520,15 +521,6 @@ const DashboardContent = () => {
 
 // Placeholder components for other pages
 
-const MessagesContent = () => (
-  <div className="flex-1 bg-gray-50 p-6">
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <h1 className="text-xl font-semibold text-gray-900 mb-4">Messages</h1>
-      <p className="text-gray-600">Messages page content will be implemented here.</p>
-    </div>
-  </div>
-);
-
 // Main Teacher Dashboard Component
 const Dashboard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -544,7 +536,7 @@ const Dashboard = () => {
       case 'sessions':
         return <Sessions />;
       case 'messages':
-        return <MessagesContent />;
+        return <Messages />;
       default:
         return <DashboardContent />;
     }
