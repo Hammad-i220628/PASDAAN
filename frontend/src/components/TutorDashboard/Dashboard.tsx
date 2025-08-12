@@ -19,6 +19,7 @@ import Schedule from './Schedule';
 import Sessions from './Sessions';
 import Messages from './Messages';
 import Profile from './Profile';
+import Earnings from './Earnings';
 
 // Sidebar Component
 interface SidebarProps {
@@ -396,50 +397,46 @@ const EarningsOverview = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 md:p-6">
-      <div className="flex items-center justify-between mb-6 md:mb-8">
+      <div className="flex items-center justify-between mb-4 md:mb-6">
         <h2 className="text-base md:text-lg font-semibold text-gray-900">Earnings Overview</h2>
         <a href="#" className="text-xs md:text-sm text-green-600 hover:text-green-800">
           View Details
         </a>
       </div>
       
-      <div className="mb-6 md:mb-8">
-        <div className="grid grid-cols-6 gap-1 md:gap-3 mb-4">
+      <div className="mb-4 md:mb-6">
+        <div className="flex items-end justify-between gap-1 md:gap-3 h-32 md:h-40">
           {monthlyData.map((data, index) => {
             const heightPercentage = (data.amount / maxAmount) * 100;
             return (
-              <div key={index} className="text-center relative">
-                <div className="text-xs font-medium text-gray-900 mb-2 absolute -top-5 md:-top-6 left-0 right-0 px-1">
-                  <span className="hidden sm:inline">{data.display}</span>
-                  <span className="sm:hidden text-xs">{data.amount/1000}k</span>
-                </div>
-                <div className="h-20 md:h-32 flex items-end">
+              <div key={index} className="flex-1 flex flex-col items-center">
+                <div className="w-full flex flex-col items-center mb-2">
+                  <span className="text-xs font-medium text-gray-900 mb-1 hidden md:block">
+                    {data.display}
+                  </span>
+                  <span className="text-xs font-medium text-gray-900 mb-1 block md:hidden">
+                    {data.amount/1000}k
+                  </span>
                   <div 
                     className="w-full bg-green-300 rounded-sm transition-all duration-300"
-                    style={{ height: `${heightPercentage}%` }}
+                    style={{ height: `${heightPercentage * 0.8}px` }}
                   >
                   </div>
                 </div>
+                <span className="text-xs text-gray-500 font-medium">{data.month}</span>
               </div>
             );
           })}
-        </div>
-        <div className="grid grid-cols-6 gap-1 md:gap-3 mt-4">
-          {monthlyData.map((data, index) => (
-            <div key={index} className="text-center">
-              <div className="text-xs md:text-sm text-gray-500">{data.month}</div>
-            </div>
-          ))}
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 pt-4 md:pt-6 border-t border-gray-200">
         <div className="text-center md:text-left">
-          <p className="text-xl md:text-2xl font-bold text-gray-900 mb-1">Rs110,500</p>
+          <p className="text-lg md:text-2xl font-bold text-gray-900 mb-1">Rs110,500</p>
           <p className="text-xs md:text-sm text-gray-500">Total (Last 6 Months)</p>
         </div>
         <div className="text-center md:text-right">
-          <p className="text-xl md:text-2xl font-bold text-gray-900 mb-1">Rs19,500</p>
+          <p className="text-lg md:text-2xl font-bold text-gray-900 mb-1">Rs19,500</p>
           <p className="text-xs md:text-sm text-gray-500">This Month</p>
         </div>
       </div>
@@ -544,6 +541,8 @@ const Dashboard = () => {
         return <Messages />;
       case 'profile':
         return <Profile />;
+      case 'earnings':
+        return <Earnings />;
       default:
         return <DashboardContent />;
     }
