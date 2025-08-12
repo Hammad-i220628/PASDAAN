@@ -34,6 +34,7 @@ const Sessions = () => {
   const [statusMaxHeight, setStatusMaxHeight] = useState(0);
   const [subjectMaxHeight, setSubjectMaxHeight] = useState(0);
   const [studentMaxHeight, setStudentMaxHeight] = useState(0);
+  const [datePickerMaxHeight, setDatePickerMaxHeight] = useState(0);
   const datePickerRef = useRef<HTMLDivElement>(null);
   const statusDropdownRef = useRef<HTMLDivElement>(null);
   const subjectDropdownRef = useRef<HTMLDivElement>(null);
@@ -41,6 +42,7 @@ const Sessions = () => {
   const statusContentRef = useRef<HTMLDivElement>(null);
   const subjectContentRef = useRef<HTMLDivElement>(null);
   const studentContentRef = useRef<HTMLDivElement>(null);
+  const datePickerContentRef = useRef<HTMLDivElement>(null);
 
   // Sample session data based on the image
   const sessions: Session[] = [
@@ -188,6 +190,15 @@ const Sessions = () => {
   ];
 
   // Calculate max heights for dropdown animations
+  useEffect(() => {
+    if (showDatePicker && datePickerContentRef.current) {
+      const contentHeight = datePickerContentRef.current.scrollHeight;
+      setDatePickerMaxHeight(Math.min(contentHeight, 300));
+    } else {
+      setDatePickerMaxHeight(0);
+    }
+  }, [showDatePicker]);
+
   useEffect(() => {
     if (showStatusDropdown && statusContentRef.current) {
       const contentHeight = statusContentRef.current.scrollHeight;
@@ -456,8 +467,20 @@ const Sessions = () => {
               </div>
               
               {/* Date Picker Dropdown */}
-              {showDatePicker && (
-                <div className="absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+              <div
+                className="absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden transition-all duration-500 ease-out"
+                style={{
+                  maxHeight: `${datePickerMaxHeight}px`,
+                  opacity: showDatePicker ? 1 : 0,
+                  visibility: showDatePicker ? 'visible' : 'hidden',
+                  transform: showDatePicker ? 'translateY(0)' : 'translateY(-10px)',
+                }}
+              >
+                <div
+                  ref={datePickerContentRef}
+                  className="overflow-y-auto scrollbar-hide"
+                  style={{ maxHeight: '300px' }}
+                >
                   <div className="p-2 border-b border-gray-200">
                     <p className="text-xs font-medium text-gray-500 mb-2">Quick Select</p>
                     <div className="grid grid-cols-3 gap-1">
@@ -465,6 +488,10 @@ const Sessions = () => {
                         type="button"
                         onClick={() => handleDateSelect('Today')}
                         className="px-2 py-1 text-xs bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
+                        style={{
+                          animationDelay: '0ms',
+                          animation: showDatePicker ? 'slideInOption 0.4s ease-out forwards' : 'none'
+                        }}
                       >
                         Today
                       </button>
@@ -472,6 +499,10 @@ const Sessions = () => {
                         type="button"
                         onClick={() => handleDateSelect('Tomorrow')}
                         className="px-2 py-1 text-xs bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
+                        style={{
+                          animationDelay: '30ms',
+                          animation: showDatePicker ? 'slideInOption 0.4s ease-out forwards' : 'none'
+                        }}
                       >
                         Tomorrow
                       </button>
@@ -479,12 +510,19 @@ const Sessions = () => {
                         type="button"
                         onClick={() => handleDateSelect('Yesterday')}
                         className="px-2 py-1 text-xs bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
+                        style={{
+                          animationDelay: '60ms',
+                          animation: showDatePicker ? 'slideInOption 0.4s ease-out forwards' : 'none'
+                        }}
                       >
                         Yesterday
                       </button>
                     </div>
                   </div>
-                  <div className="p-2">
+                  <div className="p-2" style={{
+                    animationDelay: '90ms',
+                    animation: showDatePicker ? 'slideInOption 0.4s ease-out forwards' : 'none'
+                  }}>
                     <p className="text-xs font-medium text-gray-500 mb-2">Custom Date</p>
                     <input
                       type="date"
@@ -496,7 +534,10 @@ const Sessions = () => {
                       className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
-                  <div className="p-2 border-t border-gray-200">
+                  <div className="p-2 border-t border-gray-200" style={{
+                    animationDelay: '120ms',
+                    animation: showDatePicker ? 'slideInOption 0.4s ease-out forwards' : 'none'
+                  }}>
                     <button
                       type="button"
                       onClick={clearDateFilter}
@@ -506,7 +547,7 @@ const Sessions = () => {
                     </button>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Status Filter */}
