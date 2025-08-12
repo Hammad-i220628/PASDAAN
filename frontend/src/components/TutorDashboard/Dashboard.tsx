@@ -18,6 +18,7 @@ import {
 import Schedule from './Schedule';
 import Sessions from './Sessions';
 import Messages from './Messages';
+import Profile from './Profile';
 
 // Sidebar Component
 interface SidebarProps {
@@ -43,12 +44,12 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
   };
 
   const accountItems = [
-    { icon: User, label: 'Profile', active: false },
-    { icon: DollarSign, label: 'Earnings', active: false },
-    { icon: Star, label: 'Reviews', active: false },
-    { icon: BookOpen, label: 'Resources', active: false },
-    { icon: Settings, label: 'Settings', active: false },
-    { icon: HelpCircle, label: 'Help & Support', active: false },
+    { icon: User, label: 'Profile', page: 'profile' },
+    { icon: DollarSign, label: 'Earnings', page: 'earnings' },
+    { icon: Star, label: 'Reviews', page: 'reviews' },
+    { icon: BookOpen, label: 'Resources', page: 'resources' },
+    { icon: Settings, label: 'Settings', page: 'settings' },
+    { icon: HelpCircle, label: 'Help & Support', page: 'help' },
   ];
 
   const handleLogout = () => {
@@ -128,8 +129,12 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
                 <a
                   key={index}
                   href="#"
-                  className="flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium text-blue-900 hover:bg-blue-50"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium ${
+                    currentPage === item.page
+                      ? 'bg-blue-900 text-white' 
+                      : 'text-blue-900 hover:bg-blue-50'
+                  }`}
+                  onClick={() => handleMenuClick(item.page)}
                 >
                   <item.icon className="w-5 h-5 mr-3" />
                   <span>{item.label}</span>
@@ -537,6 +542,8 @@ const Dashboard = () => {
         return <Sessions />;
       case 'messages':
         return <Messages />;
+      case 'profile':
+        return <Profile />;
       default:
         return <DashboardContent />;
     }
