@@ -78,7 +78,7 @@ const AnimatedDropdown = ({ label, placeholder, options, value, onChange, style 
         >
           <div
             ref={dropdownContentRef}
-            className="overflow-y-auto"
+            className="overflow-y-auto scrollbar-hide"
             style={{ maxHeight: '300px' }}
           >
             {options.map((option, index) => (

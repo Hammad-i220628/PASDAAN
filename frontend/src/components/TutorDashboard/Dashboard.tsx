@@ -16,6 +16,7 @@ import {
   X
 } from 'lucide-react';
 import Schedule from './Schedule';
+import Sessions from './Sessions';
 
 // Sidebar Component
 interface SidebarProps {
@@ -96,7 +97,7 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="flex-1 overflow-y-auto lg:overflow-hidden overflow-x-hidden scrollbar-hide">
           {/* Menu Items */}
           <nav className="px-4 space-y-2">
             {menuItems.map((item, index) => (
@@ -518,14 +519,6 @@ const DashboardContent = () => {
 };
 
 // Placeholder components for other pages
-const SessionsContent = () => (
-  <div className="flex-1 bg-gray-50 p-6">
-    <div className="bg-white rounded-lg shadow-sm p-6">
-      <h1 className="text-xl font-semibold text-gray-900 mb-4">Sessions Management</h1>
-      <p className="text-gray-600">Sessions page content will be implemented here.</p>
-    </div>
-  </div>
-);
 
 const MessagesContent = () => (
   <div className="flex-1 bg-gray-50 p-6">
@@ -549,7 +542,7 @@ const Dashboard = () => {
       case 'schedule':
         return <Schedule />;
       case 'sessions':
-        return <SessionsContent />;
+        return <Sessions />;
       case 'messages':
         return <MessagesContent />;
       default:
