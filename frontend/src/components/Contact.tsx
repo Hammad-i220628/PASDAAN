@@ -2,53 +2,55 @@ import React from 'react';
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 w-full overflow-x-hidden">
       {/* Hero Section */}
-      <section className="text-white py-16" style={{ backgroundColor: '#003366' }}>
-        <div className="max-w-4xl mx-auto text-center px-2 sm:px-4">
-          <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-5xl font-bold mb-3 whitespace-nowrap">Help & Support</h1>
-          <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-200 px-2">Find answers to your questions about Pasdaan's tutoring platform. Browse our FAQs or contact our support team for assistance.</p>
+      <section className="text-white py-8 sm:py-12 lg:py-16" style={{ backgroundColor: '#003366' }}>
+        <div className="max-w-7xl mx-auto text-center px-3 sm:px-4 lg:px-6">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 leading-tight">Help & Support</h1>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 max-w-4xl mx-auto leading-relaxed">Find answers to your questions about Pasdaan's tutoring platform. Browse our FAQs or contact our support team for assistance.</p>
         </div>
       </section>
-
       {/* Support Categories */}
-      <section className="py-8 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="font-bold text-xl mb-2" style={{ color: '#003366' }}>Parents Guide</h3>
-            <p className="text-gray-600">Help for parents using Pasdaan to find tutors, book sessions, and manage their children’s learning.</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="font-bold text-xl mb-2" style={{ color: '#003366' }}>Tutor Resources</h3>
-            <p className="text-gray-600">Guidance for tutors on creating profiles, managing bookings, and receiving payments.</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="font-bold text-xl mb-2" style={{ color: '#003366' }}>Booking & Sessions</h3>
-            <p className="text-gray-600">Learn how to book tutoring sessions, reschedule, or cancel appointments.</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="font-bold text-xl mb-2" style={{ color: '#003366' }}>Payments & Billing</h3>
-            <p className="text-gray-600">Information about payment methods, fees, and billing processes.</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="font-bold text-xl mb-2" style={{ color: '#003366' }}>Student Dashboard</h3>
-            <p className="text-gray-600">Help with accessing and using the student dashboard features.</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="font-bold text-xl mb-2" style={{ color: '#003366' }}>Account Settings</h3>
-            <p className="text-gray-600">Manage your account details, profiles, and notification preferences.</p>
+      <section className="py-6 sm:py-8 lg:py-12 px-3 sm:px-4 lg:px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-6 sm:mb-8 lg:mb-12" style={{ color: '#003366' }}>How Can We Help You?</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3" style={{ color: '#003366' }}>Parents Guide</h3>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Help for parents using Pasdaan to find tutors, book sessions, and manage their children's learning.</p>
+            </div>
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3" style={{ color: '#003366' }}>Tutor Resources</h3>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Guidance for tutors on creating profiles, managing bookings, and receiving payments.</p>
+            </div>
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3" style={{ color: '#003366' }}>Booking & Sessions</h3>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Learn how to book tutoring sessions, reschedule, or cancel appointments.</p>
+            </div>
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3" style={{ color: '#003366' }}>Payments & Billing</h3>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Information about payment methods, fees, and billing processes.</p>
+            </div>
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3" style={{ color: '#003366' }}>Student Dashboard</h3>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Help with accessing and using the student dashboard features.</p>
+            </div>
+            <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3" style={{ color: '#003366' }}>Account Settings</h3>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Manage your account details, profiles, and notification preferences.</p>
+            </div>
           </div>
         </div>
 
         {/* FAQs Section */}
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-6" style={{ color: '#003366' }}>Frequently Asked Questions</h2>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-6 sm:mb-8" style={{ color: '#003366' }}>Frequently Asked Questions</h2>
+          <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-lg shadow-lg">
             <style>
               {`
                 .faq-item {
                   border-bottom: 1px solid #e5e7eb;
-                  padding: 1rem 0;
+                  padding: 0.75rem 0;
                 }
                 .faq-summary {
                   cursor: pointer;
@@ -56,27 +58,55 @@ const Contact = () => {
                   color: #003366;
                   display: flex;
                   justify-content: space-between;
-                  align-items: center;
+                  align-items: flex-start;
                   outline: none;
                   list-style: none;
+                  font-size: 0.875rem;
+                  line-height: 1.5;
+                  gap: 1rem;
+                }
+                @media (min-width: 640px) {
+                  .faq-summary {
+                    font-size: 1rem;
+                    align-items: center;
+                  }
+                  .faq-item {
+                    padding: 1rem 0;
+                  }
                 }
                 .faq-summary::-webkit-details-marker {
                   display: none;
                 }
                 .faq-plus {
-                  font-size: 1.5rem;
+                  font-size: 1.25rem;
                   font-weight: bold;
                   color: #003366;
                   transition: transform 0.2s;
+                  flex-shrink: 0;
+                  margin-top: 0.125rem;
+                }
+                @media (min-width: 640px) {
+                  .faq-plus {
+                    font-size: 1.5rem;
+                    margin-top: 0;
+                  }
                 }
                 details[open] .faq-plus {
                   transform: rotate(45deg);
                 }
                 .faq-content {
-                  margin-top: 1rem;
+                  margin-top: 0.75rem;
                   color: #6b7280;
                   line-height: 1.6;
-                  padding-right: 2rem;
+                  font-size: 0.875rem;
+                  padding-right: 0;
+                }
+                @media (min-width: 640px) {
+                  .faq-content {
+                    margin-top: 1rem;
+                    font-size: 1rem;
+                    padding-right: 2rem;
+                  }
                 }
               `}
             </style>
@@ -130,11 +160,11 @@ const Contact = () => {
       </section>
 
       {/* Support Call to Action */}
-      <section className="text-white pt-16 pb-8" style={{ backgroundColor: '#003366' }}>
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-lg sm:text-lg md:text-xl lg:text-2xl font-bold text-green-400 mb-3">Still Need Help?</h2>
-          <p className="text-sm sm:text-base md:text-lg text-gray-200 mb-4">Our support team is available to assist you with any questions or concerns you may have about using Pasdaan.</p>
-          <button className="bg-green-500 text-white py-3 px-6 rounded-lg font-semibold">Contact Support</button>
+      <section className="text-white py-8 sm:py-12 lg:py-16" style={{ backgroundColor: '#003366' }}>
+        <div className="max-w-7xl mx-auto text-center px-3 sm:px-4 lg:px-6">
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-green-400 mb-3 sm:mb-4">Still Need Help?</h2>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">Our support team is available to assist you with any questions or concerns you may have about using Pasdaan.</p>
+          <button className="bg-green-500 hover:bg-green-600 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-lg font-semibold text-sm sm:text-base transition-colors duration-300 shadow-lg hover:shadow-xl">Contact Support</button>
         </div>
       </section>
     </div>

@@ -23,6 +23,7 @@ import Earnings from './Earnings';
 import Reviews from './Reviews';
 import Resources from './Resources';
 import Settings from './Settings';
+import HelpSupport from './HelpSupport';
 
 // Sidebar Component
 interface SidebarProps {
@@ -552,6 +553,8 @@ const Dashboard = () => {
         return <Resources />;
       case 'settings':
         return <Settings />;
+      case 'help':
+        return <HelpSupport />;
       default:
         return <DashboardContent />;
     }
