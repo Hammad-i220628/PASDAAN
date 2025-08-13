@@ -21,6 +21,7 @@ import Messages from './Messages';
 import Profile from './Profile';
 import Earnings from './Earnings';
 import Reviews from './Reviews';
+import Resources from './Resources';
 
 // Sidebar Component
 interface SidebarProps {
@@ -546,6 +547,8 @@ const Dashboard = () => {
         return <Earnings />;
       case 'reviews':
         return <Reviews />;
+      case 'resources':
+        return <Resources />;
       default:
         return <DashboardContent />;
     }
