@@ -9,7 +9,7 @@ import {
   DollarSign, 
   Star, 
   BookOpen, 
-  Settings, 
+  Settings as SettingsIcon, 
   HelpCircle, 
   LogOut,
   Menu,
@@ -22,6 +22,7 @@ import Profile from './Profile';
 import Earnings from './Earnings';
 import Reviews from './Reviews';
 import Resources from './Resources';
+import Settings from './Settings';
 
 // Sidebar Component
 interface SidebarProps {
@@ -51,7 +52,7 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
     { icon: DollarSign, label: 'Earnings', page: 'earnings' },
     { icon: Star, label: 'Reviews', page: 'reviews' },
     { icon: BookOpen, label: 'Resources', page: 'resources' },
-    { icon: Settings, label: 'Settings', page: 'settings' },
+    { icon: SettingsIcon, label: 'Settings', page: 'settings' },
     { icon: HelpCircle, label: 'Help & Support', page: 'help' },
   ];
 
@@ -549,6 +550,8 @@ const Dashboard = () => {
         return <Reviews />;
       case 'resources':
         return <Resources />;
+      case 'settings':
+        return <Settings />;
       default:
         return <DashboardContent />;
     }
