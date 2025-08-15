@@ -83,6 +83,7 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
         fixed lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         w-60 bg-white shadow-sm flex flex-col h-screen border-r border-gray-200 z-50 overflow-hidden
+        lg:flex
       `}>
         {/* Mobile close button */}
         <div className="lg:hidden flex justify-end p-4 flex-shrink-0">
@@ -284,33 +285,33 @@ const Dashboard = () => {
 
   // Dashboard Content Component
   const DashboardContent = () => {
-    return (
-      <main className="flex-1 p-4 md:p-6 bg-gray-50">
+  return (
+      <main className="flex-1 p-3 sm:p-4 md:p-6 bg-gray-50 overflow-hidden">
         {/* Student Profiles Section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center">
               <Users className="w-5 h-5 mr-2" />
               Student Profiles
             </h2>
-            <button className="px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-800 flex items-center">
+            <button className="px-4 py-2 bg-blue-900 text-white rounded-md hover:bg-blue-800 flex items-center justify-center sm:justify-start w-full sm:w-auto">
               <Plus className="w-4 h-4 mr-1" />
               Add Profile
             </button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {studentProfiles.map((student) => (
-              <div key={student.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center space-x-4">
-                    <div className={`w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-xl ${
+              <div key={student.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 sm:mb-6 gap-3">
+                  <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl ${
                       student.id === 1 ? 'bg-blue-900' : 'bg-blue-900'
                     }`}>
                       {student.avatar}
                     </div>
                     <div>
-                      <h3 className="font-bold text-gray-900 text-lg mb-1">{student.name}</h3>
+                      <h3 className="font-bold text-gray-900 text-base sm:text-lg mb-1">{student.name}</h3>
                       <p className="text-sm text-gray-600 mb-1">{student.grade}</p>
                       <p className="text-sm text-gray-500">{student.school}</p>
                     </div>
@@ -327,11 +328,11 @@ const Dashboard = () => {
                 </div>
 
                 {/* Subject Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
                   {student.subjects.slice(0, 3).map((subject, index) => (
                     <span 
                       key={index} 
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium ${
                         index === 0 ? 'bg-blue-100 text-blue-700' :
                         index === 1 ? 'bg-purple-100 text-purple-700' :
                         'bg-gray-100 text-gray-700'
@@ -343,12 +344,12 @@ const Dashboard = () => {
                 </div>
 
                 {/* Subject Progress */}
-                <div className="space-y-4 mb-6">
+                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                   {student.subjects.map((subject, index) => (
                     <div key={index}>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm font-medium text-gray-800">{subject.name}</span>
-                        <span className="text-sm font-semibold text-gray-900">{subject.progress}%</span>
+                      <div className="flex justify-between items-center mb-1 sm:mb-2">
+                        <span className="text-xs sm:text-sm font-medium text-gray-800">{subject.name}</span>
+                        <span className="text-xs sm:text-sm font-semibold text-gray-900">{subject.progress}%</span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div 
@@ -361,11 +362,11 @@ const Dashboard = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <button className="flex-1 bg-blue-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-800 transition-colors">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button className="flex-1 bg-blue-900 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-800 transition-colors">
                     View Progress
                   </button>
-                  <button className="flex-1 bg-white border border-blue-900 text-blue-900 py-3 px-4 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+                  <button className="flex-1 bg-white border border-blue-900 text-blue-900 py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-50 transition-colors">
                     Edit Profile
                   </button>
                 </div>
@@ -376,52 +377,52 @@ const Dashboard = () => {
 
 
         {/* Upcoming Sessions */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 sm:mb-6 flex items-center">
             <Calendar className="w-5 h-5 mr-2" />
             Upcoming Sessions
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {/* Today - Mathematics */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="mb-4">
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+              <div className="mb-3 sm:mb-4">
+                <span className="inline-block px-2 sm:px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
                   Today
                 </span>
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 text-xl mb-4">Mathematics</h3>
-                <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-gray-900 text-lg sm:text-xl mb-3 sm:mb-4">Mathematics</h3>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-1 sm:gap-0">
                   <div className="flex items-center space-x-2">
                     <span className="font-bold text-gray-900">FK</span>
-                    <span className="text-gray-600">Fatima Khan</span>
+                    <span className="text-gray-600 text-sm sm:text-base">Fatima Khan</span>
                   </div>
-                  <span className="text-gray-500 text-sm">4:00 PM - 5:00 PM</span>
+                  <span className="text-gray-500 text-xs sm:text-sm">4:00 PM - 5:00 PM</span>
                 </div>
-                <button className="w-full bg-blue-900 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-800 transition-colors">
+                <button className="w-full bg-blue-900 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-800 transition-colors">
                   Join Session
                 </button>
               </div>
             </div>
 
             {/* Tomorrow - Physics */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="mb-4">
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+              <div className="mb-3 sm:mb-4">
+                <span className="inline-block px-2 sm:px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
                   Tomorrow
                 </span>
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 text-xl mb-4">Physics</h3>
-                <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-gray-900 text-lg sm:text-xl mb-3 sm:mb-4">Physics</h3>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-1 sm:gap-0">
                   <div className="flex items-center space-x-2">
                     <span className="font-bold text-gray-900">AH</span>
-                    <span className="text-gray-600">Ali Hassan</span>
+                    <span className="text-gray-600 text-sm sm:text-base">Ali Hassan</span>
                   </div>
-                  <span className="text-gray-500 text-sm">5:30 PM - 7:00 PM</span>
+                  <span className="text-gray-500 text-xs sm:text-sm">5:30 PM - 7:00 PM</span>
                 </div>
-                <button className="w-full bg-white border border-blue-900 text-blue-900 py-3 px-4 rounded-lg font-medium hover:bg-blue-50 transition-colors">
+                <button className="w-full bg-white border border-blue-900 text-blue-900 py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-50 transition-colors">
                   View Details
                 </button>
               </div>
@@ -430,33 +431,33 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Activities */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 sm:mb-6 flex items-center">
             <Clock className="w-5 h-5 mr-2" />
             Recent Activities
           </h2>
 
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="space-y-6">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Mathematics Test Completed */}
-              <div className="flex items-start space-x-4">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
+              <div className="flex items-start space-x-3 sm:space-x-4">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-gray-900 text-base mb-1">Mathematics Test Completed</h3>
-                  <p className="text-sm text-gray-600">Ali • Score: 92% • 2 hours ago</p>
+                  <h3 className="font-bold text-gray-900 text-sm sm:text-base mb-1">Mathematics Test Completed</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">Ali • Score: 92% • 2 hours ago</p>
                 </div>
               </div>
 
               {/* New Session Scheduled */}
-              <div className="flex items-start space-x-4">
-                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-5 h-5 text-blue-600" />
+              <div className="flex items-start space-x-3 sm:space-x-4">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-gray-900 text-base mb-1">New Session Scheduled</h3>
-                  <p className="text-sm text-gray-600">Fatima • Chemistry • Tomorrow</p>
+                  <h3 className="font-bold text-gray-900 text-sm sm:text-base mb-1">New Session Scheduled</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">Fatima • Chemistry • Tomorrow</p>
                 </div>
               </div>
             </div>
@@ -464,25 +465,25 @@ const Dashboard = () => {
         </div>
 
           {/* Payment History */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-900">Payment History</h2>
               <button className="text-blue-900 hover:text-blue-800 text-sm font-medium">View All</button>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
               {paymentHistory.map((payment, index) => (
-                <div key={index} className={`p-4 ${
+                <div key={index} className={`p-3 sm:p-4 ${
                   index !== paymentHistory.length - 1 ? 'border-b border-gray-100' : ''
                 }`}>
-                  <div className="flex justify-between items-start">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0">
                     <div>
-                      <h3 className="font-bold text-gray-900 text-base mb-1">{payment.subject}</h3>
-                      <p className="text-sm text-gray-500">{payment.tutor}</p>
+                      <h3 className="font-bold text-gray-900 text-sm sm:text-base mb-0 sm:mb-1">{payment.subject}</h3>
+                      <p className="text-xs sm:text-sm text-gray-500">{payment.tutor}</p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm text-gray-400 mb-1">{payment.date}</p>
-                      <p className="font-bold text-gray-900">{payment.amount}</p>
+                    <div className="text-left sm:text-right">
+                      <p className="text-xs sm:text-sm text-gray-400 mb-0 sm:mb-1">{payment.date}</p>
+                      <p className="font-bold text-gray-900 text-sm sm:text-base">{payment.amount}</p>
                     </div>
                   </div>
                 </div>
@@ -491,24 +492,24 @@ const Dashboard = () => {
           </div>
 
           {/* Saved Tutors */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-900">Saved Tutors</h2>
               <button className="text-blue-900 hover:text-blue-800 text-sm font-medium">View All</button>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="grid grid-cols-3 gap-6">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
                 {savedTutors.map((tutor, index) => (
                   <div key={index} className="text-center">
-                    <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-3"></div>
-                    <h3 className="font-bold text-gray-900 text-sm mb-2">{tutor.name}</h3>
-                    <p className="text-xs text-gray-500 mb-2">{tutor.subjects.join(', ')}</p>
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-300 rounded-full mx-auto mb-2 sm:mb-3"></div>
+                    <h3 className="font-bold text-gray-900 text-xs sm:text-sm mb-1 sm:mb-2 truncate px-1">{tutor.name}</h3>
+                    <p className="text-xs text-gray-500 mb-1 sm:mb-2 truncate px-1">{tutor.subjects.join(', ')}</p>
                     <div className="flex items-center justify-center">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`w-3 h-3 ${
+                          className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${
                             i < Math.floor(tutor.rating) ? 'text-orange-400 fill-current' : 'text-gray-300'
                           }`}
                         />
@@ -522,7 +523,7 @@ const Dashboard = () => {
           </div>
 
           {/* Recent Messages */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-900">Recent Messages</h2>
               <button className="text-blue-900 hover:text-blue-800 text-sm font-medium">View All</button>
@@ -530,16 +531,16 @@ const Dashboard = () => {
 
             <div className="bg-white rounded-lg shadow-sm border border-gray-200">
               {recentMessages.map((message, index) => (
-                <div key={index} className={`p-4 flex items-center space-x-3 ${
+                <div key={index} className={`p-3 sm:p-4 flex items-center space-x-2 sm:space-x-3 ${
                   index !== recentMessages.length - 1 ? 'border-b border-gray-100' : ''
                 }`}>
-                  <div className="w-12 h-12 bg-gray-300 rounded-full flex-shrink-0"></div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-bold text-gray-900 text-sm">{message.name}</h3>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-300 rounded-full flex-shrink-0"></div>
+                  <div className="flex-1 min-w-0">  {/* min-width ensures proper text truncation */}
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0">
+                      <h3 className="font-bold text-gray-900 text-xs sm:text-sm truncate">{message.name}</h3>
                       <span className="text-xs text-gray-400">{message.time}</span>
                     </div>
-                    <p className="text-sm text-gray-500 mt-1">{message.message}</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-0 sm:mt-1 truncate">{message.message}</p>
                   </div>
                 </div>
               ))}
@@ -550,14 +551,14 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex overflow-x-hidden">
       <Sidebar 
         isMobileMenuOpen={isMobileMenuOpen} 
         setIsMobileMenuOpen={setIsMobileMenuOpen}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      <div className="flex-1 flex flex-col lg:ml-0">
+      <div className="flex-1 flex flex-col lg:ml-0 w-full">
         <DashboardHeader 
           parentName={parentName} 
           onMenuClick={() => setIsMobileMenuOpen(true)}
