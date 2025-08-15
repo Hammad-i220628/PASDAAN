@@ -37,6 +37,15 @@ interface IndividualStudentDashboardProps {
 
 const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashboardProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+  // Smooth scroll to top when component mounts
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, []);
   // Sample data for the individual student dashboard
   const myProgress = [
     { subject: 'Mathematics', test: 'Algebra Test', date: '12 Mar 2025', score: '92%', progress: 92 },
@@ -76,7 +85,7 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Blue Header with Student Welcome */}
-      <div className="bg-blue-900 text-white px-4 md:px-6 py-4">
+      <div className="bg-blue-900 text-white px-4 md:px-6 py-4 relative z-30">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <button onClick={onBack} className="p-2 hover:bg-blue-800 rounded-lg transition-colors mr-2 md:mr-4">
@@ -94,7 +103,7 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
         </div>
       </div>
 
-      <div className="flex">
+      <div className="flex min-h-screen">
         {/* Mobile backdrop */}
         {isMobileMenuOpen && (
           <div 
@@ -105,9 +114,9 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
         
         {/* Sidebar */}
         <div className={`
-          fixed lg:fixed lg:translate-x-0 transition-transform duration-300 ease-in-out
-          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
-          w-60 bg-white shadow-sm flex flex-col h-screen border-r border-gray-200 z-50 overflow-hidden
+          fixed lg:static lg:translate-x-0 transition-transform duration-300 ease-in-out
+          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          w-60 bg-white shadow-sm flex flex-col h-screen lg:h-auto border-r border-gray-200 z-50 overflow-hidden
           lg:flex top-0 left-0
         `}>
           {/* Mobile close button */}
@@ -182,7 +191,7 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 bg-white lg:ml-60">
+        <div className="flex-1 bg-white lg:ml-0 w-full lg:w-auto">
           <div className="p-4 sm:p-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Left Column */}
