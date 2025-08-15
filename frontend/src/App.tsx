@@ -23,6 +23,7 @@ import TutorProfile from './components/FindTutor/TutorProfile';
 import TutorAvailability from './components/FindTutor/TutorAvailability';
 import BookASession from './components/FindTutor/BookASession';
 import Dashboard from './components/TutorDashboard/Dashboard';
+import ParentDashboard from './components/ParentDashboard/Dashboard';
 
 // HomePage component
 const HomePage = () => (
@@ -41,11 +42,11 @@ const HomePage = () => (
 // AppContent component
 const AppContent = () => {
   const location = useLocation();
-  const hideFooter = location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/tutor-application' || location.pathname.startsWith('/tutor/') || location.pathname.startsWith('/tutor-availability/') || location.pathname.startsWith('/book-session/') || location.pathname === '/teacher-dashboard';
+  const hideFooter = location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/tutor-application' || location.pathname.startsWith('/tutor/') || location.pathname.startsWith('/tutor-availability/') || location.pathname.startsWith('/book-session/') || location.pathname === '/teacher-dashboard' || location.pathname === '/parent-dashboard';
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      {location.pathname !== '/teacher-dashboard' && <Header />}
+      {location.pathname !== '/teacher-dashboard' && location.pathname !== '/parent-dashboard' && <Header />}
       
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -63,6 +64,7 @@ const AppContent = () => {
         <Route path="/tutor-availability/:id" element={<TutorAvailability />} />
         <Route path="/book-session/:tutorId" element={<BookASession />} />
         <Route path="/teacher-dashboard" element={<Dashboard />} />
+        <Route path="/parent-dashboard" element={<ParentDashboard />} />
       </Routes>
       
       {!hideFooter && <Footer />}

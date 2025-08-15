@@ -27,6 +27,13 @@ const Login = () => {
       return;
     }
     
+    // Check for parent login credentials
+    if (formData.email === 'parent@gmail.com' && formData.password === 'parent') {
+      console.log('Parent login successful');
+      navigate('/parent-dashboard');
+      return;
+    }
+    
     console.log('Login form submitted:', { accountType, ...formData });
     // Add other login logic here
   };
