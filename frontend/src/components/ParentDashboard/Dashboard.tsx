@@ -39,11 +39,12 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
   const navigate = useNavigate();
 
   const menuItems = [
+    { icon: Home, label: 'Parent Dashboard', page: 'parent-dashboard' },
     { icon: Users, label: 'Find Tutors', page: 'find-tutors' },
+    { icon: User, label: 'Student Dashboard', page: 'student-dashboard' },
     { icon: BookOpen, label: 'My Bookings', page: 'bookings' },
     { icon: MessageSquare, label: 'Messages', page: 'messages' },
     { icon: CreditCard, label: 'Payments', page: 'payments' },
-    { icon: Home, label: 'Student Dashboard', page: 'dashboard' },
     { icon: Star, label: 'Add Review', page: 'add-review' },
     { icon: SettingsIcon, label: 'Settings', page: 'settings' },
   ];
@@ -80,10 +81,10 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
       
       {/* Sidebar */}
       <div className={`
-        fixed lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out
+        fixed lg:fixed lg:translate-x-0 transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         w-60 bg-white shadow-sm flex flex-col h-screen border-r border-gray-200 z-50 overflow-hidden
-        lg:flex
+        lg:flex top-0 left-0
       `}>
         {/* Mobile close button */}
         <div className="lg:hidden flex justify-end p-4 flex-shrink-0">
@@ -126,7 +127,7 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
           </nav>
 
           {/* Bottom Items */}
-          <div className="px-4 py-6 mt-6">
+          <div className="px-4 py-2">
             <div className="space-y-2">
               {bottomItems.map((item, index) => (
                 <a
@@ -191,7 +192,7 @@ const DashboardHeader = ({ parentName, onMenuClick }: DashboardHeaderProps) => {
 
 const Dashboard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState('parent-dashboard');
   const parentName = "Ahmed Malik"; // This would come from auth state
 
   // Sample data
@@ -287,6 +288,12 @@ const Dashboard = () => {
   const DashboardContent = () => {
   return (
       <main className="flex-1 p-3 sm:p-4 md:p-6 bg-gray-50 overflow-hidden">
+        {/* Page Title */}
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Parent Dashboard</h1>
+          <p className="text-gray-600 mt-2">Overview of your children's academic progress and activities</p>
+        </div>
+
         {/* Student Profiles Section */}
         <div className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
@@ -558,7 +565,7 @@ const Dashboard = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      <div className="flex-1 flex flex-col lg:ml-0 w-full">
+      <div className="flex-1 flex flex-col lg:ml-60 w-full">
         <DashboardHeader 
           parentName={parentName} 
           onMenuClick={() => setIsMobileMenuOpen(true)}

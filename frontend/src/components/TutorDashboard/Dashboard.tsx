@@ -80,9 +80,10 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
       
       {/* Sidebar */}
       <div className={`
-        fixed lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out
+        fixed lg:fixed lg:translate-x-0 transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         w-60 bg-white shadow-sm flex flex-col h-screen border-r border-gray-200 z-50 overflow-hidden
+        top-0 left-0
       `}>
         {/* Mobile close button */}
         <div className="lg:hidden flex justify-end p-4 flex-shrink-0">
@@ -175,25 +176,17 @@ interface DashboardHeaderProps {
 const DashboardHeader = ({ tutorName, onMenuClick }: DashboardHeaderProps) => {
   return (
     <div className="bg-blue-900 text-white px-4 md:px-8 py-4 md:py-6 mx-4 md:mx-6 mt-4 md:mt-6 rounded-lg">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center flex-1">
-          {/* Mobile menu button */}
-          <button 
-            onClick={onMenuClick}
-            className="lg:hidden mr-3 p-1 hover:bg-blue-800 rounded transition-colors"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <h1 className="text-sm sm:text-lg md:text-xl font-medium md:font-semibold truncate">
-            Welcome back, [Tutor Name]!
-          </h1>
-        </div>
-        <div className="bg-white text-blue-900 px-2 sm:px-3 md:px-4 py-1.5 md:py-2 rounded-full ml-2">
-          <div className="flex items-center space-x-1 sm:space-x-2">
-            <div className="w-6 sm:w-8 md:w-12 h-1.5 md:h-2 bg-green-500 rounded-full"></div>
-            <span className="text-xs md:text-sm font-medium hidden sm:inline">Online</span>
-          </div>
-        </div>
+      <div className="flex items-center">
+        {/* Mobile menu button */}
+        <button 
+          onClick={onMenuClick}
+          className="lg:hidden mr-3 p-1 hover:bg-blue-800 rounded transition-colors"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+        <h1 className="text-sm sm:text-lg md:text-xl font-medium md:font-semibold truncate">
+          Welcome back, [Tutor Name]!
+        </h1>
       </div>
       <p className="text-blue-100 mt-2 text-xs md:text-sm lg:ml-8">
         You have 3 upcoming sessions and 2 new booking requests today.
@@ -568,7 +561,7 @@ const Dashboard = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
-      <div className="flex-1 flex flex-col lg:ml-0">
+      <div className="flex-1 flex flex-col lg:ml-60">
         <DashboardHeader 
           tutorName={tutorName} 
           onMenuClick={() => setIsMobileMenuOpen(true)}
