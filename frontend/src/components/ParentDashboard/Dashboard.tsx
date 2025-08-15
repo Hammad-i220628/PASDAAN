@@ -26,6 +26,8 @@ import {
   User,
   DollarSign
 } from 'lucide-react';
+import StudentDashboard from '../StudentDashboard/Dashboard';
+import IndividualStudentDashboard from '../StudentDashboard/IndividualDashboard';
 
 // Sidebar Component
 interface SidebarProps {
@@ -52,6 +54,11 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
   const handleMenuClick = (page: string) => {
     setCurrentPage(page);
     setIsMobileMenuOpen(false);
+    
+    // Navigate to specific pages
+    if (page === 'find-tutors') {
+      navigate('/find-tutor?source=parent-dashboard');
+    }
   };
 
   const bottomItems = [
@@ -193,6 +200,7 @@ const DashboardHeader = ({ parentName, onMenuClick }: DashboardHeaderProps) => {
 const Dashboard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('parent-dashboard');
+  const [selectedIndividualStudent, setSelectedIndividualStudent] = useState<any>(null);
   const parentName = "Ahmed Malik"; // This would come from auth state
 
   // Sample data
@@ -284,9 +292,25 @@ const Dashboard = () => {
     { name: 'Zainab Iqbal', message: 'Hi, I will be sharing the session...', time: 'Yesterday' }
   ];
 
+  // If individual student is selected, render as completely separate page
+  if (selectedIndividualStudent) {
+    return (
+      <IndividualStudentDashboard 
+        student={selectedIndividualStudent} 
+        onBack={() => setSelectedIndividualStudent(null)}
+      />
+    );
+  }
+
   // Dashboard Content Component
   const DashboardContent = () => {
-  return (
+    // Render Student Dashboard if selected
+    if (currentPage === 'student-dashboard') {
+      return <StudentDashboard onStudentSelect={setSelectedIndividualStudent} />
+    }
+  
+    // Otherwise render Parent Dashboard
+    return (
       <main className="flex-1 p-3 sm:p-4 md:p-6 bg-gray-50 overflow-hidden">
         {/* Page Title */}
         <div className="mb-6 sm:mb-8">

@@ -131,6 +131,15 @@ const FindTutor = () => {
   // Show tutor results based on URL parameters or search
   const [showResults, setShowResults] = useState(false);
   
+  // Check if accessed from parent dashboard
+  const urlParams = new URLSearchParams(location.search);
+  const isFromParentDashboard = urlParams.get('source') === 'parent-dashboard';
+  
+  // Handle back button click
+  const handleBackClick = () => {
+    navigate('/parent-dashboard');
+  };
+  
   // Mock tutors data - replace with actual data from API
   const tutors = [
     {
@@ -344,8 +353,35 @@ const FindTutor = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Back Button - only show when coming from parent dashboard */}
+      {isFromParentDashboard && (
+        <div className="text-white py-4" style={{ backgroundColor: '#003366' }}>
+          <div className="px-4">
+            <button
+              onClick={handleBackClick}
+              className="flex items-center text-white hover:text-gray-200 transition-colors duration-200"
+            >
+              <svg 
+                className="w-5 h-5 mr-2" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18" 
+                />
+              </svg>
+              <span className="font-medium">Back to Parent Dashboard</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section className="text-white py-16" style={{ backgroundColor: '#003366' }}>
+      <section className="text-white py-8 md:py-16" style={{ backgroundColor: '#003366' }}>
         <div className="container mx-auto text-center px-4">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Browse Tutors</h1>
           <p className="text-sm sm:text-base md:text-lg mb-8 px-2">
