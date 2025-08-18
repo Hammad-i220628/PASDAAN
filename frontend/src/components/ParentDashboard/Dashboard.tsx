@@ -29,6 +29,7 @@ import {
 import StudentDashboard from '../StudentDashboard/Dashboard';
 import IndividualStudentDashboard from '../StudentDashboard/IndividualDashboard';
 import MyBookings from './MyBookings';
+import Messages from './Messages';
 
 // Sidebar Component
 interface SidebarProps {
@@ -313,6 +314,11 @@ const Dashboard = () => {
     // Render My Bookings if selected
     if (currentPage === 'bookings') {
       return <MyBookings />
+    }
+    
+    // Render Messages if selected
+    if (currentPage === 'messages') {
+      return <Messages />
     }
   
     // Otherwise render Parent Dashboard
