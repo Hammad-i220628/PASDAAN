@@ -1,15 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 
-const BookASession = () => {
+interface BookASessionProps {
+  onBack?: () => void;
+  bookingData?: {
+    tutorName?: string;
+    tutorInitials?: string;
+    subject?: string;
+    studentName?: string;
+  };
+}
+
+const BookASession: React.FC<BookASessionProps> = ({ onBack, bookingData }) => {
   const { tutorId } = useParams();
 
-  // Scroll to top when component mounts
+  // Scroll to top when component mounts and handle responsive behavior
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Handle window resize to adjust profile expansion
+    const handleResize = () => {
+      const isDesktop = window.innerWidth >= 1024;
+      setIsProfileExpanded(isDesktop);
+    };
+    
+    // Set initial state
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
-  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState(bookingData?.subject || '');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [currentMonth, setCurrentMonth] = useState(2); // March (0-indexed, so 2 = March)
   const [currentYear, setCurrentYear] = useState(2025);
@@ -20,12 +45,21 @@ const BookASession = () => {
   });
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('3:00 PM');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('EasyPaisa');
-  const [isProfileExpanded, setIsProfileExpanded] = useState(true);
+  
+  // Set initial profile expansion based on screen size
+  const [isProfileExpanded, setIsProfileExpanded] = useState(() => {
+    if (typeof window !== 'undefined') {
+      // Open on desktop (lg and above), closed on mobile
+      return window.innerWidth >= 1024;
+    }
+    return true; // Default to true for SSR
+  });
 
   // Mock tutor data - in real app, fetch based on tutorId
+  // Use bookingData if provided (from parent dashboard), otherwise use default
   const tutor = {
     id: tutorId,
-    name: "Ahmed Khan",
+    name: bookingData?.tutorName || "Ahmed Khan",
     title: "Mathematics, Physics Teacher",
     rating: 4.7,
     reviews: 102,
@@ -231,6 +265,18 @@ const BookASession = () => {
       
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Back Button - Only show when onBack prop is provided */}
+        {onBack && (
+          <div className="mb-6">
+            <button
+              onClick={onBack}
+              className="flex items-center space-x-2 text-blue-900 hover:text-blue-700 transition-colors duration-200"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="font-medium">Back to My Bookings</span>
+            </button>
+          </div>
+        )}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Sidebar - Tutor Profile */}
           <div className="lg:col-span-1">

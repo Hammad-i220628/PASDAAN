@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import StudentDashboard from '../StudentDashboard/Dashboard';
 import IndividualStudentDashboard from '../StudentDashboard/IndividualDashboard';
+import MyBookings from './MyBookings';
 
 // Sidebar Component
 interface SidebarProps {
@@ -307,6 +308,11 @@ const Dashboard = () => {
     // Render Student Dashboard if selected
     if (currentPage === 'student-dashboard') {
       return <StudentDashboard onStudentSelect={setSelectedIndividualStudent} />
+    }
+    
+    // Render My Bookings if selected
+    if (currentPage === 'bookings') {
+      return <MyBookings />
     }
   
     // Otherwise render Parent Dashboard
