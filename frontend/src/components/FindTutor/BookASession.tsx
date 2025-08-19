@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 
 interface BookASessionProps {
@@ -14,6 +14,7 @@ interface BookASessionProps {
 
 const BookASession: React.FC<BookASessionProps> = ({ onBack, bookingData }) => {
   const { tutorId } = useParams();
+  const navigate = useNavigate();
 
   // Scroll to top when component mounts and handle responsive behavior
   useEffect(() => {
@@ -34,8 +35,8 @@ const BookASession: React.FC<BookASessionProps> = ({ onBack, bookingData }) => {
     // Cleanup
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  const [selectedSubject, setSelectedSubject] = useState(bookingData?.subject || '');
-  const [selectedLevel, setSelectedLevel] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState(bookingData?.subject || 'Mathematics');
+  const [selectedLevel, setSelectedLevel] = useState('O Levels');
   const [currentMonth, setCurrentMonth] = useState(2); // March (0-indexed, so 2 = March)
   const [currentYear, setCurrentYear] = useState(2025);
   const [selectedDate, setSelectedDate] = useState<{day: number, month: number, year: number} | null>({
@@ -197,6 +198,39 @@ const BookASession: React.FC<BookASessionProps> = ({ onBack, bookingData }) => {
 
   const sessionDuration = 1; // hours
   const totalCost = tutor.hourlyRate * sessionDuration;
+
+  const handlePayNow = () => {
+    console.log('Pay Now button clicked!'); // Debug log
+    console.log('Form validation:', {
+      selectedDate,
+      selectedSubject,
+      selectedLevel,
+      selectedTimeSlot
+    });
+    
+    // Check if all required fields are filled
+    if (!selectedDate || !selectedSubject || !selectedLevel || !selectedTimeSlot) {
+      alert('Please fill in all required fields before proceeding to payment.');
+      return;
+    }
+    
+    // Navigate to payment page with booking data
+    const paymentData = {
+      tutorName: tutor.name,
+      subject: selectedSubject,
+      date: selectedDate ? `${selectedDate.year}-${selectedDate.month + 1}-${selectedDate.day}, ${selectedTimeSlot}` : '',
+      timeSlot: selectedTimeSlot,
+      duration: sessionDuration,
+      hourlyRate: tutor.hourlyRate,
+      // Pass information about whether this came from parent dashboard
+      fromParentDashboard: !!onBack
+    };
+    
+    console.log('Payment data:', paymentData); // Debug log
+    console.log('Navigating to /payment...'); // Debug log
+    
+    navigate('/payment', { state: paymentData });
+  };
 
   return (
     <>
@@ -647,6 +681,7 @@ const BookASession: React.FC<BookASessionProps> = ({ onBack, bookingData }) => {
 
                 {/* Pay Now Button */}
                 <button 
+                  onClick={handlePayNow}
                   className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md ultra-smooth hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:scale-100"
                   disabled={!selectedDate || !selectedSubject || !selectedLevel || !selectedTimeSlot}
                 >

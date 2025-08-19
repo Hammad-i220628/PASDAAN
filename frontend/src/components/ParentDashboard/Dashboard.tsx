@@ -30,6 +30,7 @@ import StudentDashboard from '../StudentDashboard/Dashboard';
 import IndividualStudentDashboard from '../StudentDashboard/IndividualDashboard';
 import MyBookings from './MyBookings';
 import Messages from './Messages';
+import MyReviews from './MyReviews';
 
 // Sidebar Component
 interface SidebarProps {
@@ -48,7 +49,6 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen, currentPage, setCurren
     { icon: User, label: 'Student Dashboard', page: 'student-dashboard' },
     { icon: BookOpen, label: 'My Bookings', page: 'bookings' },
     { icon: MessageSquare, label: 'Messages', page: 'messages' },
-    { icon: CreditCard, label: 'Payments', page: 'payments' },
     { icon: Star, label: 'Add Review', page: 'add-review' },
     { icon: SettingsIcon, label: 'Settings', page: 'settings' },
   ];
@@ -319,6 +319,11 @@ const Dashboard = () => {
     // Render Messages if selected
     if (currentPage === 'messages') {
       return <Messages />
+    }
+    
+    // Render My Reviews if selected
+    if (currentPage === 'add-review') {
+      return <MyReviews />
     }
   
     // Otherwise render Parent Dashboard
