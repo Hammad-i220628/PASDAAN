@@ -32,6 +32,7 @@ import MyBookings from './MyBookings';
 import Messages from './Messages';
 import MyReviews from './MyReviews';
 import Settings from './Settings';
+import HelpSupport from './HelpSupport';
 
 // Sidebar Component
 interface SidebarProps {
@@ -330,6 +331,11 @@ const Dashboard = () => {
     // Render Settings if selected
     if (currentPage === 'settings') {
       return <Settings />
+    }
+    
+    // Render Help & Support if selected
+    if (currentPage === 'help') {
+      return <HelpSupport />
     }
   
     // Otherwise render Parent Dashboard
