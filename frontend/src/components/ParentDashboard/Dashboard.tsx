@@ -31,6 +31,7 @@ import IndividualStudentDashboard from '../StudentDashboard/IndividualDashboard'
 import MyBookings from './MyBookings';
 import Messages from './Messages';
 import MyReviews from './MyReviews';
+import Settings from './Settings';
 
 // Sidebar Component
 interface SidebarProps {
@@ -324,6 +325,11 @@ const Dashboard = () => {
     // Render My Reviews if selected
     if (currentPage === 'add-review') {
       return <MyReviews />
+    }
+    
+    // Render Settings if selected
+    if (currentPage === 'settings') {
+      return <Settings />
     }
   
     // Otherwise render Parent Dashboard
