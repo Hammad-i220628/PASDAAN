@@ -1212,36 +1212,7 @@ const Settings = () => {
 
           {/* Tabs */}
           <div className="border-b border-gray-200 mb-6 sm:mb-8 -mx-3 sm:-mx-4 lg:mx-0 overflow-hidden">
-            {/* Mobile view - wrap tabs in multiple lines */}
-            <div className="block sm:hidden px-3">
-              {/* First line - first 4 tabs */}
-              <div className="flex overflow-x-auto scrollbar-hide mb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {tabs.slice(0, 4).map((tab) => (
-                  <TabButton
-                    key={tab}
-                    active={activeTab === tab}
-                    onClick={() => setActiveTab(tab)}
-                  >
-                    {tab}
-                  </TabButton>
-                ))}
-              </div>
-              {/* Second line - remaining tabs */}
-              <div className="flex overflow-x-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {tabs.slice(4).map((tab) => (
-                  <TabButton
-                    key={tab}
-                    active={activeTab === tab}
-                    onClick={() => setActiveTab(tab)}
-                  >
-                    {tab}
-                  </TabButton>
-                ))}
-              </div>
-            </div>
-            
-            {/* Desktop view - single line */}
-            <div className="hidden sm:flex overflow-x-auto scrollbar-hide px-0 sm:px-4 lg:px-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="flex overflow-x-auto scrollbar-hide px-3 sm:px-4 lg:px-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {tabs.map((tab) => (
                 <TabButton
                   key={tab}
