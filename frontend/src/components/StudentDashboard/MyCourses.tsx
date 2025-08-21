@@ -138,8 +138,8 @@ const MyCourses: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Blue Header with Student Welcome */}
-      <div className="bg-blue-900 text-white px-4 md:px-6 py-4 relative z-30">
+      {/* Blue Header with Student Welcome - Fixed */}
+      <div className="bg-blue-900 text-white px-4 md:px-6 py-4 fixed top-0 left-0 right-0 z-30">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <button onClick={handleBackToParent} className="p-2 hover:bg-blue-800 rounded-lg transition-colors mr-2 md:mr-4">
@@ -157,16 +157,18 @@ const MyCourses: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex min-h-screen">
-        <StudentSidebar
-          studentId={studentId}
-          isMobileMenuOpen={isMobileMenuOpen}
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-        />
+      {/* Add top padding to account for fixed header */}
+      <div className="pt-16">
+        <div className="flex min-h-screen">
+          <StudentSidebar
+            studentId={studentId}
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+          />
 
-        {/* Main Content */}
-        <div className="flex-1 bg-white lg:ml-0 w-full lg:w-auto">
-          <div className="p-4 sm:p-6">
+          {/* Main Content */}
+          <div className="flex-1 bg-white w-full lg:pl-60">
+            <div className="p-4 sm:p-6">
             {/* Page header */}
             <div className="mb-6 sm:mb-8">
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Courses</h1>
@@ -311,6 +313,7 @@ const MyCourses: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
     </div>
   );
 };

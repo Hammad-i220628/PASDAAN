@@ -85,8 +85,8 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Blue Header with Student Welcome */}
-      <div className="bg-blue-900 text-white px-4 md:px-6 py-4 relative z-30">
+      {/* Blue Header with Student Welcome - Fixed */}
+      <div className="bg-blue-900 text-white px-4 md:px-6 py-4 fixed top-0 left-0 right-0 z-30">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <button onClick={onBack} className="p-2 hover:bg-blue-800 rounded-lg transition-colors mr-2 md:mr-4">
@@ -104,16 +104,18 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
         </div>
       </div>
 
-      <div className="flex min-h-screen">
-        <StudentSidebar
-          studentId={String(student.id)}
-          isMobileMenuOpen={isMobileMenuOpen}
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-        />
+      {/* Add top padding to account for fixed header */}
+      <div className="pt-16">
+        <div className="flex min-h-screen">
+          <StudentSidebar
+            studentId={String(student.id)}
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+          />
 
-        {/* Main Content */}
-        <div className="flex-1 bg-white lg:ml-0 w-full lg:w-auto">
-          <div className="p-4 sm:p-6">
+          {/* Main Content */}
+          <div className="flex-1 bg-white w-full lg:pl-60">
+            <div className="p-4 sm:p-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Left Column */}
               <div className="lg:col-span-2 space-y-4 sm:space-y-6">
@@ -354,6 +356,7 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
                   </div>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>

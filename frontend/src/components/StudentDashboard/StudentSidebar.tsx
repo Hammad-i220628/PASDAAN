@@ -41,10 +41,10 @@ const StudentSidebar: React.FC<StudentSidebarProps> = ({
       isActive: location.pathname === `/student-dashboard/${studentId}/courses`
     },
     {
-      href: '#',
+      href: studentId ? `/student-dashboard/${studentId}/homework` : '#',
       icon: User,
       label: 'Home Work',
-      isActive: false
+      isActive: location.pathname === `/student-dashboard/${studentId}/homework`
     },
     {
       href: '#',
@@ -78,10 +78,10 @@ const StudentSidebar: React.FC<StudentSidebarProps> = ({
       
       {/* Sidebar */}
       <div className={`
-        fixed lg:static lg:translate-x-0 transition-transform duration-300 ease-in-out
+        fixed lg:fixed lg:translate-x-0 transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        w-60 bg-white shadow-sm flex flex-col h-screen lg:h-auto border-r border-gray-200 z-50 overflow-hidden
-        lg:flex top-0 left-0
+        w-60 bg-white shadow-sm flex flex-col h-screen border-r border-gray-200 z-40 overflow-hidden
+        lg:flex top-16 lg:top-16 left-0
       `}>
         {/* Mobile close button */}
         <div className="lg:hidden flex justify-end p-4 flex-shrink-0">
@@ -130,10 +130,6 @@ const StudentSidebar: React.FC<StudentSidebarProps> = ({
                 <HelpCircle className="w-5 h-5 mr-3" />
                 <span>Help & Support</span>
               </a>
-              <button className="w-full flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium text-blue-900 hover:bg-blue-50 text-left" onClick={() => setIsMobileMenuOpen(false)}>
-                <LogOut className="w-5 h-5 mr-3" />
-                <span>Logout</span>
-              </button>
             </div>
           </div>
           
