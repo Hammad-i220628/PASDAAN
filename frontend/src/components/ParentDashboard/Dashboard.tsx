@@ -206,6 +206,18 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState('parent-dashboard');
   const [selectedIndividualStudent, setSelectedIndividualStudent] = useState<any>(null);
   const parentName = "Ahmed Malik"; // This would come from auth state
+  const navigate = useNavigate();
+
+  // Check URL parameters to set initial page
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get('section');
+    if (section) {
+      setCurrentPage(section);
+      // Clean up URL by removing the query parameter
+      navigate('/parent-dashboard', { replace: true });
+    }
+  }, [navigate]);
 
   // Sample data
   const studentProfiles = [
@@ -423,7 +435,10 @@ const Dashboard = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <button className="flex-1 bg-blue-900 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-800 transition-colors">
+                  <button 
+                    onClick={() => setSelectedIndividualStudent(student)}
+                    className="flex-1 bg-blue-900 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-800 transition-colors"
+                  >
                     View Progress
                   </button>
                   <button className="flex-1 bg-white border border-blue-900 text-blue-900 py-2 sm:py-3 px-3 sm:px-4 rounded-lg text-sm sm:text-base font-medium hover:bg-blue-50 transition-colors">

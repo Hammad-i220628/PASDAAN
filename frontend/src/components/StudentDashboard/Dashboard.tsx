@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Users,
   BookOpen,
@@ -17,6 +18,8 @@ interface StudentDashboardProps {
 
 const StudentDashboard = ({ onStudentSelect }: StudentDashboardProps) => {
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
+  const { studentId } = useParams();
+  const navigate = useNavigate();
 
   // Sample data for the students
   const studentProfiles = [
@@ -52,15 +55,31 @@ const StudentDashboard = ({ onStudentSelect }: StudentDashboardProps) => {
     if (onStudentSelect) {
       onStudentSelect(student);
     } else {
-      setSelectedStudent(student);
+      navigate(`/student-dashboard/${student.id}`);
     }
   };
 
   const handleBackToList = () => {
-    setSelectedStudent(null);
+    // Navigate to parent dashboard with student-dashboard section active
+    navigate('/parent-dashboard?section=student-dashboard');
   };
 
-  // If a student is selected and no parent callback, show their individual dashboard
+  // Effect to handle URL parameter changes
+  useEffect(() => {
+    if (studentId && !onStudentSelect) {
+      const student = studentProfiles.find(s => s.id.toString() === studentId);
+      if (student) {
+        setSelectedStudent(student);
+      } else {
+        // If student not found, redirect to dashboard home
+        navigate('/student-dashboard');
+      }
+    } else if (!studentId) {
+      setSelectedStudent(null);
+    }
+  }, [studentId, navigate, onStudentSelect]);
+
+  // If a student is selected (via URL or internal state), show their individual dashboard
   if (selectedStudent && !onStudentSelect) {
     return (
       <IndividualStudentDashboard 

@@ -17,6 +17,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import StudentSidebar from './StudentSidebar';
 
 interface IndividualStudentDashboardProps {
   student: {
@@ -104,91 +105,11 @@ const IndividualStudentDashboard = ({ student, onBack }: IndividualStudentDashbo
       </div>
 
       <div className="flex min-h-screen">
-        {/* Mobile backdrop */}
-        {isMobileMenuOpen && (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-        )}
-        
-        {/* Sidebar */}
-        <div className={`
-          fixed lg:static lg:translate-x-0 transition-transform duration-300 ease-in-out
-          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          w-60 bg-white shadow-sm flex flex-col h-screen lg:h-auto border-r border-gray-200 z-50 overflow-hidden
-          lg:flex top-0 left-0
-        `}>
-          {/* Mobile close button */}
-          <div className="lg:hidden flex justify-end p-4 flex-shrink-0">
-            <button 
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-gray-100"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          {/* Logo */}
-          <div className="p-6 pb-4 flex-shrink-0 flex justify-center">
-            <img 
-              src="/logo.png" 
-              alt="PASDAAN" 
-              className="h-8 w-auto"
-            />
-          </div>
-
-          {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto lg:overflow-hidden overflow-x-hidden scrollbar-hide">
-            {/* Menu Items */}
-            <nav className="px-4 space-y-2">
-              <a
-                href="#"
-                className="flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium bg-blue-900 text-white"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Home className="w-5 h-5 mr-3" />
-                <span>Student Dashboard</span>
-              </a>
-              <a href="#" className="flex items-center px-3 py-3 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                <BookOpen className="w-5 h-5 mr-3" />
-                <span>My Courses</span>
-              </a>
-              <a href="#" className="flex items-center px-3 py-3 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                <User className="w-5 h-5 mr-3" />
-                <span>Home Work</span>
-              </a>
-              <a href="#" className="flex items-center px-3 py-3 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                <Calendar className="w-5 h-5 mr-3" />
-                <span>Schedule</span>
-              </a>
-              <a href="#" className="flex items-center px-3 py-3 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                <Clock className="w-5 h-5 mr-3" />
-                <span>Results</span>
-              </a>
-              <a href="#" className="flex items-center px-3 py-3 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                <MessageSquare className="w-5 h-5 mr-3" />
-                <span>Messages</span>
-              </a>
-            </nav>
-
-            {/* Bottom Items */}
-            <div className="px-4 py-2">
-              <div className="space-y-2">
-                <a href="#" className="flex items-center px-3 py-3 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
-                  <HelpCircle className="w-5 h-5 mr-3" />
-                  <span>Help & Support</span>
-                </a>
-                <button className="w-full flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium text-blue-900 hover:bg-blue-50 text-left" onClick={() => setIsMobileMenuOpen(false)}>
-                  <LogOut className="w-5 h-5 mr-3" />
-                  <span>Logout</span>
-                </button>
-              </div>
-            </div>
-            
-            {/* Bottom padding for better scroll experience */}
-            <div className="h-6"></div>
-          </div>
-        </div>
+        <StudentSidebar
+          studentId={String(student.id)}
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+        />
 
         {/* Main Content */}
         <div className="flex-1 bg-white lg:ml-0 w-full lg:w-auto">
