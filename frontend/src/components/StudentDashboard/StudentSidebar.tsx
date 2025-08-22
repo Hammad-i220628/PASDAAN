@@ -126,7 +126,15 @@ const StudentSidebar: React.FC<StudentSidebarProps> = ({
           {/* Bottom Items */}
           <div className="px-4 py-2">
             <div className="space-y-2">
-              <a href="#" className="flex items-center px-3 py-3 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>
+              <a 
+                href={studentId ? `/student-dashboard/${studentId}/help-support` : '#'} 
+                className={`flex items-center px-3 py-3 rounded-lg transition-colors text-sm font-medium ${
+                  location.pathname === `/student-dashboard/${studentId}/help-support`
+                    ? 'bg-blue-900 text-white' 
+                    : 'text-blue-900 hover:bg-blue-50'
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
                 <HelpCircle className="w-5 h-5 mr-3" />
                 <span>Help & Support</span>
               </a>
