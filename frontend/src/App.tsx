@@ -28,6 +28,7 @@ import ParentDashboard from './components/ParentDashboard/Dashboard';
 import StudentDashboard from './components/StudentDashboard/Dashboard';
 import MyCourses from './components/StudentDashboard/MyCourses';
 import Homework from './components/StudentDashboard/Homework';
+import Messages from './components/StudentDashboard/Messages';
 
 // HomePage component
 const HomePage = () => (
@@ -75,6 +76,7 @@ const AppContent = () => {
         <Route path="/student-dashboard/:studentId" element={<StudentDashboard />} />
         <Route path="/student-dashboard/:studentId/courses" element={<MyCourses />} />
         <Route path="/student-dashboard/:studentId/homework" element={<Homework />} />
+        <Route path="/student-dashboard/:studentId/messages" element={<Messages />} />
       </Routes>
       
       {!hideFooter && <Footer />}

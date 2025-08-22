@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { 
   Search, 
   Paperclip, 
   Send,
-  ArrowLeft
+  ArrowLeft,
+  BookOpen,
+  Clock,
+  CheckCircle,
+  ChevronRight,
+  Menu
 } from 'lucide-react';
+import StudentSidebar from './StudentSidebar';
 
 // Types for messages and contacts
 interface Contact {
@@ -17,6 +24,7 @@ interface Contact {
   unreadCount?: number;
   role: 'tutor';
   subject?: string;
+  rating: number;
 }
 
 interface Message {
@@ -25,6 +33,7 @@ interface Message {
   timestamp: string;
   isFromUser: boolean;
   sender: string;
+  type?: 'text' | 'homework' | 'announcement';
 }
 
 interface Conversation {
@@ -32,48 +41,53 @@ interface Conversation {
   messages: Message[];
 }
 
-// Sample data - Parent's conversations with tutors
+// Sample data - Student's conversations with tutors
 const contacts: Contact[] = [
   {
     id: '1',
-    name: 'Fatima Khan',
-    initials: 'FK',
-    lastMessage: 'Ali did great in today\'s session!',
-    timeAgo: '2 min ago',
+    name: 'Farhan Ahmad',
+    initials: 'FA',
+    lastMessage: 'Great work on today\'s calculus problems!',
+    timeAgo: '5 min ago',
     isOnline: true,
-    unreadCount: 1,
+    unreadCount: 2,
     role: 'tutor',
-    subject: 'Mathematics'
+    subject: 'Mathematics',
+    rating: 4.9
   },
   {
     id: '2',
-    name: 'Ali Hassan',
-    initials: 'AH',
-    lastMessage: 'Please review the homework problems...',
-    timeAgo: '1h ago',
-    isOnline: false,
-    role: 'tutor',
-    subject: 'Physics'
-  },
-  {
-    id: '3',
-    name: 'Zainab Iqbal',
-    initials: 'ZI',
-    lastMessage: 'Hi, I will be sharing the session notes...',
+    name: 'Aisha Khan',
+    initials: 'AK',
+    lastMessage: 'Don\'t forget to review the physics formulas...',
     timeAgo: '1h ago',
     isOnline: true,
     role: 'tutor',
-    subject: 'English'
+    subject: 'Physics',
+    rating: 4.8
   },
   {
-    id: '4',
-    name: 'Dr. Usman Ahmad',
-    initials: 'UA',
-    lastMessage: 'Fatima is making excellent progress',
+    id: '3',
+    name: 'Imran Siddiqui',
+    initials: 'IS',
+    lastMessage: 'I\'ve attached the essay guidelines',
     timeAgo: '2h ago',
     isOnline: false,
     role: 'tutor',
-    subject: 'Chemistry'
+    subject: 'English',
+    rating: 4.6
+  },
+  {
+    id: '4',
+    name: 'Dr. Sarah Ahmed',
+    initials: 'SA',
+    lastMessage: 'Your chemistry lab report was excellent!',
+    timeAgo: '3h ago',
+    isOnline: false,
+    unreadCount: 1,
+    role: 'tutor',
+    subject: 'Chemistry',
+    rating: 4.7
   }
 ];
 
@@ -83,38 +97,47 @@ const conversations: { [key: string]: Conversation } = {
     messages: [
       {
         id: '1',
-        content: 'Hello! How did Ali\'s session go today?',
+        content: 'Hi Mr. Farhan! I need help with the derivative problems from today\'s class.',
         timestamp: '2:00 PM',
         isFromUser: true,
-        sender: 'Ahmed Malik'
+        sender: 'Ali'
       },
       {
         id: '2',
-        content: 'Hi Ahmed! Ali did wonderful today. He\'s really grasping the calculus concepts well.',
+        content: 'Of course! Which specific problems are you struggling with?',
         timestamp: '2:05 PM',
         isFromUser: false,
-        sender: 'Fatima Khan'
+        sender: 'Farhan Ahmad'
       },
       {
         id: '3',
-        content: 'We worked on derivatives and he solved most problems independently.',
-        timestamp: '2:06 PM',
-        isFromUser: false,
-        sender: 'Fatima Khan'
+        content: 'Problems 15-17 from Chapter 4. I\'m confused about the chain rule.',
+        timestamp: '2:07 PM',
+        isFromUser: true,
+        sender: 'Ali'
       },
       {
         id: '4',
-        content: 'That\'s excellent news! Thank you for your dedication.',
+        content: 'No problem! Remember: if you have f(g(x)), the derivative is f\'(g(x)) × g\'(x). Let\'s work through problem 15 together.',
         timestamp: '2:10 PM',
-        isFromUser: true,
-        sender: 'Ahmed Malik'
+        isFromUser: false,
+        sender: 'Farhan Ahmad'
       },
       {
         id: '5',
-        content: 'Ali did great in today\'s session!',
+        content: 'Great work on today\'s calculus problems!',
         timestamp: '4:30 PM',
         isFromUser: false,
-        sender: 'Fatima Khan'
+        sender: 'Farhan Ahmad',
+        type: 'announcement'
+      },
+      {
+        id: '6',
+        content: 'Complete exercises 18-25 for homework. Due tomorrow before our session.',
+        timestamp: '4:32 PM',
+        isFromUser: false,
+        sender: 'Farhan Ahmad',
+        type: 'homework'
       }
     ]
   },
@@ -123,24 +146,31 @@ const conversations: { [key: string]: Conversation } = {
     messages: [
       {
         id: '1',
-        content: 'Hi! I\'ve assigned some physics problems for Fatima to practice.',
+        content: 'Hi Miss Aisha! When is our next physics session?',
         timestamp: '1:00 PM',
-        isFromUser: false,
-        sender: 'Ali Hassan'
+        isFromUser: true,
+        sender: 'Ali'
       },
       {
         id: '2',
-        content: 'Please review the homework problems I sent via email.',
+        content: 'Hello Ali! Our next session is tomorrow at 6:00 PM. We\'ll be covering electromagnetism.',
         timestamp: '1:05 PM',
         isFromUser: false,
-        sender: 'Ali Hassan'
+        sender: 'Aisha Khan'
       },
       {
         id: '3',
-        content: 'Thank you! I\'ll make sure she reviews them before the next session.',
+        content: 'Don\'t forget to review the physics formulas I shared last week.',
+        timestamp: '1:10 PM',
+        isFromUser: false,
+        sender: 'Aisha Khan'
+      },
+      {
+        id: '4',
+        content: 'Sure! I\'ll review them tonight. Thank you!',
         timestamp: '1:15 PM',
         isFromUser: true,
-        sender: 'Ahmed Malik'
+        sender: 'Ali'
       }
     ]
   },
@@ -149,17 +179,25 @@ const conversations: { [key: string]: Conversation } = {
     messages: [
       {
         id: '1',
-        content: 'Hi, I will be sharing the session notes and reading materials for Ali.',
+        content: 'Mr. Imran, I finished the essay draft you assigned.',
         timestamp: '12:00 PM',
-        isFromUser: false,
-        sender: 'Zainab Iqbal'
+        isFromUser: true,
+        sender: 'Ali'
       },
       {
         id: '2',
-        content: 'Perfect! He\'s been asking for extra reading materials.',
+        content: 'Excellent! Please email it to me, and I\'ll review it before our next session.',
         timestamp: '12:05 PM',
-        isFromUser: true,
-        sender: 'Ahmed Malik'
+        isFromUser: false,
+        sender: 'Imran Siddiqui'
+      },
+      {
+        id: '3',
+        content: 'I\'ve attached the essay guidelines for your next assignment.',
+        timestamp: '12:10 PM',
+        isFromUser: false,
+        sender: 'Imran Siddiqui',
+        type: 'homework'
       }
     ]
   },
@@ -168,29 +206,85 @@ const conversations: { [key: string]: Conversation } = {
     messages: [
       {
         id: '1',
-        content: 'Fatima is making excellent progress in chemistry.',
+        content: 'Dr. Sarah, I submitted my chemistry lab report.',
         timestamp: '10:00 AM',
-        isFromUser: false,
-        sender: 'Dr. Usman Ahmad'
+        isFromUser: true,
+        sender: 'Ali'
       },
       {
         id: '2',
-        content: 'Thank you Dr. Usman! We really appreciate your teaching methods.',
+        content: 'Your chemistry lab report was excellent! Well done on the analysis section.',
         timestamp: '10:30 AM',
+        isFromUser: false,
+        sender: 'Dr. Sarah Ahmed'
+      },
+      {
+        id: '3',
+        content: 'Thank you so much! Chemistry is becoming my favorite subject.',
+        timestamp: '10:35 AM',
         isFromUser: true,
-        sender: 'Ahmed Malik'
+        sender: 'Ali'
       }
     ]
   }
 };
 
-const Messages = () => {
+const Messages: React.FC = () => {
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [newMessage, setNewMessage] = useState('');
   const [isMobileView, setIsMobileView] = useState(false);
   const [conversationData, setConversationData] = useState<{ [key: string]: Conversation }>(conversations);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { studentId } = useParams();
+  const navigate = useNavigate();
+
+  // Sample student data to get student info
+  const studentProfiles = [
+    {
+      id: 1,
+      name: 'Ali',
+      grade: 'Grade 8 • Age 13',
+      school: 'City School North Campus',
+      avatar: 'A'
+    },
+    {
+      id: 2,
+      name: 'Fatima',
+      grade: 'Grade 10 • Age 16',
+      school: 'Beaconhouse School',
+      avatar: 'F'
+    }
+  ];
+
+  const currentStudent = studentProfiles.find(s => s.id.toString() === studentId);
+
+  // Smooth scroll to top when component mounts
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    
+    // Redirect to student dashboard if no studentId
+    if (!studentId) {
+      navigate('/student-dashboard');
+    }
+  }, [studentId, navigate]);
+
+  const handleBackToParent = () => {
+    navigate('/parent-dashboard?section=student-dashboard');
+  };
+
+  if (!currentStudent) {
+    // If student not found, redirect to parent dashboard
+    React.useEffect(() => {
+      navigate('/parent-dashboard');
+    }, [navigate]);
+    return null;
+  }
 
   // Filter contacts based on search query
   const filteredContacts = contacts.filter(contact =>
@@ -231,7 +325,7 @@ const Messages = () => {
         content: newMessage.trim(),
         timestamp: timeString,
         isFromUser: true,
-        sender: 'Ahmed Malik'
+        sender: currentStudent?.name || 'Ali'
       };
 
       // Update the conversation data
@@ -285,9 +379,12 @@ const Messages = () => {
         </div>
         <div className="flex items-center justify-between mt-1">
           <span className="text-xs text-blue-600 font-medium">{contact.subject} Tutor</span>
-          {contact.isOnline && (
-            <span className="text-xs text-green-600">Online</span>
-          )}
+          <div className="flex items-center space-x-2">
+            <span className="text-xs text-yellow-600">★ {contact.rating}</span>
+            {contact.isOnline && (
+              <span className="text-xs text-green-600">Online</span>
+            )}
+          </div>
         </div>
       </div>
       {contact.unreadCount && (
@@ -308,28 +405,80 @@ const Messages = () => {
       <div className={`max-w-[280px] sm:max-w-xs lg:max-w-md xl:max-w-lg px-3 sm:px-4 py-2 rounded-lg ${
         message.isFromUser 
           ? 'bg-blue-900 text-white ml-auto' 
+          : message.type === 'homework'
+          ? 'bg-orange-50 border-2 border-orange-200 text-gray-900 shadow-sm'
+          : message.type === 'announcement'
+          ? 'bg-green-50 border-2 border-green-200 text-gray-900 shadow-sm'
           : 'bg-white border border-gray-200 text-gray-900 shadow-sm'
       }`}>
+        {/* Message type indicator */}
+        {message.type === 'homework' && (
+          <div className="flex items-center mb-1">
+            <BookOpen className="w-3 h-3 text-orange-600 mr-1" />
+            <span className="text-xs font-medium text-orange-600">Homework Assignment</span>
+          </div>
+        )}
+        {message.type === 'announcement' && (
+          <div className="flex items-center mb-1">
+            <CheckCircle className="w-3 h-3 text-green-600 mr-1" />
+            <span className="text-xs font-medium text-green-600">Announcement</span>
+          </div>
+        )}
+        
         <p className="text-sm break-words">{message.content}</p>
-        <p className={`text-xs mt-1 ${message.isFromUser ? 'text-blue-100' : 'text-gray-500'}`}>
+        <p className={`text-xs mt-1 ${
+          message.isFromUser ? 'text-blue-100' : 
+          message.type ? 'text-gray-600' : 'text-gray-500'
+        }`}>
           {message.timestamp}
         </p>
       </div>
       {message.isFromUser && (
         <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-green-600 flex items-center justify-center text-white text-xs sm:text-sm font-semibold ml-2 sm:ml-3 flex-shrink-0">
-          AM
+          {currentStudent?.name?.charAt(0) || 'A'}
         </div>
       )}
     </div>
   );
 
   return (
-    <main className="flex-1 p-3 sm:p-4 md:p-6 bg-gray-50">
-      {/* Page Header */}
-      <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Messages</h1>
-        <p className="text-gray-600 mt-2">Chat with your children's tutors</p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Blue Header with Student Welcome - Fixed */}
+      <div className="bg-blue-900 text-white px-4 md:px-6 py-4 fixed top-0 left-0 right-0 z-30">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <button onClick={handleBackToParent} className="p-2 hover:bg-blue-800 rounded-lg transition-colors mr-2 md:mr-4">
+              <ChevronRight className="w-5 h-5 rotate-180" />
+            </button>
+            <h1 className="text-lg md:text-xl font-bold">Welcome back, {currentStudent.name}!</h1>
+          </div>
+          {/* Mobile menu button */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="lg:hidden p-2 hover:bg-blue-800 rounded-lg transition-colors"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        </div>
       </div>
+
+      {/* Add top padding to account for fixed header */}
+      <div className="pt-16">
+        <div className="flex min-h-screen">
+          <StudentSidebar
+            studentId={studentId}
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+          />
+
+          {/* Main Content */}
+          <div className="flex-1 bg-white w-full lg:pl-60">
+            <div className="p-4 sm:p-6">
+              {/* Page header */}
+              <div className="mb-6 sm:mb-8">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Messages</h1>
+                <p className="text-gray-600 mt-2">Chat with your tutors</p>
+              </div>
 
       <div className="bg-white rounded-lg shadow-sm flex" style={{ height: 'calc(100vh - 200px)' }}>
         {/* Contacts Sidebar */}
@@ -338,8 +487,6 @@ const Messages = () => {
         }`}>
           {/* Header */}
           <div className="p-3 sm:p-4 border-b border-gray-200">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Messages</h2>
-            
             {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -386,7 +533,11 @@ const Messages = () => {
                   </div>
                   <div className="ml-3">
                     <h2 className="text-lg font-semibold text-gray-900">{selectedContact.name}</h2>
-                    <p className="text-sm text-blue-600">{selectedContact.subject} Tutor</p>
+                    <div className="flex items-center space-x-2">
+                      <p className="text-sm text-blue-600">{selectedContact.subject} Tutor</p>
+                      <span className="text-gray-400">•</span>
+                      <p className="text-sm text-yellow-600">★ {selectedContact.rating}</p>
+                    </div>
                     {selectedContact.isOnline && (
                       <p className="text-sm text-green-600">Online</p>
                     )}
@@ -443,7 +594,11 @@ const Messages = () => {
           )}
         </div>
       </div>
-    </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
