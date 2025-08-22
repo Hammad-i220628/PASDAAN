@@ -263,35 +263,35 @@ const Messages = () => {
         setSelectedContact(contact);
         setIsMobileView(true);
       }}
-      className={`flex items-center p-3 sm:p-4 cursor-pointer transition-colors border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100 ${
-        selectedContact?.id === contact.id ? 'bg-blue-50 border-l-4 border-l-blue-900' : ''
+      className={`flex items-center p-3 sm:p-4 md:p-5 cursor-pointer transition-all duration-200 border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100 ${
+        selectedContact?.id === contact.id ? 'bg-blue-50 border-l-4 border-l-blue-900 shadow-sm' : ''
       }`}
     >
       <div className="relative flex-shrink-0">
-        <div className="w-12 h-12 rounded-full bg-blue-900 flex items-center justify-center text-white font-semibold">
+        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-blue-900 flex items-center justify-center text-white font-semibold text-sm md:text-base">
           {contact.initials}
         </div>
         {contact.isOnline && (
-          <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+          <div className="absolute bottom-0 right-0 w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded-full border-2 border-white"></div>
         )}
       </div>
-      <div className="ml-3 flex-1 min-w-0">
+      <div className="ml-3 md:ml-4 flex-1 min-w-0">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium text-gray-900 truncate">{contact.name}</h3>
-          <span className="text-xs text-gray-500">{contact.timeAgo}</span>
+          <h3 className="text-sm md:text-base font-medium text-gray-900 truncate">{contact.name}</h3>
+          <span className="text-xs md:text-sm text-gray-500 ml-2">{contact.timeAgo}</span>
+        </div>
+        <div className="mt-1">
+          <p className="text-sm md:text-base text-gray-600 truncate">{contact.lastMessage}</p>
         </div>
         <div className="flex items-center justify-between mt-1">
-          <p className="text-sm text-gray-600 truncate">{contact.lastMessage}</p>
-        </div>
-        <div className="flex items-center justify-between mt-1">
-          <span className="text-xs text-blue-600 font-medium">{contact.subject} Tutor</span>
+          <span className="text-xs md:text-sm text-blue-600 font-medium">{contact.subject} Tutor</span>
           {contact.isOnline && (
-            <span className="text-xs text-green-600">Online</span>
+            <span className="text-xs md:text-sm text-green-600 font-medium">Online</span>
           )}
         </div>
       </div>
       {contact.unreadCount && (
-        <div className="ml-2 bg-blue-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+        <div className="ml-2 bg-blue-900 text-white text-xs rounded-full w-5 h-5 md:w-6 md:h-6 flex items-center justify-center font-medium">
           {contact.unreadCount}
         </div>
       )}
@@ -325,21 +325,14 @@ const Messages = () => {
 
   return (
     <main className="flex-1 p-3 sm:p-4 md:p-6 bg-gray-50">
-      {/* Page Header */}
-      <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Messages</h1>
-        <p className="text-gray-600 mt-2">Chat with your children's tutors</p>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-sm flex" style={{ height: 'calc(100vh - 200px)' }}>
+      <div className="bg-white rounded-lg shadow-sm flex" style={{ height: 'calc(100vh - 120px)' }}>
         {/* Contacts Sidebar */}
-        <div className={`w-full md:w-80 border-r border-gray-200 flex flex-col ${
+        <div className={`w-full md:w-80 lg:w-96 xl:w-80 border-r border-gray-200 flex flex-col ${
           isMobileView ? 'hidden md:flex' : 'flex'
         }`}>
           {/* Header */}
-          <div className="p-3 sm:p-4 border-b border-gray-200">
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Messages</h2>
-            
+          <div className="p-3 sm:p-4 md:p-6 border-b border-gray-200 bg-white sticky top-0 z-10">
+            <h1 className="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">Messages</h1>
             {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -348,16 +341,22 @@ const Messages = () => {
                 placeholder="Search tutors..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-transparent text-sm"
+                className="w-full pl-10 pr-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-transparent text-sm md:text-base transition-all duration-200"
               />
             </div>
           </div>
 
           {/* Contacts List */}
-          <div className="flex-1 overflow-y-auto">
-            {filteredContacts.map((contact) => (
-              <ContactItem key={contact.id} contact={contact} />
-            ))}
+          <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            {filteredContacts.length > 0 ? (
+              filteredContacts.map((contact) => (
+                <ContactItem key={contact.id} contact={contact} />
+              ))
+            ) : (
+              <div className="p-4 text-center text-gray-500">
+                <p className="text-sm">No tutors found</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -367,46 +366,60 @@ const Messages = () => {
         }`}>
           {selectedContact ? (
             <>
-              {/* Chat Header */}
-              <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                <div className="flex items-center">
+              {/* Chat Header - Fixed and properly styled */}
+              <div className="p-4 md:p-6 border-b border-gray-200 flex items-center justify-between bg-white sticky top-0 z-10 shadow-sm">
+                <div className="flex items-center min-w-0 flex-1">
                   <button
                     onClick={() => setIsMobileView(false)}
-                    className="md:hidden mr-3 p-1 hover:bg-gray-100 rounded"
+                    className="md:hidden mr-3 p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
                   <div className="relative flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-900 flex items-center justify-center text-white font-semibold text-sm md:text-base">
                       {selectedContact.initials}
                     </div>
                     {selectedContact.isOnline && (
                       <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
                     )}
                   </div>
-                  <div className="ml-3">
-                    <h2 className="text-lg font-semibold text-gray-900">{selectedContact.name}</h2>
-                    <p className="text-sm text-blue-600">{selectedContact.subject} Tutor</p>
-                    {selectedContact.isOnline && (
-                      <p className="text-sm text-green-600">Online</p>
-                    )}
+                  <div className="ml-3 md:ml-4 min-w-0 flex-1">
+                    <h2 className="text-lg md:text-xl font-semibold text-gray-900 truncate">{selectedContact.name}</h2>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <p className="text-sm md:text-base text-blue-600 font-medium">{selectedContact.subject} Tutor</p>
+                      {selectedContact.isOnline && (
+                        <>
+                          <span className="text-gray-400">•</span>
+                          <p className="text-sm md:text-base text-green-600 font-medium">Online</p>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
-                {currentConversation?.messages.map((message) => (
-                  <MessageBubble key={message.id} message={message} />
-                ))}
+              {/* Messages - Scrollable area - only messages scroll */}
+              <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-gray-50 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                {currentConversation?.messages.length > 0 ? (
+                  currentConversation.messages.map((message) => (
+                    <MessageBubble key={message.id} message={message} />
+                  ))
+                ) : (
+                  <div className="flex items-center justify-center h-full">
+                    <div className="text-center text-gray-500">
+                      <p className="text-sm md:text-base">No messages yet</p>
+                      <p className="text-xs md:text-sm mt-1">Start the conversation!</p>
+                    </div>
+                  </div>
+                )}
                 {/* Invisible div for auto-scroll */}
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Message Input */}
-              <div className="p-4 border-t border-gray-200 bg-white">
-                <div className="flex items-center space-x-2">
-                  <button className="p-2 hover:bg-gray-100 rounded-full">
+              {/* Message Input - Fixed at bottom, doesn't scroll */}
+              <div className="p-4 md:p-6 border-t border-gray-200 bg-white md:relative fixed md:static bottom-0 left-0 right-0 z-20 shadow-lg md:shadow-none">
+                <div className="flex items-center space-x-3">
+                  <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                     <Paperclip className="w-5 h-5 text-gray-600" />
                   </button>
                   <div className="flex-1 relative">
@@ -416,12 +429,12 @@ const Messages = () => {
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-900 focus:border-transparent text-sm pr-12"
+                      className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-900 focus:border-transparent text-sm md:text-base pr-12 md:pr-14 transition-all duration-200"
                     />
                     <button
                       onClick={handleSendMessage}
                       disabled={!newMessage.trim()}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 bg-green-600 text-white rounded-full hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 md:p-2 bg-green-600 text-white rounded-full hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                     >
                       <Send className="w-4 h-4" />
                     </button>
