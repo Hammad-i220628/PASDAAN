@@ -31,6 +31,7 @@ import Homework from './components/StudentDashboard/Homework';
 import Messages from './components/StudentDashboard/Messages';
 import HelpSupport from './components/StudentDashboard/HelpSupport';
 import Schedule from './components/StudentDashboard/Schedule';
+import Results from './components/StudentDashboard/Results';
 
 // HomePage component
 const HomePage = () => (
@@ -80,6 +81,7 @@ const AppContent = () => {
         <Route path="/student-dashboard/:studentId/homework" element={<Homework />} />
         <Route path="/student-dashboard/:studentId/messages" element={<Messages />} />
         <Route path="/student-dashboard/:studentId/schedule" element={<Schedule />} />
+        <Route path="/student-dashboard/:studentId/results" element={<Results />} />
         <Route path="/student-dashboard/:studentId/help-support" element={<HelpSupport />} />
       </Routes>
       

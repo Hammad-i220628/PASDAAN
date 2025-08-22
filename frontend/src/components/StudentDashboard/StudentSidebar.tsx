@@ -53,10 +53,10 @@ const StudentSidebar: React.FC<StudentSidebarProps> = ({
       isActive: location.pathname === `/student-dashboard/${studentId}/schedule`
     },
     {
-      href: '#',
+      href: studentId ? `/student-dashboard/${studentId}/results` : '#',
       icon: Clock,
       label: 'Results',
-      isActive: false
+      isActive: location.pathname === `/student-dashboard/${studentId}/results`
     },
     {
       href: studentId ? `/student-dashboard/${studentId}/messages` : '#',
