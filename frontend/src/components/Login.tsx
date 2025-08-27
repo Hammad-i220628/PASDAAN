@@ -21,8 +21,15 @@ const Login = () => {
     e.preventDefault();
     
     // Check for admin login credentials
-    if (formData.email === 'admin@gmail.com' && formData.password === 'admin') {
+    if (formData.email === 'muaz@gmail.com' && formData.password === '03061797003') {
       console.log('Admin login successful');
+      navigate('/admin-dashboard');
+      return;
+    }
+    
+    // Check for tutor login credentials
+    if (formData.email === 'tutor@gmail.com' && formData.password === 'tutor') {
+      console.log('Tutor login successful');
       navigate('/teacher-dashboard');
       return;
     }

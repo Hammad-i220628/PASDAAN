@@ -26,6 +26,7 @@ import Payment from './components/FindTutor/Payment';
 import Dashboard from './components/TutorDashboard/Dashboard';
 import ParentDashboard from './components/ParentDashboard/Dashboard';
 import StudentDashboard from './components/StudentDashboard/Dashboard';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
 import MyCourses from './components/StudentDashboard/MyCourses';
 import Homework from './components/StudentDashboard/Homework';
 import Messages from './components/StudentDashboard/Messages';
@@ -50,11 +51,11 @@ const HomePage = () => (
 // AppContent component
 const AppContent = () => {
   const location = useLocation();
-  const hideFooter = location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/tutor-application' || location.pathname.startsWith('/tutor/') || location.pathname.startsWith('/tutor-availability/') || location.pathname.startsWith('/book-session/') || location.pathname === '/payment' || location.pathname === '/teacher-dashboard' || location.pathname.startsWith('/parent-dashboard') || location.pathname.startsWith('/student-dashboard');
+  const hideFooter = location.pathname === '/signup' || location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/tutor-application' || location.pathname.startsWith('/tutor/') || location.pathname.startsWith('/tutor-availability/') || location.pathname.startsWith('/book-session/') || location.pathname === '/payment' || location.pathname === '/teacher-dashboard' || location.pathname === '/admin-dashboard' || location.pathname.startsWith('/parent-dashboard') || location.pathname.startsWith('/student-dashboard');
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      {location.pathname !== '/teacher-dashboard' && !location.pathname.startsWith('/parent-dashboard') && !location.pathname.startsWith('/student-dashboard') && location.pathname !== '/payment' && <Header />}
+      {location.pathname !== '/teacher-dashboard' && location.pathname !== '/admin-dashboard' && !location.pathname.startsWith('/parent-dashboard') && !location.pathname.startsWith('/student-dashboard') && location.pathname !== '/payment' && <Header />}
       
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -73,6 +74,7 @@ const AppContent = () => {
         <Route path="/book-session/:tutorId" element={<BookASession />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/teacher-dashboard" element={<Dashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/parent-dashboard" element={<ParentDashboard />} />
         <Route path="/parent-dashboard/student/:studentId/courses" element={<MyCourses />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />

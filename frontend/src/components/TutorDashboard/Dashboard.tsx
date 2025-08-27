@@ -175,7 +175,7 @@ interface DashboardHeaderProps {
 
 const DashboardHeader = ({ tutorName, onMenuClick }: DashboardHeaderProps) => {
   return (
-    <div className="bg-blue-900 text-white px-4 md:px-8 py-4 md:py-6 mx-4 md:mx-6 mt-4 md:mt-6 rounded-lg">
+    <div className="bg-blue-900 text-white px-4 md:px-8 py-4 md:py-6 mx-0 mt-0 rounded-none">
       <div className="flex items-center">
         {/* Mobile menu button */}
         <button 
